@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html ng-app="onload">
+<head>
+  <title>Grand Pen Marketing</title>
+  <link rel="icon" href="logo.ico">
+  <link href="./ASSETS/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+  <link href="./ASSETS/css/customstyle.css" rel="stylesheet" type="text/css" />
+  <link href="./ASSETS/css/customstyle2.css" rel="stylesheet" type="text/css" />
+
+  <link rel="stylesheet" type="text/css" href="./ASSETS/js/dialog/ngDialog.min.css" >
+  <link rel="stylesheet" type="text/css" href="./ASSETS/bootstrap/css/font-awesome/css/font-awesome.min.css" >
+  <link rel="stylesheet" type="text/css" href="./ASSETS/js/dialog/ngDialog-theme-plain.min.css">
+  <link rel="stylesheet" type="text/css" href="./ASSETS/js/dialog/ngDialog-theme-default.min.css">
+  <link rel="stylesheet" type="text/css" href="./ASSETS/js/dialog/ngDialog-custom-width.css">
+  <link rel="stylesheet" type="text/css" href="./ASSETS/css/loading-bar.min.css">
+
+  <link rel="stylesheet" type="text/css" href="./ASSETS/js/notification/angular-ui-notification.min.css" >
+  <link rel="stylesheet" type="text/css" href="./ASSETS/js/bootstrap-datetimepicker.min.css" >
+  <style type="text/css">
+    body {
+      background-color: #333333;
+      font-family: "Open Sans", Helvetica;
+    }
+
+    form {
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      letter-spacing: 4px;
+      padding-top: 30px;
+      text-align: center;
+    }
+    label .label-text {
+      color: #000;
+      cursor: text;
+      font-size: 20px;
+      line-height: 20px;
+      text-transform: uppercase;
+      -moz-transform: translateY(-34px);
+      -ms-transform: translateY(-34px);
+      -webkit-transform: translateY(-34px);
+      transform: translateY(-34px);
+      transition: all 0.3s;
+    }
+    label input {
+      background-color: transparent;
+      border: 0;
+      border-bottom: 2px solid #4A4A4A;
+      color: black;
+      font-size: 26px;
+      letter-spacing: -1px;
+      outline: 0;
+      padding: 5px 20px;
+      text-align: center;
+      transition: all 0.3s;
+      width: 200px;
+    }
+    label input:focus {
+      max-width: 100%;
+      width: 400px;
+    }
+    label input:focus + .label-text {
+      color: #000;
+      font-size: 13px;
+      -moz-transform: translateY(-74px);
+      -ms-transform: translateY(-74px);
+      -webkit-transform: translateY(-74px);
+      transform: translateY(-74px);
+    }
+    label input:valid + .label-text {
+      font-size: 13px;
+      -moz-transform: translateY(-74px);
+      -ms-transform: translateY(-74px);
+      -webkit-transform: translateY(-74px);
+      transform: translateY(-74px);
+    }
+
+    button {
+      background-color: #333333;
+      border: 2px solid white;
+      border-radius: 10px;
+      color: white;
+      cursor: pointer;
+      font-size: 20px;
+      padding: 15px 30px;
+      text-transform: uppercase;
+      transition: all 200ms;
+    }
+    button:hover, button:focus {
+      background-color: black;
+      color: white;
+      outline: 0;
+    }
+  </style>
+</head>
+
+
+<body class="login-page" ng-controller="Login">
+  <div style="background-color: #fff;width: 35%;margin-left: 35%;padding: 30px;border-radius: 5px;margin-top:2%;"> 
+    <p class="login-box-msg" style="color:black;font-family: arial;font-weight: bold;font-size:20px;">Sign in to Grand Pen Marketing System</p>  
+    <form>
+      <label>
+        <input id="user_id" type="text" required />
+        <div class="label-text">Username</div>
+
+      </label>
+      <label>
+        <input id="password" type="password" required />
+        <div class="label-text">Password</div>
+      </label>
+      <a onclick="login()" href="#" value="Log In"><img src="bowtie.png"  style="width: 140px;"></a>
+
+    </form>
+    <div style="margin-top:15px;text-align: center;">
+      <a href="" ng-click="forgot_password()" class="text-center" >Forgot Password?</a>
+    </div>
+    <center>
+      <div id="div-message">
+      </div>
+    </center>
+  </div>
+ <!--  <img src="Final.png" style="max-width: 55%; height: auto;margin-top: -550px;"> -->
+  <!-- <div style="position:absolute; margin-left:10px; margin-top: -28%;">
+  <img src="Final.png" style="max-width: 55%; height: auto;">
+</div> -->
+</body>
+
+<script src="./ASSETS/js/jquery.min.js"></script>
+<script src="./ASSETS/bootstrap/js/bootstrap.min.js"></script>
+<script src="./ASSETS/js/JqueryStretch.js"></script>
+
+<script src="ASSETS/angular/angular.min.js"></script>
+<script src="ASSETS/angular/angular-route.min.js"></script>
+<script src="ASSETS/angular/angular-cookies.min.js"></script>
+<script src="ASSETS/angular/angular-md5.js"></script>   
+<script src="ASSETS/angular/angular-date.js"></script>
+<script src="ASSETS/angularjs/loading-bar.min.js"></script>
+
+<script src="./ASSETS/js/dialog/ngDialog.js"></script>
+<script src="./ASSETS/js/bootstrap-notify.js"></script>
+<script src="./ASSETS/js/angucomplete-alt.js"></script>
+<script src="./ASSETS/js/uploader/angular-file-upload.min.js"></script>
+<script src="./ASSETS/js/notification/angular-ui-notification.min.js"></script>
+<script src="ASSETS/angular/bootstrap-ui.js"></script>
+<script src="./ASSETS/js/moment.min.js"></script>
+<script src="ASSETS/angular/angular-date2.js"></script>
+
+<script>
+  var app = angular.module('onload', [
+    'ngRoute',
+    'ngCookies',
+    'angular-md5',
+    'ngDialog',
+    'angularFileUpload',
+    'ui-notification',
+    'ui.bootstrap',
+    'ae-datetimepicker',
+    'angucomplete-alt',
+    'angular-loading-bar'
+    ]);
+  </script>
+
+  <script src="JS/CONTROLLERS/login.js"></script>
+
+  <script src="JS/FACTORIES/SessionFactory.js"></script>
+  <script src="JS/FACTORIES/UserFactory.js"></script>
+  <script src="JS/FACTORIES/ProductFactory.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      checksession();
+      $.backstretch("login_background.jpg");
+      $("#user_id, #password, #btn_submit").on('keypress', function( event ) {
+        if ( event.which == 13 ) {
+          login();
+        }         
+      });
+    });
+
+    function checksession(){
+      $.ajax('./FUNCTIONS/Session/getsession.php', {
+        type: "POST",
+        statusCode: {
+          404: function(response){
+
+          }
+        },
+        success: function(data){
+          window.location = window.location.href.replace('login.html','');
+        }
+      });
+    }
+
+    function login(){
+      var error=0;
+      var empid = $('#user_id').val();
+      var pass = $('#password').val();
+
+      if(empid.replace(/\s/g,'') == "" || pass.replace(/\s/g,'') == ""){
+        $('#div-message').empty().show().append("User Name and/or Password is Incorrect");
+
+        setTimeout(function(){
+          $('#div-message').empty().hide();
+        }, 5000);
+      }
+      else {
+        $.ajax('FUNCTIONS/Users/authentication.php', {
+          type: "POST",
+          data: { empid : empid, password : pass},
+          statusCode: {
+            404: function(response){
+              $('#div-message').empty().show().append("Incorrect User Name and/or Password");
+
+              setTimeout(function(){
+                $('#div-message').empty().hide();
+              }, 5000);
+            }
+          },
+          success: function(data){
+            window.location = window.location.href.replace('login.html','');
+          }
+        });
+      }
+    }
+  </script>
+
+  <script type="text/ng-template" id="forgot_password">
+    <div class="ngdialog-message">
+      <div style="margin-top: 15px;">
+        <h3><span style="color:#ffbf00;">{{ modal.title }}</span></h3>
+      </div>
+      <div style="margin-top:20px;margin-bottom:30px;">
+        <hr style="height:1px;border:none;color:#333;background-color:#333;"/>
+        Email: <div class="input-group">
+        <input type="text" class="form-control" placeholder="Input Registered Email Here" aria-describedby="basic-addon1" ng-model="modal.email">
+        <span class="input-group-addon" id="basic-addon1">@</span>
+      </div>
+    </div>
+  </div>
+  <div class="ngdialog-buttons">
+    <button type="button"  class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+    <button type="button" style="background-color: #ffbf00;" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
+  </div>
+</div>
+</script>
+
+<script type="text/ng-template" id="checkresult">
+  <div class="ngdialog-message">
+    <div style="margin-top: 15px;">
+      <h3><span style="color:#ffbf00;">{{ modal.title }}</span></h3>
+    </div>
+    <div style="margin-top:20px;margin-bottom:10px;" ng-if="modal.status == true">
+      <hr style="height:1px;border:none;color:#333;background-color:#333;"/>
+      An Code Verification has been sent to your email please copy it and paste on this box to verify.
+      <input type="text" class="form-control" placeholder="Input Verification Code Here." ng-model="modal.code">
+    </div>
+    <div style="margin-top:20px;margin-bottom:10px;" ng-if="modal.status == false">
+      <hr style="height:1px;border:none;color:#333;background-color:#333;"/>
+      E-mail does not exist, Please check and try again
+    </div>
+    <div class="ngdialog-buttons" >
+      <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+      <button type="button" style="background-color: #ffbf00;" ng-if="modal.status == true" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
+    </div>
+  </div>
+</script>
+</body>
+</html>

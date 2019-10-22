@@ -1,0 +1,191 @@
+<style>
+
+	#container_fluid_revise {
+		padding-right: 0%;
+		padding-left: 0%;
+		background-attachment: fixed;
+	}
+
+	center h3 {
+		padding: 2%;
+		height: 90px;
+		border: 1px groove lightsteelblue;
+		border-radius: 5px;
+		display: flex;
+		align-items: center;
+	}
+
+	center h3 b{
+		flex-direction: column;
+	}
+
+	@media only screen and (max-width: 1000px) {
+		div.container.panel.ng-scope {
+			width: 90% !important;
+		}
+
+		center h3 b {
+			font-size: 20px;
+		}
+
+		#pandas-desc h3 b {
+			font-size: 18px;
+		}
+	}
+
+	@media only screen and (max-width: 992px) {
+		#header {
+			margin-top: 8% !important;
+		}
+	}
+
+	@media only screen and (max-width: 768px) {
+		#header {
+			margin-top: 3% !important;
+		}
+
+		.col-xs-4 center i {
+			font-size: 350% !important;
+		}
+
+		.col-xs-4 center h2 {
+			font-size: 150% !important;
+			margin: 0%;
+		}
+
+		center h3 b {
+			font-size: 16px;
+		}
+
+		#pandas-desc h3 b {
+			font-size: 14px;
+		}
+
+		div.dropdown {
+			width: 100% !important;
+		}
+	}
+
+</style>
+
+<div class="row-fluid"> 
+       <div style="background-color:#ff6600 !important;">
+           <div id="header" style="font-size: 50px;font-weight: bold;color: white; padding:20px;">Wealth Management</div>
+       </div>
+</div>
+<div class="clearfix"></div>
+<div style="margin-top:10px;"></div>
+<div class="container panel">
+	<div class="row panel-body">
+		<div id="pandas-desc" class="col-md-4 col-sm-4 col-lg-4 col-xs-4" ng-mouseover="pandas=true;joberfied=false;rats=false;" ng-mouseleave="pandas=false;joberfied=false;rats=false;">
+			<center>
+				<a href="http://hrpandas.com" target="_blank"><img class="img-responsive" src="https://files.joberfied.com/files/20171205/xRbOnBf5omkrqDm3HKtRDCuQHUUcWEpJUGW7Iz0ubZcIaC9hKs.png" style="width: 30%">
+				<h2><b>PANDAS</b></h2></a>
+				<h3>
+					<b class="back" ng-if="pandas">HR's most friendly software that takes care of the employee needs.</b>
+				</h3>
+			</center>
+		</div>
+		<div id="joberfied-desc" class="col-md-4 col-sm-4 col-lg-4 col-xs-4" ng-mouseover="pandas=false;joberfied=true;rats=false;" ng-mouseleave="pandas=false;joberfied=false;rats=false;">
+			<center>
+				<a href="https://joberfied.com" target="_blank"><img class="img-responsive" src="https://files.joberfied.com/files/20171205/Tb0FtmV2BItWvIjXDEhwHWKUn2KNL9HcY7iGh18jAp3txcFyfm.png" style="width: 30%">
+				<h2><b>JOBERFIED</b></h2></a>
+				<h3><b ng-if="joberfied">Your Social Recruitment Platform</b></h3>
+			</center>
+		</div>
+		<div id="rats-desc" class="col-md-4 col-sm-4 col-lg-4 col-xs-4" ng-mouseover="pandas=false;joberfied=false;rats=true;" ng-mouseleave="pandas=false;joberfied=false;rats=false;">
+			<center>
+				<a href="http://ratsglobal.com" target="_blank"><img class="img-responsive" src="https://files.joberfied.com/files/20171205/GFyV4Er0QSHGZMukiBxYClpXNb5VOr1SupmouRc8jjC8vxjUyW.png" style="width: 30%">
+				<h2><b>RATS</b></h2></a>
+				<h3><b ng-if="rats">A Powerful Tool Empowering Recruiters</b></h3>
+			</center>
+		</div>
+	</div>
+
+	<hr style="background-color:gray; border-top: 1px solid lightgray">
+	<div class="row panel" style="margin-top: 40px;">
+		<div class="panel-body">
+				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+						<center>
+							<i style="font-size:70px;color:#1FD912;" class="fa fa-money"></i>
+							<h2>Cash Flow Solutions</h2>
+							<div class="dropdown">
+								<p style="cursor:pointer;font-family: arial" class="dropdown-toggle" data-toggle="dropdown"><u>What are you looking for ?</u>
+									<span class="caret"></span>
+									<ul class="dropdown-menu">
+										<li><a href="" ng-click="bloan=true;pawn=false;invest=false;invoice=false;remit=false;real=false;seed=false;stock=false;ad=false;">I'm looking for a Business Loan</a></li>
+										<li><a href="" ng-click="bloan=false;pawn=true;invest=false;invoice=false;remit=false;real=false;seed=false;stock=false;ad=false;">I'm looking to pawn my item/property</a></li>
+										<li><a href="" ng-click="bloan=false;pawn=false;invest=true;invoice=false;remit=false;real=false;seed=false;stock=false;ad=false;">I'm looking for a Additional Investor</a></li>
+										<li><a href="" ng-click="bloan=false;pawn=false;invest=false;invoice=true;remit=false;real=false;seed=false;stock=false;ad=false;">I'm willing to sell my invoices</a></li>
+									</ul>
+								</p>
+							</div>
+							<!-- Business Loan -->
+							<a ng-if="bloan" href="http://www.lendr.com.ph/" target="_blank"><img ng-if="bloan" src="https://files.joberfied.com/files/20171205/nX4vJ2vPo0uXUK2AzV9zFBuXWGsXsA0TXsFel0uNrcl9mb8bw5.png" style="width: 40%;"></a><br ng-if="bloan">
+							<a style="margin-top: 10px;" ng-if="bloan" href="https://www.loansolutions.ph/" target="_blank"><img ng-if="bloan" src="https://files.joberfied.com/files/20171205/9EFUt2fEKymX9WGMLgchZ5rUZ3SjjFGgKMz1CS6NGgkD2pQDLq.svg" style="width: 60%;"></a>
+							<br ng-if="bloan">
+							<a style="margin-top: 20px;" ng-if="bloan" href="https://www.mynt.xyz/" target="_blank"><img ng-if="bloan" src="https://files.joberfied.com/files/20171205/tKIVRknfJJsXZ7y7m8jalRWZ6fbkHlh1tqKAOvdY4JtRFiOrex.png" style="width: 50%;"></a>
+							<br ng-if="bloan"><br ng-if="bloan">
+							<a style="margin-top: 50px;" ng-if="bloan" href="https://fundko.com/" target="_blank"><img ng-if="bloan" src="https://files.joberfied.com/files/20171205/LqseJeBgf61FzLk40eUDLSDXqaNEBCSKsAm2cnW6jLBWWjRNBl.png" style="width: 50%;"></a>
+							<br ng-if="bloan"><br ng-if="bloan">
+							<a ng-if="bloan" href="https://www.newunion.ph/" target="_blank"><img ng-if="bloan" src="https://files.joberfied.com/files/20171205/yTtTj3ZdobxFGH8hVaOE0Vy2i7VNt5DfNwywnLNPl8VpGTKbrY.svg" style="width: 50%;"></a>
+			
+							<!-- Investors -->
+							<a ng-if="invest" href="http://www.kickstart.ph/" target="_blank"><img ng-if="invest" src="https://files.joberfied.com/files/20171205/wmDmWFXiNUzy73pbqdoKFSADJ321NgCAIFmeK7AVRyHPrwoXQS.png" style="width: 50%;"></a><br ng-if="invest">
+							<a ng-if="invest" href="http://www.philvencap.com/" target="_blank"><img ng-if="invest" src="https://files.joberfied.com/files/20171205/cWiJcTOEzqs0VSB9rTeb8OzgXk6B2UVUq1bIIoL5U3vnJum1BH.png" style="width: 50%;"></a>
+							<br ng-if="invest"><br ng-if="invest">
+							<a ng-if="invest" href="https://500.co/" target="_blank"><img ng-if="invest" src="https://files.joberfied.com/files/20171205/UYgHk9l5aaC2EhYG19lswum9YbJcjSO2os7NpiIG8I6ApVEeSq.png" style="width: 20%;"></a>
+			
+							<!-- Pawn -->
+							<a ng-if="pawn" href="https://pawnhero.ph/" target="_blank"><img ng-if="pawn" src="https://files.joberfied.com/files/20171205/D0SpwkiJ8jZ8JonngWzQ6aIBfGhVslyvbFZNp7WmhukqYOR5iF.png" style="width: 50%;"></a><br ng-if="pawn">
+			
+							<!-- Invoice -->
+							<a ng-if="invoice" href="https://acudeen.com/" target="_blank"><img ng-if="invoice" src="https://files.joberfied.com/files/20171205/yanKLznkTjdcF5ajFCT2ES6sKeJyruGdJrlUeO2xvVNyOoXToo.png" style="width: 50%;"></a>
+						</center>
+					</div>
+					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+						<center>
+							<i style="font-size:70px;color:#2C3E56;" class="fa fa-thumbs-o-up"></i>
+							<h2>Business Services</h2>
+							<div class="dropdown">
+								<p style="cursor:pointer;font-family: arial" class="dropdown-toggle" data-toggle="dropdown"><u>What are you looking for ?</u>
+									<span class="caret"></span>
+									<ul class="dropdown-menu">
+										<li><a href="" ng-click="bloan=false;pawn=false;invest=false;invoice=false;remit=true;real=false;seed=false;stock=false;ad=false;">I'm looking for Remittance Center</a></li>
+									</ul>
+								</p>
+							</div>
+							<!-- Remittance -->
+							<a ng-if="remit" href="https://coins.ph/" target="_blank"><img ng-if="remit" src="https://files.joberfied.com/files/20171205/sPqodsSm10nu69VtWH4FqMM1LHJReLQKa7y1nHef5FN2Egjaod.png" style="width: 50%;"></a>
+						</center>
+					</div>
+					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+						<center>
+							<i style="font-size:70px;color:#730066;" class="fa fa-line-chart"></i>
+							<h2>Investments</h2>
+							<div class="dropdown">
+								<p style="cursor:pointer;font-family: arial" class="dropdown-toggle" data-toggle="dropdown"><u>What are you looking for ?</u>
+									<span class="caret"></span>
+									<ul class="dropdown-menu">
+										<li><a href="" ng-click="bloan=false;pawn=false;invest=false;invoice=false;remit=false;real=true;seed=false;stock=false;ad=false;">I'm looking for real estate</a></li>
+										<li><a href="" ng-click="bloan=false;pawn=false;invest=false;invoice=false;remit=false;real=false;seed=true;stock=false;ad=false;">I'm looking for seed investment</a></li>
+										<li><a href="" ng-click="bloan=false;pawn=false;invest=false;invoice=false;remit=false;real=false;seed=false;stock=true;ad=false;">I'm looking for stock investment</a></li>
+										<li><a href="" ng-click="bloan=false;pawn=false;invest=false;invoice=false;remit=false;real=false;seed=false;stock=false;ad=true;">I'm looking for additional business</a></li>
+									</ul>
+								</p>
+							</div>
+							<a ng-if="seed" href="https://acudeen.com/" target="_blank"><img ng-if="seed" src="https://files.joberfied.com/files/20171205/yanKLznkTjdcF5ajFCT2ES6sKeJyruGdJrlUeO2xvVNyOoXToo.png" style="width: 50%;"></a>
+							<br ng-if="seed">
+							<a ng-if="seed" href="https://www.newunion.ph/" target="_blank"><img ng-if="seed" src="https://files.joberfied.com/files/20171205/yTtTj3ZdobxFGH8hVaOE0Vy2i7VNt5DfNwywnLNPl8VpGTKbrY.svg" style="width: 50%;"></a>
+							
+							<!-- Coming Soon -->
+							<a ng-if="real" href="" target="_blank"><img ng-if="real" src="https://files.joberfied.com/files/20171205/wbLfFoFTSv3tuZtHxCR8rZ0dZrUGvKtgl49pgE8y01hiOPnBP4.png" style="width: 50%;"></a>
+							<a ng-if="stock" href="" target="_blank"><img ng-if="stock" src="https://files.joberfied.com/files/20171205/wbLfFoFTSv3tuZtHxCR8rZ0dZrUGvKtgl49pgE8y01hiOPnBP4.png" style="width: 50%;"></a>
+							<a ng-if="ad" href="" target="_blank"><img ng-if="ad" src="https://files.joberfied.com/files/20171205/wbLfFoFTSv3tuZtHxCR8rZ0dZrUGvKtgl49pgE8y01hiOPnBP4.png" style="width: 50%;"></a>
+			
+						</center>
+					</div>
+		</div>
+		
+	</div>
+</div>

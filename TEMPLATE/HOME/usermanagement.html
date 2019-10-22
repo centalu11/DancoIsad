@@ -1,0 +1,372 @@
+<style>
+    button:hover {
+      background-color: green !important;
+    }
+
+    #container_fluid_revise {
+      padding-right: 0%;
+      padding-left: 0%;
+    }
+
+    @media only screen and (max-width: 992px) {
+      .table-responsive {
+        font-size: 90% !important;
+      }
+
+      #header {
+        margin-top: 8%;
+        padding-top: 2%;
+      }
+    }
+
+    @media only screen and (max-width: 768px) {
+      #header {
+        margin-top: 3%;
+        padding-top: 2%;
+      }
+
+      #header-title {
+        font-size: 250% !important;
+      }
+    }
+
+    @media only screen and (max-width: 600px) {
+      #header div {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+      }
+
+      #sec-banner {
+        font-size: 90% !important;
+        padding-bottom: 2% !important;
+      }
+
+      #first-banner {
+        font-size: 110% !important
+      }
+
+      #header-title {
+        font-size: 200% !important;
+        width: 100% !important;
+      }
+
+      #header div.col-xs-12 div.col-xs-12 {
+        padding-bottom: 2%;
+      }
+    }
+</style>
+
+<div class="row-fluid">
+  <div id="header" style="background-color:green !important; overflow: hidden;">
+    <div  class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="background-color:green !important; overflow: hidden; display: flex; align-items: center">
+      <div id="header-title" class="col-xs-12 col-sm-7 col-md-8 col-lg-8" style="font-size: 50px;font-weight: bold;color: white; padding:20px;">User Management</div>
+    </div>
+  </div>
+
+  <div class="row-fluid" style="margin-top: 10px">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    
+    <div class="panel" style="overflow: hidden !important">
+      <div class="panel-body" style="overflow: hidden !important">
+        
+              <!--ol class="breadcrumb">
+                  <li><a href="#">Newsfeed</a></li>
+                  <li><a href="#">Admin</a></li>
+                  <li class="active">User Management</li>
+              </ol-->
+        
+              <div class="row-fluid">
+        
+                <button type="button" class="btn" ng-click="add_user()" style="color: #ffffff; background-color: black;font-family: arial;border-radius: 4px"><i class="fa fa-plus"></i> Add User </button>
+        
+                <button type="button" class="btn" ng-click="change_pin()" style="color: #ffffff; background-color: black;font-family: arial;margin-left:2%;"><i class="fa fa-pencil"></i> Change Superior Pin Code </button>
+              </div><br/>
+        
+        <div class="clearfix"></div>
+      <div class="x_content">
+        <table class="table table-hover table-responsive">
+           <thead>
+        <tr style="background-color:green;color: white; ">
+          <th>Cashier Name</th>
+          <th>User ID</th>
+          <th>User Type</th>
+          <th>Modify</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="v in added_user_data.slice(((currentPage_user_data-1)*itemsPerPage_user_data), ((currentPage_user_data)*itemsPerPage_user_data)) track by $index">
+
+          <td>{{v.first_name+ " " +v.last_name}}</td>
+          <td>{{v.user_id}}</td>
+          <td>{{v.user_type}}</td>
+          <td>
+            <i class="fa fa-pencil" aria-hidden="true" style="cursor:pointer" ng-click="edit_user(v)"  title="Edit"></i>
+            <i class="fa fa-trash" aria-hidden="true" style="cursor:pointer" ng-click="delete_user(v)"  title="Delete"></i>
+            <i class="fa fa-list-ul" style="cursor:pointer" title="Edit Permission"
+              ng-click="edit_permission(v)"></i>
+        </tr>
+      </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <center>
+      <pagination total-items="totalItems_user_data" ng-model="currentPage_user_data" ng-change="pageChanged_user_data()" class="pagination-md" max-size="maxSize" items-per-page="itemsPerPage_user_data"></pagination>
+    </center>
+  </div>
+</div>
+</div>
+</div>
+
+<script type="text/ng-template" id="EditUser">
+  <div class="ngdialog-message">
+    <div style="margin-top: -15px;">
+      <h3><span style="color:green;"><b>{{ modal.title }}<b></span></h3>
+
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="col-md-6">
+          First Name <input type="text" class="form-control" ng-model="modal.first_name">
+        </div>
+        <div class="col-md-6">
+          Middle Name <input type="text" class="form-control" ng-model="modal.middle_name">
+        </div>
+        <div class="col-md-6">
+          Last Name <input type="text" class="form-control" ng-model="modal.last_name">
+        </div>
+      </div>
+    </div>
+    <br>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="col-md-12">
+          E-Mail <input type="email" class="form-control" ng-model="modal.email">
+        </div>
+      </div>
+    </div>
+    <br>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="col-md-6">
+          Password <input type="password" class="form-control" ng-model="modal.first_password">
+        </div>
+        <div class="col-md-6">
+          Confirm Password <input type="password" class="form-control" ng-model="modal.confirm_password">
+          </br>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="col-md-12">
+          User ID <input type="text" disabled class="form-control" ng-model="modal.final_user_id">
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="col-md-12">
+          <label>User Type</label>
+        <select ng-model="modal.user_type" class="form-control">
+            <option value="" disabled selected style="display:none"> -- Select Type here -- </option>
+           <option value="2">Cashier</option>
+           <option value="1">Admin</option>
+        </select>
+        </div>
+      </div>
+    </div>
+    <br>
+  <div class="ngdialog-buttons" style="margin-top:20px;">
+    <div class="ngdialog-buttons">
+    <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)"> <i class="fa fa-times-circle"> </i> {{modal.close}}</button>
+    <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')" style="background-color: green"> <i class="fa fa-check"> </i> {{modal.save}}</button>
+  </div>
+  </br>
+</script>
+
+<script type="text/ng-template" id="UpdateUser">
+  <div class="ngdialog-message">
+    <div style="margin-top: -15px;">
+      <h3><span style="color:green;"><b>{{ modal.title }}<b></span></h3>
+
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="col-md-6">
+          First Name <input type="text" class="form-control" ng-model="modal.first_name">
+        </div>
+        <div class="col-md-6">
+          Middle Name <input type="text" class="form-control" ng-model="modal.middle_name">
+        </div>
+        <div class="col-md-6">
+          Last Name <input type="text" class="form-control" ng-model="modal.last_name">
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="col-md-6">
+          Password <input type="password" class="form-control" ng-model="modal.first_password">
+        </div>
+        <div class="col-md-6">
+          Confirm Password <input type="password" class="form-control" ng-model="modal.confirm_password">
+          </br>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="col-md-12">
+          E-Mail <input type="email" class="form-control" ng-model="modal.email">
+        </div>
+      </div>
+    </div>
+    <br>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="col-md-12">
+          User ID <input type="text" disabled class="form-control" ng-model="modal.final_user_id">
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="col-md-12">
+          <label>User Type</label>
+        <select ng-model="modal.user_type" class="form-control">
+            <option value="" disabled selected style="display:none"> -- Select Type here -- </option>
+           <option value="2">Cashier</option>
+           <option value="1">Admin</option>
+        </select>
+        </div>
+      </div>
+    </div>
+    <br>
+  <div class="ngdialog-buttons" style="margin-top:20px;">
+    <div class="ngdialog-buttons">
+    <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)"> <i class="fa fa-times-circle"> </i> {{modal.close}}</button>
+    <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')" style="background-color: green"> <i class="fa fa-check"> </i> {{modal.save}}</button>
+  </div>
+  </br>
+</script>
+
+<script type="text/ng-template" id="ChangePin" >
+
+    <div class="ngdialog-message" >
+      <h3><span style="color:green;"><b>{{ modal.title }}</b></span></h3>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="col-md-12">
+          Old Pin <input type="password" class="form-control" ng-model="modal.old_password">
+        </div>
+      </div>
+      <span ng-show="modal.not_match == true"> These passwords doesnt match.</span>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="col-md-6">
+          New Pin <input type="password" class="form-control" ng-model="modal.password1">
+        </div>
+        <div class="col-md-6">
+          Confirm New Pin <input type="password" class="form-control" ng-model="modal.password2">
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="ngdialog-buttons" style="margin-top:20px;">
+      <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+      <button type="button" style="background-color: green;" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
+    </div>
+  </script>
+
+<script type="text/ng-template" id="EditPermission">
+  <div class="ngdialog-message">
+    <div style="margin-top: -15px;">
+      <h3><span style="color:green;"><b>{{ modal.title }}<b></span></h3>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2 col-lg-2">
+        <p>Cashier</p>
+      </div>
+      <div class="col-md-1 col-lg-1">
+        <input type="checkbox" style="transform: scale(1.5);" ng-model="modal.permissions.Cashier.Menu">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2 col-lg-2">
+        <p>Admin</p>
+      </div>
+      <div class="col-md-1 col-lg-1">
+        <input type="checkbox" style="transform: scale(1.5);" ng-model="modal.permissions.Admin.Menu">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
+        <p>Inventory Management</p>
+      </div>
+      <div class="col-md-1 col-lg-1">
+        <input type="checkbox" style="transform: scale(1.5);" ng-model="modal.permissions.Admin.Modules.One">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
+        <p>Purchase Order</p>
+      </div>
+      <div class="col-md-1 col-lg-1">
+        <input type="checkbox" style="transform: scale(1.5);" ng-model="modal.permissions.Admin.Modules.Two">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
+        <p>Supplier Details</p>
+      </div>
+      <div class="col-md-1 col-lg-1">
+        <input type="checkbox" style="transform: scale(1.5);" ng-model="modal.permissions.Admin.Modules.Three">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
+        <p>Sales Report</p>
+      </div>
+      <div class="col-md-1 col-lg-1">
+        <input type="checkbox" style="transform: scale(1.5);" ng-model="modal.permissions.Admin.Modules.Four">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
+        <p>Receipt Backup</p>
+      </div>
+      <div class="col-md-1 col-lg-1">
+        <input type="checkbox" style="transform: scale(1.5);" ng-model="modal.permissions.Admin.Modules.Five">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
+        <p>User Management</p>
+      </div>
+      <div class="col-md-1 col-lg-1">
+        <input type="checkbox" style="transform: scale(1.5);" ng-model="modal.permissions.Admin.Modules.Twelve">
+      </div>
+    </div>
+  </div>
+  <div class="ngdialog-buttons" style="margin-top:20px;">
+    <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)"> <i class="fa fa-times-circle"> </i> {{modal.close}}</button>
+    <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')" style="background-color: green"> <i class="fa fa-check"> </i> {{modal.save}}</button>
+  </div>
+</script>

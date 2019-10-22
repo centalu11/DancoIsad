@@ -1,0 +1,818 @@
+
+<style type="text/css">
+/* * Copyright (c) 2012 Thibaut Courouble
+* Licensed under the MIT License
+================================================== */
+
+input {
+    font-family: 'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    color: #555860;
+}
+
+#container_fluid_revise {
+	padding-right: 0%;
+	padding-left: 0%;
+}
+
+hr {
+    display: none;
+}
+
+.panel {
+    margin-bottom: unset;
+    border-radius: unset;
+}
+
+.search {
+    position: relative;
+    margin: 0 auto;
+    width: 300px;
+}
+
+.search input {
+    height: 26px;
+    width: 100%;
+    padding: 0 12px 0 25px;
+    background: white url("http://cssdeck.com/uploads/media/items/5/5JuDgOa.png") 8px 6px no-repeat;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #a8acbc #babdcc #c0c3d2;
+    border-radius: 13px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-box-shadow: inset 0 1px #e5e7ed, 0 1px 0 #fcfcfc;
+    -moz-box-shadow: inset 0 1px #e5e7ed, 0 1px 0 #fcfcfc;
+    -ms-box-shadow: inset 0 1px #e5e7ed, 0 1px 0 #fcfcfc;
+    -o-box-shadow: inset 0 1px #e5e7ed, 0 1px 0 #fcfcfc;
+    box-shadow: inset 0 1px #e5e7ed, 0 1px 0 #fcfcfc;
+}
+
+.search input:focus {
+    outline: none;
+    border-color: #66b1ee;
+    -webkit-box-shadow: 0 0 2px rgba(85, 168, 236, 0.9);
+    -moz-box-shadow: 0 0 2px rgba(85, 168, 236, 0.9);
+    -ms-box-shadow: 0 0 2px rgba(85, 168, 236, 0.9);
+    -o-box-shadow: 0 0 2px rgba(85, 168, 236, 0.9);
+    box-shadow: 0 0 2px rgba(85, 168, 236, 0.9);
+}
+
+.search .results {
+    display: none;
+    position: absolute;
+    top: 35px;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    padding: 0;
+    margin: 0;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #cbcfe2 #c8cee7 #c4c7d7;
+    border-radius: 3px;
+    background-color: #fdfdfd;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fdfdfd), color-stop(100%, #eceef4));
+    background-image: -webkit-linear-gradient(top, #fdfdfd, #eceef4);
+    background-image: -moz-linear-gradient(top, #fdfdfd, #eceef4);
+    background-image: -ms-linear-gradient(top, #fdfdfd, #eceef4);
+    background-image: -o-linear-gradient(top, #fdfdfd, #eceef4);
+    background-image: linear-gradient(top, #fdfdfd, #eceef4);
+    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    -ms-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    -o-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.search .results li { display: block }
+
+.search .results li:first-child { margin-top: -1px }
+
+.search .results li:first-child:before, .search .results li:first-child:after {
+    display: block;
+    content: '';
+    width: 0;
+    height: 0;
+    position: absolute;
+    left: 50%;
+    margin-left: -5px;
+    border: 5px outset transparent;
+}
+
+.search .results li:first-child:before {
+    border-bottom: 5px solid #c4c7d7;
+    top: -11px;
+}
+
+.search .results li:first-child:after {
+    border-bottom: 5px solid #fdfdfd;
+    top: -10px;
+}
+
+.search .results li:first-child:hover:before, .search .results li:first-child:hover:after { display: none }
+
+.search .results li:last-child { margin-bottom: -1px }
+
+.search .results a {
+    display: block;
+    position: relative;
+    margin: 0 -1px;
+    padding: 6px 40px 6px 10px;
+    color: #808394;
+    font-weight: 500;
+    text-shadow: 0 1px #fff;
+    border: 1px solid transparent;
+    border-radius: 3px;
+}
+
+.search .results a span { font-weight: 200 }
+
+.search .results a:before {
+    content: '';
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    margin-top: -9px;
+    background: url("http://cssdeck.com/uploads/media/items/7/7BNkBjd.png") 0 0 no-repeat;
+}
+
+.search .results a:hover {
+    text-decoration: none;
+    color: #fff;
+    text-shadow: 0 -1px rgba(0, 0, 0, 0.3);
+    border-color: #2380dd #2179d5 #1a60aa;
+    background-color: #338cdf;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #59aaf4), color-stop(100%, #338cdf));
+    background-image: -webkit-linear-gradient(top, #59aaf4, #338cdf);
+    background-image: -moz-linear-gradient(top, #59aaf4, #338cdf);
+    background-image: -ms-linear-gradient(top, #59aaf4, #338cdf);
+    background-image: -o-linear-gradient(top, #59aaf4, #338cdf);
+    background-image: linear-gradient(top, #59aaf4, #338cdf);
+    -webkit-box-shadow: inset 0 1px rgba(255, 255, 255, 0.2), 0 1px rgba(0, 0, 0, 0.08);
+    -moz-box-shadow: inset 0 1px rgba(255, 255, 255, 0.2), 0 1px rgba(0, 0, 0, 0.08);
+    -ms-box-shadow: inset 0 1px rgba(255, 255, 255, 0.2), 0 1px rgba(0, 0, 0, 0.08);
+    -o-box-shadow: inset 0 1px rgba(255, 255, 255, 0.2), 0 1px rgba(0, 0, 0, 0.08);
+    box-shadow: inset 0 1px rgba(255, 255, 255, 0.2), 0 1px rgba(0, 0, 0, 0.08);
+}
+
+:-moz-placeholder {
+    color: #a7aabc;
+    font-weight: 200;
+}
+
+::-webkit-input-placeholder {
+    color: #a7aabc;
+    font-weight: 200;
+}
+
+input[type=text] {
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+    transition: .3s;
+
+}
+
+input[type=text]:focus {
+    overflow: hidden;
+    border-color:lightgray;
+    box-shadow: 0 0 8px 0 darkgray;
+}
+
+/*#changeInput[type=text]:focus {
+    overFlow: hidden;
+    width: 60% !important;
+    border-color:#59aaf4;
+}*/
+
+#changeInput {
+    width: 66%;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #a8acbc #babdcc #c0c3d2;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-box-shadow: inset 0 1px #e5e7ed, 0 1px 0 #fcfcfc;
+    -moz-box-shadow: inset 0 1px #e5e7ed, 0 1px 0 #fcfcfc;
+    -ms-box-shadow: inset 0 1px #e5e7ed, 0 1px 0 #fcfcfc;
+    -o-box-shadow: inset 0 1px #e5e7ed, 0 1px 0 #fcfcfc;
+    box-shadow: inset 0 1px #e5e7ed, 0 1px 0 #fcfcfc;
+}
+
+.searchProduct {
+    position: relative;
+    z-index: 2;
+    float: left;
+    width: 30% !important;
+    margin-bottom: 0;
+    display: table-cell;
+    border-radius: 0px !important;
+    box-shadow: none;
+    border-color: #d2d6de;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+}
+
+.searchProduct:not(select) {
+    -webkit-appearance: none;
+}
+
+.lt-ie9 .search input { line-height: 26px }
+
+#transac_btns button:hover {
+    background-color: green !important;
+}
+
+/*button:focus { border:solid 3px red !important; }*/
+
+#transac_btns button{
+    margin: auto;
+    background-color:black;
+    font-family: arial;
+    border-radius: 4px;
+}
+
+#upper_btn {
+    margin-left: 1% !important;
+    margin-right: 1% !important;
+}
+
+.container .row p {
+    padding-left: 0%;
+    padding-right: 0%;
+    margin-bottom: 0%;
+}
+
+.container .row {
+    margin-bottom: 2%;
+    display: flex;
+    align-items: center;
+}
+
+@media only screen and (max-width: 992px) {
+    #header {
+		margin-top: 8%;
+	}
+
+	.table-responsive {
+		font-size: 90% !important;
+	}
+}
+
+@media only screen and (max-width: 855px) {
+    #change-div p {
+        font-size: 150% !important;
+    }
+}
+
+
+@media only screen and (max-width:768px) {
+
+    #header {
+        margin-top: 3%;
+		padding-top: 2%;
+	}
+
+	#header-title{
+		font-size: 250% !important;
+	}
+
+    div.panel-body .input-group input {
+        font-size: 150% !important;
+        height:40px !important;
+        font-weight: bolder;
+    }
+
+    div.panel-body .input-group span {
+        font-size: 9px;
+    }
+
+    div.panel.panel-default div.panel-heading span{
+        font-size: 115% !important;
+    }
+
+    div.panel-body p {
+        font-size: 120% !important;
+    }
+
+    div.container div.row {
+        flex-direction: column;
+    }
+
+    div.container div.row input {
+        font-size: 120% !important;
+        width: 80% !important;
+    }
+
+    #transac_btns button {
+        padding: 6px 9px;
+        font-size: 115%;
+    }
+
+    #change-div p  {
+        font-size: 145% !important;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    div.col-xs-8 {
+        width: 100% !important;
+    }
+
+    div.col-xs-4 {
+        padding-top: 2%;
+        padding-left: unset;
+        width: 50% !important;
+    }
+
+    div#transac_btns {
+        width: 50% !important;
+    }
+
+    div#transac_btns button {
+        margin-top: 2%;
+        width: 70% !important;
+    }
+
+    div#transac_btns.panel-body {
+        padding-left: unset;
+        padding-right: unset;
+    }
+}
+
+/*@media only screen and (max-width: 675px) {
+    div#transac_btns {
+        float: right;
+        width: 50%;
+    }
+
+     button#upper_btn, #transac_btns button {
+        margin-bottom: 5% !important;
+    }
+
+}
+
+@media only screen and (max-width: 616px) {
+
+    button#upper_btn, #transac_btns button { 
+        width: 80%;
+    }
+ 
+}*/
+
+@media only screen and (max-width: 540px) {
+    i.glyphicon, .col-xs-6 div.input-group input {
+        font-size: 13px !important;
+    }
+
+    div.panel.panel-default div.panel-heading span {
+        font-size: 16px !important;
+    }
+
+    div#transac_btns button {
+        width: 85% !important;
+        font-size: 95% !important;
+    }
+
+    div.panel-body p, div.container div.row input {
+        font-size: 100% !important;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    div#header-title {
+        margin-top: 2% !important;
+    }
+}
+</style>
+
+<div class="row-fluid"> 
+   <div id="header" style="background-color:green !important; overflow: hidden;">
+       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="background-color:green !important; overflow: hidden; display: flex; align-items: center">
+           <div id="header-title" class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="font-size: 50px;font-weight: bold;color: white; padding:20px;">Cashier</div>
+       </div>
+   </div>
+</div>
+
+<div class="row-fluid">
+<div id="main-body" class="panel col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div style="margin-top: 10px">
+    <div class ="col-xs-8 col-sm-7 col-md-7 col-lg-7" style="border: 1px lightgray solid !important; border-radius: 5px; padding-top: 1%">
+        <section class="main">
+
+            <div class="form-row">
+                <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding-right: unset; padding-left: unset">
+                    <div class="input-group">
+                        <span class="input-group-addon" style="background-color: lightgray">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </span>
+                        <input type="text" class="form-control" ng-model="form.barcode" ng-change="barcode()" placeholder="Search Product"/>
+                    </div>
+                </div>
+            
+                <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding-right: unset">
+                    <div class="input-group">
+                        <span class="input-group-addon" style="background-color: lightgray">
+                            <i class="glyphicon glyphicon-certificate"></i>
+                        </span>
+                        <input type="text" is-Number class="form-control" placeholder="Quantity" ng-model="form.countquantity">
+                    </div>
+                </div>
+            </div>
+        </section>
+    <div class="page-title">
+        <div class="title_left">
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="panel">
+        <div class="panel-body" style="padding: unset">
+            <div class="clearfix"></div>
+        <div class="x_content">
+            <table class="table table-hover table-responsive" style="color: black; ">
+                <thead>
+                    <tr style="background-color:green;color: white; ">
+                        <th>#</th>
+                        <th>Product Name</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Option</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="(k,v) in tender_data track by $index">
+                        <th scope="row">{{k+1}}</th>
+                        <td>{{v.product_name}}</td>
+                        <td><input type="text" is-Number ng-model="v.product_quantity" style="width:50px;" ng-disabled="v.status" ng-keypress="$event.keyCode === 13 && [v.product_price=v.product_quantity*v.selling_price,v.status=true,temporary(),v.tempo_status=true,stock_checker(k)]"> <i style="cursor:pointer" ng-if="v.status==true" ng-click="v.status=false" class="fa fa-plus-circle"></i> </td>
+                        <td>{{v.product_price}}</td>
+                        <td>&nbsp&nbsp<i class="fa fa-times-circle" aria-hidden="true" style="cursor:pointer" ng-click="void_product(k)"  title="Void Product"></i>
+                            <!-- &nbsp&nbsp<i class="fa fa-check" aria-hidden="true" style="cursor:pointer" ng-click="discount_product(k)"  title="Discount Product"></i> -->
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        </div>
+    </div>
+</div>
+<div></div>
+<div class="col-xs-4 col-sm-5 col-md-5 col-lg-5" style="padding-right: unset">
+ <div class="panel panel-default" style="border-radius: 5px;">
+     <div class="panel-heading" style="background-color: green;"> 
+       <span style="color:white;font-size:25px;font-family: arial;font-weight: bold;">Sub Total</span>
+    </div>
+
+    <div class="panel-body" style="width: 100%">
+        <div class="input-group">
+            <span class="input-group-addon" style="background-color:lightgray">
+                <i class="fa fa-money" style="font-size: 200%;"></i>
+            </span>
+            <input class="form-control col-3 col-sm-3 col-md-3 col-lg-3" style="height: 50px; font-size: 250%" ng-model="product_total_temporary" disabled>
+        </div>
+
+        <div class="container" style="margin-top: 3%; width:100%;">
+            <div class="row">
+                <p class="col-4 col-sm-4 col-md-4 col-lg-4" style="font-size:150%;font-weight: bold">Total </p> 
+                <input class="col-8 col-sm-8 col-md-8 col-lg-8" type="text" ng-model="form.q" placeholder ="0" disabled style="font-size:150%; width: 66%"/>
+            </div>
+            
+            <div class="row">
+                <p class="col-4 col-sm-4 col-md-4 col-lg-4" style="font-size: 150%; font-weight: bold">Cash </p> 
+                <input class="col-8 col-sm-8 col-md-8 col-lg-8" id="changeInput" type="text" ng-disabled="cash_status == true" ng-model="cash" is-Number style="font-size:150%;" ng-keypress="$event.keyCode === 13 && [cash_status=true,check_amount(cash),tender_show=true]"/>
+            </div>
+
+<!--             <div class="row">
+                <p class="col-4 col-sm-4 col-md-4 col-lg-4" style="font-size:150%; font-weight: bold">Discount </p> 
+                <input class="col-8 col-sm-8 col-md-8 col-lg-8" type="text" ng-model="discount_amounts" disabled style="font-size:150%; width: 66%"/>
+            </div> -->
+            
+            <div class="row" id="change-div">
+                <p class="col-4 col-sm-4 col-md-4 col-lg-4" style="font-size:200%; font-weight: bold">Change </p> 
+                <input class="col-8 col-sm-8 col-md-8 col-lg-8" type="text" ng-model="change" disabled style="font-size:200%; width: 66%"/>
+            </div>
+            <!-- <p style="font-size:30px;">Number of Items = {{number}}</p> -->
+<!-- 
+<p style="font-size:30px;">VAT% = 12%</p>
+<p style="font-size:30px;">Net. Amt = {{net_amount}} </p>
+<p style="font-size:30px;">VAT = {{vat}}</p> -->
+<!-- <option value="4" ng-show="aomos_dscnt_status == false">AOMOS Staff discount</option> -->
+        </div>
+        
+        </div>
+    </div>
+</div>
+
+<div class="panel-body col-xs-12 col-sm-12 col-md-12 col-lg-12" id="transac_btns" style="text-align: center;">
+
+    <button type="button" id="upper_btn" class="btn btn-warning btn-lg" ng-show="tender_show == true" ng-click="tender_product_final();cash_status=true;tender_status=true;tender_show=false"><i class="fa fa-money"></i> Tender Item </button>
+   <!--  <button type="button" id="upper_btn" class="btn btn-warning btn-lg" ng-disabled="tender_status" ng-click="discount_amount()"><i class="fa fa-cc-mastercard"></i> Discount</button> -->
+    <!-- <button type="button" id="upper_btn" class="btn btn-warning btn-lg" ng-disabled="tender_status" ng-click="down_payment();down_payment_status=true"><i class="fa fa-arrow-circle-o-down"></i> Down Payment </button>
+    <button type="button" id="upper_btn" class="btn btn-warning btn-lg" ng-disabled="gift_status" ng-click="pay_gift_cert()"><i class="fa fa-gift"></i> Gift Certificate</button><br><br> -->
+    <button type="button" class="btn btn-warning btn-lg" ng-disabled="tender_status" ng-click="cancel_transaction()"><i class="fa fa-times-circle"></i> Cancel Transaction </button><br/><br/>
+    <button type="button" class="btn btn-warning btn-lg" style="margin-top:5px;" ng-show="tender_status" ng-click="next_transaction()"><i class="fa fa-arrow-right"></i> Next Transaction </button>
+    <!-- <button type="button" class="btn btn-warning btn-lg" style="margin-top:5px;" ng-show="tender_status" ng-click="send_receipt()"><i class="fa fa-mail-forward"></i> Send Receipt </button> -->
+
+</div>
+</div>
+</div>
+</div>
+
+
+<script type="text/ng-template" id="GiftModal">
+  <div class="ngdialog-message">
+    <div style="margin-top: -15px;">
+      <h3><span style="color:green;"><b>{{ modal.title }}<b></span></h3>
+
+    </div>
+    <div class="row">
+        <div style="margin-left:13px;">
+          Gift Certificate Name <input type="text" style="width:350px;" class="form-control" ng-model="modal.gc_name">
+          Gift Certificate Code <input type="text" style="width:350px;" class="form-control" ng-model="modal.gc_code">
+          Gift Certificate Amount <input type="text" style="width:350px;" class="form-control" ng-model="modal.gc_amount">
+        </div>
+
+
+  <div class="ngdialog-buttons" style="margin-top:20px;">
+    <div class="ngdialog-buttons">
+    <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)"> <i class="fa fa-times-circle"> </i> {{modal.close}}</button>
+    <button style="background-color: green" type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')"> <i class="fa fa-check-square-o"> </i> {{modal.save}}</button>
+  </div>
+</script>
+
+
+<script type="text/ng-template" id="DiscountModal">
+            <div class="ngdialog-message">
+                <div style="margin-top: 1.5%;">
+                    <h3><span style="color:green;"><b>{{ modal.title }}<b></span></h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        Discount Type
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <select class="form-control" ng-model="modal.discount_type">
+                            <option value="" disabled selected style="display:none"> -- Please select --</option>
+                            <option value="1">Senior Citizen</option>
+                            <option value="2">PWD</option>
+                            <option value="3">Voucher</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <span ng-if="modal.discount_type == 1 || modal.discount_type == 2">Control No. / Card No.</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <input ng-if="modal.discount_type == 1 || modal.discount_type == 2" type="text" class="form-control" ng-model="modal.cnumber" placeholder="" />
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <span ng-if="modal.discount_type == 3">Voucher Number<input is-Number type="text" class="form-control" ng-model="modal.vnumber" placeholder="" /></span>
+                        <span ng-if="modal.discount_type == 3">Voucher Amount<input is-Number type="text" class="form-control" ng-model="modal.vamount" placeholder="" /></span>
+                        <span ng-if="modal.discount_type == 3">Customer Name<input type="text" class="form-control" ng-model="modal.custname" placeholder="" /></span>
+                    </div>
+                </div>
+
+
+                <div class="ngdialog-buttons" style="margin-top: 2.5%;">
+                    <div class="ngdialog-buttons">
+                        <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')" style="background-color:green"> <i class="fa fa-check-square-o"> </i> {{modal.save}}</button>
+                        <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)"> <i class="fa fa-times-circle"> </i> {{modal.close}}</button>
+                    </div>
+                </div>
+            </script>
+
+
+<!--  <div class="ngdialog-message">
+<div style="margin-top: 1.5%;">
+<h3><span style="color:#ffbf00;"><b>{{ modal.title }}<b></span></h3>
+</div>
+</div>
+<div class="row">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+Discount Type
+</div>
+</div>
+<div class="row">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+<select class="form-control" ng-model="modal.discount_type">
+<option value="" disabled selected style="display:none"> -- Please select --</option>
+<option value="1">Senior Citizen</option>
+<option value="4">2</option>
+<option value="5">3</option>
+<option value="6">5</option>
+</select>
+</div>
+</div>
+<div class="row" style="margin-top: 10px;">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+<span ng-if="modal.discount_type == 1 || modal.discount_type == 2">Control No. / Card No.</span>
+</div>
+</div>
+<div class="row">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+<input ng-if="modal.discount_type == 1 || modal.discount_type == 2" type="text" class="form-control" ng-model="modal.cnumber" placeholder="" />
+</div>
+</div>
+<div class="row" style="margin-top: 10px;">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+<span ng-if="modal.discount_type == 3">Select Company / Customer</span>
+</div>
+</div>
+<div class="row">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+<select class="form-control" ng-model="modal.company_discount_percent" ng-if="modal.discount_type == 3">
+<option value="" disabled selected style="display:none"> -- Please select --</option>
+<option ng-repeat="(k,v) in customer_data" value="{{v.percent}}">{{v.company + " - " + v.percent + " %"}} </option>
+</select>
+</div>
+</div>
+
+
+<div class="ngdialog-buttons" style="margin-top: 2.5%;">
+<div class="ngdialog-buttons">
+<button style="background-color: #ffbf00" type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')"> <i class="fa fa-check-square-o"> </i> {{modal.save}}</button>
+<button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)"> <i class="fa fa-times-circle"> </i> {{modal.close}}</button>
+</div>
+</div>
+</div> -->
+
+<script type="text/ng-template" id="SendReceiptModal">
+  <div class="ngdialog-message">
+    <div style="margin-top: -15px;">
+      <h3><span style="color:green;"><b>{{ modal.title }}<b></span></h3>
+
+    </div>
+    <div class="row">
+        <div style="margin-left:13px;">
+          E-mail of the Customer <input type="text" style="width:350px;" class="form-control" ng-model="modal.email">
+        </div>
+
+
+  <div class="ngdialog-buttons" style="margin-top:20px;">
+    <div class="ngdialog-buttons">
+    <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)"> <i class="fa fa-times-circle"> </i> {{modal.close}}</button>
+    <button style="background-color: green" type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')"> <i class="fa fa-check-square-o"> </i> {{modal.save}}</button>
+  </div>
+</script>
+
+<script type="text/ng-template" id="InputPinModal">
+  <div class="ngdialog-message">
+    <div style="margin-top: -15px;">
+      <h3><span style="color:green;"><b>{{ modal.title }}<b></span></h3>
+
+    </div>
+    <div class="row">
+        <div style="margin-left:13px;">
+          PIN CODE <input type="password" style="width:350px;" class="form-control" ng-model="modal.pin">
+        </div>
+
+
+  <div class="ngdialog-buttons" style="margin-top:20px;">
+    <div class="ngdialog-buttons">
+    <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)"> <i class="fa fa-times-circle"> </i> {{modal.close}}</button>
+    <button style="background-color: green" type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')"> <i class="fa fa-trash"> </i> {{modal.save}}</button>
+  </div>
+</script>
+
+<script type="text/ng-template" id="DownPaymentModal">
+            <div class="ngdialog-message">
+                <div style="margin-top: 1.5%;">
+                    <h3><span style="color:green;"><b>{{ modal.title }}<b></span></h3>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 col-xs-12 col-md-12 col-lg-12">
+                    <label for="GtCNme">Customer Name/Company Name</label>
+                    <input id="GtCNme" type="text" class="form-control" ng-model="modal.cname">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-xs-12 col-md-12 col-lg-12">
+                    <label for="GtC">Down Payment Amount</label>
+                    <input id="GtC" type="text" is-Number class="form-control" ng-model="modal.down_payment_amount">
+                </div>
+            </div><br/>
+
+            <div class="ngdialog-buttons" style="margin-top: 1.5%;">
+                <div class="ngdialog-buttons">
+                    <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)"> <i class="fa fa-times-circle"> </i> {{modal.close}}</button>
+                    <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')" style="background-color:green"> <i class="fa fa-check-square-o"> </i> {{modal.save}}</button>
+                </div>
+            </div>
+        </script>
+
+        <script type="text/ng-template" id="GiftModal">
+            <div class="ngdialog-message">
+                <div style="margin-top: 1.5%;">
+                    <h3><span style="color:green;"><b>{{ modal.title }}<b></span></h3>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 col-xs-12 col-md-12 col-lg-12">
+                    <label for="GtCNme">Gift Certificate Name</label>
+                    <input id="GtCNme" type="text" class="form-control" ng-model="modal.gc_name">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-xs-12 col-md-12 col-lg-12">
+                    <label for="GtC">Gift Certificate Code</label>
+                    <input id="GtC" type="text" class="form-control" ng-model="modal.gc_code">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-xs-12 col-md-12 col-lg-12">
+                    <label for="GtA">Gift Certificate Amount</label>
+                    <input id="GtA" type="text" class="form-control" ng-model="modal.gc_amount">
+                </div>
+            </div>
+
+            <div class="ngdialog-buttons" style="margin-top: 1.5%;">
+                <div class="ngdialog-buttons">
+                    <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)"> <i class="fa fa-times-circle"> </i> {{modal.close}}</button>
+                    <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')" style="background-color: green"> <i class="fa fa-check-square-o"> </i> {{modal.save}}</button>
+                </div>
+            </div>
+        </script>
+
+
+<!--   <div class="ngdialog-message">
+<div style="margin-top: -15px;">
+<h3><span style="color:#ffbf00;"><b>{{ modal.title }}<b></span></h3>
+
+</div>
+<div class="row">
+<div style="margin-left:13px;">
+Discount Amount <input type="text" is-Number style="width:350px;" class="form-control" ng-model="modal.discntamnt">
+</div>
+</div>
+<div class="row">
+<div style="margin-left:13px;">
+PIN CODE <input type="password" style="width:350px;" class="form-control" ng-model="modal.pin">
+</div>
+</div>
+
+
+<div class="ngdialog-buttons" style="margin-top:20px;">
+<div class="ngdialog-buttons">
+<button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)"> <i class="fa fa-times-circle"> </i> {{modal.close}}</button>
+<button style="background-color: #ffbf00" type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')"> <i class="fa fa-check"> </i> {{modal.save}}</button>
+</div> -->
+
+<script type="text/ng-template" id="AdviceModal">
+  <div class="ngdialog-message">
+    <div style="margin-top: -15px;">
+      <h3><span style="color:green;"><b>{{ modal.title }}<b></span></h3>
+
+    </div>
+    <div class="row">
+        <div style="margin-left:13px;">
+          PLEASE TELL TO YOUR SUPERVISOR THAT THERE IS NO MORE STOCK FOR THIS PRODUCT AFTER TENDERING THE ITEMS
+        </div>`
+  <div class="ngdialog-buttons" style="margin-top:20px;">
+    <div class="ngdialog-buttons">
+    <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)"> <i class="fa fa-times-circle"> </i> {{modal.close}}</button>
+  </div>
+</div>
+</div>
+</script>
+
+<script type="text/ng-template" id="AdviceExceedModal">
+  <div class="ngdialog-message">
+    <div style="margin-top: -15px;">
+      <h3><span style="color:green;"><b>{{ modal.title }}<b></span></h3>
+
+    </div>
+    <div class="row">
+        <div style="margin-left:13px;">
+          PLEASE LIMIT THE ITEM QUANTITY YOU INPUT BECAUSE THERE IS A LIMITED STOCK FOR THIS ITEM
+        </div>
+  <div class="ngdialog-buttons" style="margin-top:20px;">
+    <div class="ngdialog-buttons">
+    <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)"> <i class="fa fa-times-circle"> </i> {{modal.close}}</button>
+  </div>
+</div>
+</div>
+</script>

@@ -1,0 +1,190 @@
+<style>
+	button:hover {
+		background-color: #000000 !important;
+  	}
+	
+	button {
+		border-color: #ff6600;
+	}
+
+	.container {
+		margin-top: 1%;
+	}
+
+	#container_fluid_revise {
+		background-image: unset !important;
+		background-color: white;
+	}
+
+	#note h5 {
+		font-size: 17px !important;
+	}
+
+	@media only screen and (max-width: 992px) {
+		#header {
+			margin-top: 11%;
+		}
+
+		#header h1 {
+			font-size: 360% !important;
+		}
+
+		#header h2 {
+			font-size: 200% !important;
+		}
+
+		.panel-body .col-xs-5 h1 {
+			font-size: 300% !important;
+		}
+
+		.panel-body .col-xs-5 h5 {
+			font-size: 140% !important;
+		}
+
+		div#note h5 {
+			font-size: 95% !important;
+		}
+	}
+
+	@media only screen and (max-width: 767px) {
+		#header {
+			margin-top: 5%;
+		}
+
+		#header h1 {
+			font-size: 325% !important;
+		}
+
+		#header h2 {
+			font-size: 170% !important;
+		}
+
+		div.col-xs-7 div.col-xs-7 {
+			width: 100% !important;
+		}
+	}
+
+	@media only screen and (max-width: 650px) {
+		#header {
+			flex-direction: column-reverse !important;
+			margin-top: 40px;
+		}
+
+		#header .col-xs-7 {
+			text-align: center !important;
+			width: 100% !important;
+		}
+
+		#header .col-xs-5 {
+			width: 55% !important;
+		}
+
+		.panel-body {
+			flex-direction: column !important;
+		}
+
+		.panel-body .col-xs-5{
+			width: 100% !important;
+		}
+
+		.panel-body .col-xs-7{
+			width: 100% !important;
+		}
+	}
+
+	@media only screen and (max-width: 430px) {
+		#header h1 {
+			font-size: 270% !important;
+		}
+
+		#header h2 {
+			font-size: 145% !important;
+		}
+
+		.panel-body col-xs-5 h1 {
+			font-size: 250% !important;
+		}
+
+		.glyphicon {
+			font-size: 350% !important;
+		}
+
+		div#note div h5 {
+			font-size: 85% !important
+		}
+	}
+</style>
+
+<div class="clearfix"></div>
+<div class="container">
+	<div id="header" class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-bottom: 1%; border-bottom: 2px groove; display: flex; flex-direction: row; align-items: center">
+		<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+			<h1 style="font-size: 590%">Let's get in touch!</h1>
+			<h2>We'd love to hear from you.</h2>
+		</div>
+			
+		<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" style="display: flex; flex-direction: column; align-items: center">
+			<img src="./tech-support.png" style="width: 60%">
+		</div>
+	</div>
+	<div class="panel">
+		<div class="panel-body col-xs-12 col-sm-12 col-md-12 col-lg-12" style=" display: flex; flex-direction: row; align-items: center">
+			<!-- <div class="row">
+				<div class="col-md-5">
+					<h4>Send To</h4>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-7">
+					<tags-input ng-model="externalContacts" placeholder="Add an Email" allow-leftover-text="false" display-property="name" key-property="id" text="text">
+                    <auto-complete min-length="1" highlight-matched-text="true" source="searchPeople($query)"></auto-complete>
+                 	</tags-input>
+				</div>
+			</div> -->
+
+			<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" style="text-align: center;">
+				<div id="note">
+					<div style="color:darkslategray">
+						<h1 style="font-size: 350%">Ask Help</h1>
+						<h5 style="font-size: 160%">(Customer Service and Technical Support)</h5>
+					</div>
+					<div class="glyphicon glyphicon-phone-alt" style="font-size: 600%; color: #ff6600"></div>
+					
+					<div>
+						<h5>(02) 514-1131, Monday to Friday 9AM to 6PM <br>(Except Some Holidays). </h5>
+						<h5>In case you can't reach us, send us an email and will call you in 24 to 48 Hours.</h5>
+					</div>
+					
+				</div>
+			</div>
+
+			<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7" style="border: 1px solid gray; border-radius: 20px; padding: 15px;">
+				<div class="row">
+					<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+						<h4>Subject Line</h4>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+						<input type="text" ng-model="form.subject_line" class="form-control" style="border: 2px groove; border-radius: 5px !important;">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+						<h4>Message Body</h4>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<textarea class="form-control" ng-model="form.message" rows="10" style="border: 2px groove; border-radius: 10px !important;"></textarea>
+					</div>
+				</div>
+				<div class="row" style="margin-top: 10px;">
+					<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+						<button class="btn btn-warning form-control" ng-click="send_email_sender()" style="background-color: #ff6600"><i class="fa fa-paper-plane" ></i> Send Email</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

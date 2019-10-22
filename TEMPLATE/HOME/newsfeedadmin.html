@@ -1,0 +1,303 @@
+<style>
+    button:hover, input[type=button]:hover {
+      background-color: #ff6600 !important;
+    }
+
+    button {
+      border-color: #d58512 !important;
+    }
+
+    #container_fluid_revise {
+      padding-right: 0%;
+      padding-left: 0%;
+    }
+
+    @media only screen and (max-width: 992px) {
+      #header {
+        margin-top: 8%;
+      }
+
+      .table-responsive {
+        font-size: 90% !important;
+      }
+    }
+    
+    @media only screen and (max-width: 768px) {
+      #header {
+        margin-top: 3%;
+      }
+
+      #header-title {
+      font-size: 250% !important;
+      }
+    }
+
+     @media only screen and (max-width: 600px) {
+      #sec-banner {
+        font-size: 80% !important;
+      }
+
+      #first-banner {
+        font-size: 110% !important
+      }
+
+      #header div.col-xs-12 {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      #header-title {
+        font-size: 200% !important;
+      }
+
+      #header div.col-xs-12 div.col-xs-12 {
+        padding-bottom: 2%;
+      }
+    }
+
+</style>
+
+<div class="row-fluid">
+  <div id="header" style="background-color:#ff6600 !important; overflow: hidden;">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="background-color:#ff6600 !important; overflow: hidden; display: flex; align-items: center">
+      <div id="header-title" class="col-xs-12 col-sm-8 col-md-8 col-lg-8" style="font-size: 50px;font-weight: bold;color: white; padding:20px;"> Newsfeed Admin </div>
+
+      <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+        <span id="first-banner" style="font-size:15px;color:white; font-weight: bold;font-family: arial;">BUNNY TIPS <i class="fa fa-lightbulb-o"></i><br>
+        <span id="sec-banner" style="font-size:15px;color:white; font-weight: bold;">You can easily add your branch details simply clicking the add branch button.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row-fluid">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 10px">
+    <div class="panel">
+      <div class="panel-body" style="overflow: auto">
+        <div style="margin-bottom: 10px;">
+          <button type="button" class="btn" style="color: #ffffff; background-color: black;font-family: arial;border-radius: 4px" ng-click="add_newsflash()"><i class="fa fa-list-alt"></i> Add News Flash</button>
+          <button type="button" class="btn" style="color: #ffffff; background-color: black;font-family: arial;border-radius: 4px" ng-click="add_ads()"><i class="fa fa-star"></i> Add Advertisement</button>
+          <button type="button" class="btn" style="color: #ffffff; background-color: black;font-family: arial;border-radius: 4px" ng-click="add_gif()"><i class="fa fa-building-o"></i> Add GIF</button>
+        </div>
+        <div class="clearfix"></div>
+      <div class="x_content">
+        <table class="table table-hover table-responsive">
+          <thead>
+            <tr style="background-color:#ff6600;color: white; ">
+              <th>#</th>
+                <th>User ID</th>
+                <th>Name</th>
+                <th>Link</th>
+                <th>Description/Image File</th>
+                <th>Type</th>
+                <th>Date Created</th>
+                <th>Options</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="v in news_feed_data track by $index">
+                <th scope="row">{{v.number}}</th>
+                <td>{{v.user_id}}</td>
+                <td>{{v.name}}</td>
+                <td>{{v.link}}</td>
+                <td>{{v.description}}</td>
+                <td>{{v.type}}</td>
+                <td>{{v.date_created | date :  "medium" }}</td>
+                <td>&nbsp&nbsp<i class="fa fa-pencil" aria-hidden="true" style="cursor:pointer" ng-click="check_edit_news_feed_data(v)"  title="Edit"></i>
+                  <i class="fa fa-trash" aria-hidden="true" style="cursor:pointer" ng-click="delete_news_feed_data(v)"  title="Delete"></i></td>
+                </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+  <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-md-12">
+        <center>
+          <pagination total-items="totalItems_customerdata" ng-model="currentPage_customerdata" ng-change="pageChanged_customerdata()" class="pagination-md" max-size="maxSize" items-per-page="itemsPerPage_customerdata"></pagination>
+        </center>
+      </div>
+  </div>
+
+
+
+
+<script type="text/ng-template" id="AddArticles">
+  <div class="ngdialog-message">
+    <div style="margin-top: -15px;">
+      <h3><span style="color:#ff6600;"><b>{{ modal.title }}<b></span></h3>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          Article Name <input type="text" class="form-control" ng-model="modal.aname">
+      </div>
+    </div>
+
+    <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <label for="slckinds">Upload a video of your Article:  </label>
+        <span style="font-size:12px; color:#FF0000;">* Only .gif files are allowed.</span>
+          <input type="file" tabindex="15" nv-file-select="" accept=".gif" uploader="ads_article" />
+            <img src="{{modal.image_source}}" style="height: auto; display: block; max-width: 50%;" />
+              <div class="progress" style="">
+                <div class="progress-bar" role="progressbar" ng-style="{ 'width': ads_article.progress + '%' }"></div>
+              </div>
+                <button type="button" tabindex="16" class="btn btn-success btn-s" ng-click="ads_article.uploadAll()" ng-disabled="!ads_article.getNotUploadedItems().length">
+              <span class="glyphicon glyphicon-upload"></span> Upload
+            </button>
+          <button type="button" tabindex="17" class="btn btn-warning btn-s" ng-click="ads_article.cancelAll()" ng-disabled="!ads_article.isUploading">
+        <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+      </button>
+    </div>
+    </div>
+
+  <div class="ngdialog-buttons" style="margin-top: 2.5%;">
+    <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)"> <i class="fa fa-times-circle"> </i> {{modal.close}}</button>
+    <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save') " style="background-color:#ff6600"> <i class="fa fa-check" > </i> {{modal.save}}</button>
+  </div>
+
+</script>
+
+
+<script type="text/ng-template" id="EditArticle">
+  <div class="ngdialog-message">
+    <div style="margin-top: -15px;">
+      <h3><span style="color:#ff6600;"><b>{{ modal.title }}<b></span></h3>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          GIF Name <input type="text" class="form-control" ng-model="modal.aname">
+      </div>
+    </div> 
+
+    <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <label for="slckinds">Upload a video of your GIF:  </label>
+        <span style="font-size:12px; color:#FF0000;">* Only .gif files are allowed.</span>
+          <input type="file" tabindex="15" nv-file-select="" accept=".gif" uploader="ads_article" />
+            <img src="{{modal.image_source}}" style="height: auto; display: block; max-width: 50%;" />
+              <div class="progress" style="">
+                <div class="progress-bar" role="progressbar" ng-style="{ 'width': ads_article.progress + '%' }"></div>
+              </div>
+                <button type="button" tabindex="16" class="btn btn-success btn-s" ng-click="ads_article.uploadAll()" ng-disabled="!ads_article.getNotUploadedItems().length">
+              <span class="glyphicon glyphicon-upload"></span> Upload
+            </button>
+          <button type="button" tabindex="17" class="btn btn-warning btn-s" ng-click="ads_article.cancelAll()" ng-disabled="!ads_article.isUploading">
+        <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+      </button>
+    </div>
+    </div>
+
+  <div class="ngdialog-buttons" style="margin-top: 2.5%;">
+    <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)"> <i class="fa fa-times-circle"> </i> {{modal.close}}</button>
+    <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save') " style="background-color:#ff6600"> <i class="fa fa-check" > </i> {{modal.save}}</button>
+  </div>
+
+</script>
+
+<script type="text/ng-template" id="AddNF">
+  <div class="ngdialog-message">
+    <div style="margin-top: -15px;">
+      <h3><span style="color:#ff6600;"><b>{{ modal.title }}<b></span></h3>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+          News Flash Description <input type="text" class="form-control" ng-model="modal.news_flash">
+      </div>
+    </div>
+
+  <div class="ngdialog-buttons" style="margin-top: 2.5%;">
+    <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)"> <i class="fa fa-times-circle"> </i> {{modal.close}}</button>
+    <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save') " style="background-color:#ff6600"> <i class="fa fa-check" > </i> {{modal.save}}</button>
+  </div>
+
+</script>
+
+<script type="text/ng-template" id="EditNewsFlash">
+  <div class="ngdialog-message">
+    <div style="margin-top: -15px;">
+      <h3><span style="color:#ffbf00;"><b>{{ modal.title }}<b></span></h3>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+          News Flash Description <input type="text" class="form-control" ng-model="modal.news_flash">
+      </div>
+    </div>
+
+  <div class="ngdialog-buttons" style="margin-top: 2.5%;">
+    <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)"> <i class="fa fa-times-circle"> </i> {{modal.close}}</button>
+    <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')" style="background-color:#ffbf00"> <i class="fa fa-check" > </i> {{modal.save}}</button>
+  </div>
+
+</script>
+
+<script type="text/ng-template" id="AddAds">
+  <div class="ngdialog-message">
+    <div style="margin-top: -15px;">
+      <h3><span style="color:#ff6600;"><b>{{ modal.title }}<b></span></h3>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <label for="slckinds">Upload a Picture of your Advertisement:  </label>
+        <span style="font-size:12px; color:#FF0000;">* Only jpg, png files are allowed.</span>
+          <input type="file" tabindex="15" nv-file-select="" accept=".jpg,.png,.jpeg" uploader="ads_image" />
+            <img src="{{modal.image_source}}" style="height: auto; display: block; max-width: 50%;" />
+              <div class="progress" style="">
+                <div class="progress-bar" role="progressbar" ng-style="{ 'width': ads_image.progress + '%' }"></div>
+              </div>
+                <button type="button" tabindex="16" class="btn btn-success btn-s" ng-click="ads_image.uploadAll()" ng-disabled="!ads_image.getNotUploadedItems().length">
+              <span class="glyphicon glyphicon-upload"></span> Upload
+            </button>
+          <button type="button" tabindex="17" class="btn btn-warning btn-s" ng-click="ads_image.cancelAll()" ng-disabled="!ads_image.isUploading">
+        <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+      </button>
+    </div>
+
+  <div class="ngdialog-buttons" style="margin-top: 2.5%;">
+    <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)"> <i class="fa fa-times-circle"> </i> {{modal.close}}</button>
+    <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')" style="background-color:#ff6600"> <i class="fa fa-check"> </i> {{modal.save}}</button>
+  </div>
+
+</script>
+
+<script type="text/ng-template" id="EditAds">
+  <div class="ngdialog-message">
+    <div style="margin-top: -15px;">
+      <h3><span style="color:#ffbf00;"><b>{{ modal.title }}<b></span></h3>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <label for="slckinds">Upload a Picture of your Advertisement:  </label>
+        <span style="font-size:12px; color:#FF0000;">* Only jpg, png files are allowed.</span>
+          <input type="file" tabindex="15" nv-file-select="" accept=".jpg,.png,.jpeg" uploader="ads_image" />
+            <img src="{{modal.image_source}}" style="height: auto; display: block; max-width: 50%;" />
+              <div class="progress" style="">
+                <div class="progress-bar" role="progressbar" ng-style="{ 'width': ads_image.progress + '%' }"></div>
+              </div>
+                <button type="button" tabindex="16" class="btn btn-success btn-s" ng-click="ads_image.uploadAll()" ng-disabled="!ads_image.getNotUploadedItems().length">
+              <span class="glyphicon glyphicon-upload"></span> Upload
+            </button>
+          <button type="button" tabindex="17" class="btn btn-warning btn-s" ng-click="ads_image.cancelAll()" ng-disabled="!ads_image.isUploading">
+        <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+      </button>
+    </div>
+
+  <div class="ngdialog-buttons" style="margin-top: 2.5%;">
+    <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)"> <i class="fa fa-times-circle"> </i> {{modal.close}}</button>
+    <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')" style="background-color:#ffbf00"> <i class="fa fa-check"> </i> {{modal.save}}</button>
+  </div>
+
+</script>

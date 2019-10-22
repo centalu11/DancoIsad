@@ -1,0 +1,395 @@
+<style>
+    button:hover {
+      background-color: green !important;
+    }
+
+    #container_fluid_revise {
+      padding-right: 0%;
+      padding-left: 0%;
+    }
+
+  @media only screen and (max-width: 992px) {
+    #header {
+      margin-top: 8%;
+    }
+  }
+
+  @media only screen and (max-width: 768px) {
+    #header {
+      margin-top: 3%;
+    }
+
+    #header-title {
+      font-size: 230% !important;
+    }
+
+    div.form-group div.col-xs-4 {
+      margin-top: 0% !important;
+    }
+
+    div.form-group button {
+      margin: 0%;
+      margin-top: 21% !important;
+    }
+
+    div.form-group div.col-xs-4.center-block {
+      width: 20% !important;
+    }
+  }
+
+  @media only screen and (max-width: 630px) {
+    #header div {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    #header br {
+      display: none;
+    }
+
+    #sec-banner {
+      font-size: 90% !important;
+    }
+
+    #first-banner {
+      font-size: 110% !important
+    }
+
+    #header-title {
+      font-size: 200% !important;
+      width: 100% !important;
+    }
+
+    #header div.col-xs-12 {
+      padding-bottom: 2%;
+    }
+
+    div.form-group button {
+      margin: 0%;
+      margin-top: 26% !important;
+    }
+  }
+
+  @media only screen and (max-width: 540px) {
+    div.form-group button {
+      margin-top: 35% !important;
+    }
+  }
+</style>
+
+  <div id="header" style="background-color:green !important; overflow: hidden;">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="background-color:green !important; overflow: hidden; display: flex; align-items: center" >
+      <div id="header-title" class="col-xs-12 col-sm-8 col-md-8 col-lg-8" style="font-size: 50px;font-weight: bold;color: white; padding:20px;">Request Purchase Order List</div>
+    </div>
+  </div>
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 10px;">
+  <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+    <div class="panel panel-default" style="border-radius: 5px;">
+      <div class="panel-body">
+        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0%;">
+          <div class="col-xs-4 col-sm-4 col-md-6 col-lg-6" style="color:black;font-family: arial;font-weight: bold;margin-top: 5%">
+            Date From:
+            <input datetimepicker class="form-control" ng-model="filter.po1" type="text" id="datetimepicker11"/>
+          </div>
+
+          <div class="col-xs-4 col-sm-4 col-md-6 col-lg-6" style="color:black;font-family: arial;font-weight: bold;margin-top: 5%">
+            To:
+            <input datetimepicker class="form-control" ng-model="filter.po2" type="text" id="datetimepicker22"/>
+          </div>
+          
+          <div class="col-xs-4 col-sm-4 col-md-5 col-lg-5 center-block" style="margin-top: 2%; width: 100%">
+              <button type="button" class="btn btn-warning center-block" ng-click="search_po_order()" style="color: #ffffff; background-color: black;font-family: arial;border-radius: 4px; padding-left: 20%; padding-right: 20%"><i class="fa fa-search"></i> Find </button>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+      <div class ="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+        <div class="panel">
+          <div class="panel-body" style="overflow: auto">
+            <div class="clearfix"></div>
+          <div class="x_content">
+
+         <table class="table table-hover">
+                <thead>
+                  <tr style="background-color:green;color: white; ">
+                    <th>#</th>
+                    <th>Product Name</th>
+                    <th>P-O Number</th>
+                    <th>Product Quantity</th>
+                    <th>Product Supplier Price</th>
+                    <th>Product Date Needed</th>
+                    <th>Product Date Requested</th><!-- 
+                    <th>Remarks</th>
+                    <th>Status</th> -->
+                    <th  ng-show="user.user_id == '2014000100'">Option</th>
+                  </tr>
+                </thead>
+                <tbody>
+                 <button type="button" style="float:left;background-color:black;font-family: arial;margin-bottom: 2%;margin-left:80%;" class="btn btn-warning" ng-click="print_po()"><i class="fa fa-download"></i> Download P.O </button>
+                  <tr ng-repeat="(k,v) in request_data.slice(((currentPage_orderdata-1)*itemsPerPage_orderdata), ((currentPage_orderdata)*itemsPerPage_orderdata))" ng-if="request_data_status == true">
+                    <th scope="row">{{v.number}}</th>
+                    <td>{{v.product_name}}</td>
+                    <td>{{v.product_finalnumber}}</td>
+                    <td>{{v.product_quantity}}</td>
+                    <td>{{v.product_market_price}}</td>
+                    <td>{{v.product_date_needed | date :  "medium" }}</td>
+                    <td>{{v.date_created | date :  "medium" }}</td><!-- 
+                    <td ng-show="v.status == 'Disapproved' || v.status == 'Approved'">{{v.remarks}}</td>
+                    <td>{{v.status}}</td> -->
+                    <td  ng-show="user.user_id == '2014000100'">&nbsp&nbsp<i class="fa fa-thumbs-up" ng-if="v.status == 'Pending' " aria-hidden="true" style="cursor:pointer" ng-click="approve_order_request(v)"  title="Approve"></i>
+                      <i class="fa fa-thumbs-down" ng-if="v.status == 'Pending' " aria-hidden="true" style="cursor:pointer" ng-click="disapprove_order_request(v);send_remarks(v)"  title="Disapprove"></i>
+                    </td>
+                  </tr>
+                  <tr ng-if="request_data_status == false">
+                          <td colspan="9" style="text-align: center;">No Data Found</td>
+                        </tr>
+                </tbody>
+              </table>
+          </div>
+        </div>
+      </div>
+       
+<div class="row">
+  <div class="col-md-12">
+    <center>
+      <pagination total-items="totalItems_orderdata" ng-model="currentPage_orderdata" ng-change="pageChanged_orderdata()" class="pagination-md" max-size="maxSize" items-per-page="itemsPerPage_orderdata"></pagination>
+    </center>
+  </div>
+</div>
+</div>
+</div>
+
+<script type="text/javascript">
+            $(document).ready(function () {
+                $('#datetimepicker11').datetimepicker({
+                  format: 'MM/DD/YYYY'
+                });
+                $('#datetimepicker22').datetimepicker({
+                  format: 'MM/DD/YYYY'
+                });
+            });
+        </script>
+
+<script type="text/ng-template" id="RequestOrderDataModal">
+  <div class="ngdialog-message">
+    <div style="margin-top: -15px;">
+      <h3><span style="color:green;"><b>{{ modal.title }}<b></span></h3>
+
+    </div>
+    <div class="row">
+        <div style="margin-left:13px;">
+          Purchase Order Number <input disabled type="text" style="width:350px;" class="form-control" ng-model="modal.finalnumber">
+        </div>
+        <div style="margin-left:13px;margin-top:10px;">
+          Quantity <input type="text" is-Number style="width:300px;" class="form-control" ng-model="modal.product_quantity">
+        </div>
+        <div style="margin-left:13px;margin-top:10px;">
+          Date Needed 
+          <div class='input-group  date' style="width:300px;" datetimepicker ng-model="modal.product_date_needed" id='datetimepicker1' >
+           <input type='text' class="form-control" />
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+             </span>
+        </div>
+      </div>
+    <div style="margin-left:13px;margin-top:10px;">
+          Supplier Price <input type="text" is-Number style="width:300px;" class="form-control" ng-model="modal.product_market_price">
+        </div>
+    </div>
+  <div class="ngdialog-buttons" style="margin-top:20px;">
+    <div class="ngdialog-buttons">
+    <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)"> <i class="fa fa-times-circle"> </i> {{modal.close}}</button>
+    <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')" style="background-color:green"> <i class="fa fa-trash"> </i> {{modal.save}}</button>
+ </div>
+</div>
+  </br>
+</script>
+
+<script type="text/ng-template" id="SendEmailRequest">
+  <div class="ngdialog-message">
+    <div style="margin-top: -15px;">
+      <h3><span style="color:green;"><b>{{ modal.title }}<b></span></h3>
+
+    </div>
+    <div class="row">
+        <div style="margin-left:13px;">
+          Remarks <textarea ng-model="form.remarks" cols="20" rows="5"></textarea>
+        </div>
+    </div>
+
+
+  <div class="ngdialog-buttons" style="margin-top:20px;">
+    <div class="ngdialog-buttons">
+    <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)"> <i class="fa fa-times-circle"> </i> {{modal.close}}</button>
+    <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')" style="background-color: green"> <i class="fa fa-trash"> </i> {{modal.save}}</button>
+  </div>
+ </div>
+</div>
+  </br>
+</script>
+
+
+<script type="text/ng-template" id="InputPinModal">
+  <div class="ngdialog-message">
+    <div style="margin-top: -15px;">
+      <h3><span style="color:green;"><b>{{ modal.title }}<b></span></h3>
+
+    </div>
+    <div class="row">
+        <div style="margin-left:13px;">
+          PIN CODE <input type="password" style="width:350px;" class="form-control" ng-model="modal.pin">
+        </div>
+
+
+  <div class="ngdialog-buttons" style="margin-top:20px;">
+    <div class="ngdialog-buttons">
+    <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)"> <i class="fa fa-times-circle"> </i> {{modal.close}}</button>
+    <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')" style="background-color: green"> <i class="fa fa-trash"> </i> {{modal.save}}</button>
+  </div>
+  </br>
+</script>
+
+<script type="text/ng-template" id="EditMyProfile">
+  <div class="ngdialog-message">
+    <div style="margin-top: -15px;">
+      <h3><span style="color:green;"><b>{{ modal.title }}<b></span></h3>
+
+    </div>
+    <div class="row">
+        <div style="margin-left:13px;">
+          Product Name <input type="text" style="width:100%;" class="form-control" ng-model="modal.product_name">
+        </div>
+        <div style="margin-left:13px;">
+          Item Bar Code <input type="text" style="width:100%;" is-Number class="form-control" ng-model="modal.product_bar_code">
+        </div>
+        <div style="margin-left:13px;">
+          Stocks <input type="text" style="width:100%;" is-Number class="form-control" ng-model="modal.product_stocks">
+        </div>
+        <div style="margin-left:13px;">
+          Standard Retail Price <input type="text" is-Number style="width:100%;" class="form-control" ng-model="modal.product_srp">
+        </div>
+        <div style="margin-left:13px;">
+          Market Price <input type="text" is-Number style="width:100%;" class="form-control" ng-model="modal.product_price">
+        </div>
+        <div style="margin-left:13px;">
+          Supplier 
+              <select style="width:100%;" ng-model="modal.product_supplier" class="form-control">
+                <option value="" disabled selected style="display:none"> Select Supplier </option>
+                <option ng-repeat="v in supplier_data" value="{{v.supplier_code_name}}">{{v.supplier_name}}</option>
+              </select>
+        </div>
+        <div style="margin-left:13px;">
+          Exp. Date 
+          <div class='input-group  date' style="width:270px;" datetimepicker ng-model="modal.product_expiration" id='datetimepicker1' >
+           <input type='text'  placeholder="Exp. Date" class="form-control" />
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+             </span>
+        </div>
+      </div>
+      <div style="margin-left:13px;">
+          Receipt Name <input type="text" max-length="17"  style="width:100%;" class="form-control" ng-model="modal.receipt_name">
+        </div>
+        <div style="margin-left:13px;">
+          O.R # <input type="text"  style="width:100%;" class="form-control" ng-model="modal.or_number">
+        </div>
+        <div style="margin-left:13px;">
+    Product Code <input type="text" class="form-control" placeholder="Product Code" ng-model="modal.product_product_code"/>
+    </div>
+    <div style="margin-left:13px;">
+    Select Rules
+      <select ng-model="modal.product_rule" class="form-control">
+        <option value="" disabled selected style="display:none"> Select Rules</option>
+        <option ng-repeat="v in rule_data" value="{{v.rule_name}}">{{v.rule_name}}</option>
+      </select> 
+    </div>
+
+    <div style="margin-left:13px;">
+    Select Kinds
+      <select ng-model="modal.product_kinds" class="form-control">
+        <option value="" disabled selected style="display:none"> Select Kinds</option>
+        <option value="Food">Food</option>
+        <option value="Nonfood">Non-Food</option>
+      </select> 
+    </div>
+    <br>
+
+
+  <div class="ngdialog-buttons" style="margin-top:20px;">
+    <div class="ngdialog-buttons">
+    <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)"> <i class="fa fa-times-circle"> </i> {{modal.close}}</button>
+    <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')" style="background-color: green"> <i class="fa fa-upload"> </i> {{modal.save}}</button>
+  </div>
+  </br>
+</script>
+
+<script type="text/ng-template" id="EditSupplierData">
+  <div class="ngdialog-message">
+    <div style="margin-top: -15px;">
+      <h3><span style="color:green;"><b>{{ modal.title }}<b></span></h3>
+
+    </div>
+    <div class="row">
+        <div style="margin-left:13px;">
+          Supplier Name <input type="text" style="width:100%;" class="form-control" ng-model="modal.supplier_name">
+        </div>
+        <div style="margin-left:13px;">
+          Supplier Address <input type="text" style="width:100%;" class="form-control" ng-model="modal.supplier_address">
+        </div>
+        <div style="margin-left:13px;">
+          Supplier Contact Number <input type="text" is-Number style="width:100%;" class="form-control" ng-model="modal.supplier_contact_number">
+        </div>
+        <div style="margin-left:13px;">
+          Supplier Contact Person <input type="text" style="width:100%;" class="form-control" ng-model="modal.supplier_contact_person">
+        </div>
+        <div style="margin-left:13px;">
+          Supplier Code Name <input type="text" style="width:100%;" class="form-control" ng-model="modal.supplier_code_name">
+        </div>
+    <br>
+
+
+  <div class="ngdialog-buttons" style="margin-top:20px;">
+    <div class="ngdialog-buttons">
+    <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)"> <i class="fa fa-times-circle"> </i> {{modal.close}}</button>
+    <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')" style="background-color: green"> <i class="fa fa-upload"> </i> {{modal.save}}</button>
+  </div>
+  </br>
+</script>
+
+<script type="text/javascript">
+            $(document).ready(function () {
+                $('#datetimepicker1').datetimepicker({
+                  format: 'MM/DD/YYYY'
+                });
+            });
+        </script>
+
+<script type="text/ng-template" id="MyPointsModal">
+<div class="ngdialog-message" style="width: 500px;">
+<div style="margin-top: -15px;">
+<h3><span style="color:green;">{{ modal.title }}</span></h3>
+
+</div>
+<div>
+<table style="width: 85%;">
+<thead>
+<tr>
+<td>
+<input type="text" class="form-control" is-Number maxlength="7" placeholder="2000" ng-model="form.request_points" />
+</td>
+</tr>
+</thead>
+</table>
+</div>
+</div>
+<div class="ngdialog-buttons">
+<button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)"> <i class="fa fa-times-circle"> </i> {{modal.close}}</button>
+<button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')" style="background-color: green"> <i class="fa fa-check-square-o"> </i> {{modal.save}}</button>
+</div>
+</script>

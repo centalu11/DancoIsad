@@ -1,0 +1,176 @@
+<style>
+
+  button:hover, #download_btn:hover {
+    background-color: #ff6600 !important;
+  }
+
+  #download_ctrler input {
+    border-radius: 4px !important;
+  }
+
+  #download_btn {
+    margin: auto;
+    margin-left: 1% !important;
+    margin-right: 1% !important;
+    background-color:black;
+    font-family: arial;
+    float: right;
+  }
+
+  #download_ctrler {
+    float: right;
+    padding-right: 0%; 
+  }
+
+</style>
+
+<div class="row-fluid">
+  <div class ="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+    <div style="background-color:#ff6600 !important; width:110%;margin-left: -5%;margin-top: -1%;" >
+      <p style="font-size: 50px;font-weight: bold;color: white;margin-left: 3%; padding:20px; margin-bottom: 0% !important;"> Petty Cash Out Record
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="row-fluid panel" style="overflow: hidden; padding-top: 2%; margin: -3% -3% -3% -3%;">
+
+  <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style="margin-left: 2.5% !important;">
+    <div class="panel panel-default" style="border-radius: 5px;">
+  
+      <div class="panel-body" style="height: 350px">
+        <div>
+         <button type="button" class="btn" ng-click="add_payment()" style="color: #ffffff; background-color: black;font-family: arial; margin-bottom: 2%;"><i class="fa fa-plus"></i> Add Record Petty Cash Out</button>
+       </div>
+
+       <fieldset class="form-group">
+         <legend>Search Petty</legend>
+          <div class="form-row">
+            <div style="color:black;font-family: arial;font-weight: bold;" class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+              Date From:
+              <input datetimepicker class="form-control" style="text-align: center" ng-model="filter.date3" type="text" id="datetimepicker1"/>
+            </div>
+            
+            
+            <div style="color:black;font-family: arial;font-weight: bold; text-align: center;" class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+              To:
+                <input datetimepicker class="form-control" style="text-align: center" ng-model="filter.date4" type="text" id="datetimepicker2"/>
+            </div>
+          </div>
+          <div style="color:black;font-family: arial;font-weight: bold; width: 30%; margin: auto;" class="form-group"><br>
+            <button type="button" class="btn btn-warning form-control" ng-click="get_payment_filter(form)" style="color: #ffffff; background-color: black;font-family: arial;border-radius: 3px !important;"><i class="fa fa-search"></i> Find </button>
+          </div>
+       </fieldset>
+      </div>
+    </div>
+  </div>
+
+<div class ="col-xs-8 col-sm-8 col-md-8 col-lg-8" style="border: 1px solid lightgray; border-radius: 5px; padding: 0% !important; margin-left: 2.5%">
+  <div class="panel">
+    <div class="panel-body" style="padding: 2.3% !important;">
+      <div class="clearfix"></div>
+      
+      <div class="x_content">
+       <table class="table">
+        <thead>
+          <tr style="background-color:#ff6600;color: white; ">
+            <th>#</th>
+            <th>Item/s Bought</th>
+            <th>Amount</th>
+            <th>Date Initiated</th>
+            <th>Options</th>
+          </tr>
+        </thead>
+        <tbody>
+
+         <div class="form-row" style="margin-bottom: 10px;">
+
+          <div id="download_ctrler" class="form-group col-xs-3 col-sm-3 col-md-3 col-lg-3">
+            <input type="button" id="download_btn" class="btn btn-warning form-control" value="Download PDF Copy" ng-click="print_pdf_payment()">
+          </div>
+
+          <div id="download_ctrler" class="form-group col-xs-3 col-sm-3 col-md-3 col-lg-3">
+            <input type="button" id="download_btn" class="btn btn-warning form-control" value="Download Excel Copy" ng-click="print_csvs_payment()">
+          </div>
+
+        </div>
+
+        <tr ng-repeat="v in payment_data.slice(((currentPage_payment_data-1)*itemsPerPage_payment_data), ((currentPage_payment_data)*itemsPerPage_payment_data)) track by $index">
+          <th scope="row">{{v.number}}</th>
+          <td>{{v.productname}}</td>
+          <td>{{v.productamount}}</td>
+          <td>{{v.date_created | date :  "medium" }}</td>
+          <td>
+            <i class="fa fa-pencil" aria-hidden="true" style="cursor:pointer" ng-click="edit_payment(v)"  title="Edit User"></i>
+            <i class="fa fa-trash" aria-hidden="true" style="cursor:pointer" ng-click="delete_payment(v)"  title="Delete User"></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <center>
+      <pagination total-items="totalItems_payment_data" ng-model="currentPage_payment_data" ng-change="pageChanged_payment_data()" class="pagination-md" max-size="maxSize" items-per-page="itemsPerPage_payment_data"></pagination>
+    </center>
+  </div>
+</div>
+</div>
+
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    $('#datetimepicker1').datetimepicker({
+      format: 'MM/DD/YYYY'
+    });
+    $('#datetimepicker2').datetimepicker({
+      format: 'MM/DD/YYYY'
+    });
+  });
+</script>
+
+<script id=OpenModal type=text/ng-template>
+  <div class="ngdialog-message">
+    <div style="margin-top: -15px;">
+      <h3><span style="color:#ff6600;padding-left:25px;"><b>{{ modal.title }}<b></span></h3>
+      <div style="margin-left: 5%">
+      Item/s Bought
+      <div class="input-group">
+       <input type="text" class="form-control" name="Productname" style=" border-radius:2px; width:250px;font-size:20px;" ng-model="modal.ProductName"/></i>
+       </div>
+      </div>
+      <br/>
+      <div style="margin-left: 5%">
+      Amount of Item/s
+      <div class="input-group" >
+        <input type="text" class="form-control" is-Number name="Productamount"  style=" border-radius:5px;width:250px; font-size:20px;" ng-model="modal.Productamount"/>
+      </div>
+      </div>
+      <br/>
+      <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)"> <i class="fa fa-times-circle"> </i> {{modal.close}}</button>
+      <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')" style="background-color: #ff6600"> <i class="fa fa-upload"> </i> {{modal.save}}</button>
+    </div>
+  </div>
+</script>
+
+<script id=EditModal type=text/ng-template>
+  <div class="ngdialog-message">
+    <div style="margin-top: -15px;">
+      <h3><span style="color:#ff6600;padding-left:10px;"><b>{{ modal.title }}<b></span></h3>
+  <div style="margin-left:13px;margin-top:10px;">
+       Item/s Bought<input type="text" is-Number style="width:300px;" class="form-control" ng-model="modal.ProductName">
+      </div>
+      <br/>
+      <div style="margin-left:13px;margin-top:10px;">
+       Amount of Item/s<input type="text" is-Number style="width:300px;" class="form-control" ng-model="modal.Productamount">
+      </div>
+      <br/>
+      <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)"> <i class="fa fa-times-circle"> </i> {{modal.close}}</button>
+      <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')" style="background-color: #ff6600"> <i class="fa fa-upload"> </i> {{modal.save}}</button>
+    </div>
+  </div>
+</script>
+

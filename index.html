@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html ng-app="onload">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Grand Pen Marketing</title>
+
+	<link href="ASSETS/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+	<link href="ASSETS/css/customstyle2.css" rel="stylesheet" type="text/css" />
+	<link href="ASSETS/css/angucomplete-alt.css" rel="stylesheet" type="text/css" />
+	<link href="ASSETS/bootstrap/css/bootstrap-social.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="./ASSETS/js/dialog/ngDialog.min.css" >
+	<link rel="stylesheet" type="text/css" href="./ASSETS/bootstrap/css/font-awesome/css/font-awesome.min.css" >
+	<link rel="stylesheet" type="text/css" href="./ASSETS/js/dialog/ngDialog-theme-plain.min.css">
+	<link rel="stylesheet" type="text/css" href="./ASSETS/js/dialog/ngDialog-theme-default.min.css">
+	<link rel="stylesheet" type="text/css" href="./ASSETS/js/dialog/ngDialog-custom-width.css">
+	<link rel="stylesheet" type="text/css" href="./ASSETS/css/loading-bar.min.css">
+
+	<link rel="stylesheet" type="text/css" href="./ASSETS/js/notification/angular-ui-notification.min.css" >
+	<link rel="stylesheet" type="text/css" href="./ASSETS/googlecss.css" >
+	<link rel="stylesheet" type="text/css" href="./ASSETS/amcharts.css" >
+	<link rel="stylesheet" type="text/css" href="./ASSETS/cloudfaretags.css" >
+	<link rel="stylesheet" type="text/css" href="./ASSETS/js/bootstrap-datetimepicker.min.css" >
+	<link rel="stylesheet" type="text/css" href="./ASSETS/js/plugins/tags/ng-tags-input.css" >
+	
+	<script src="./ASSETS/js/amcharts.js"></script>
+	<script src="./ASSETS/js/amcharts2.js"></script>
+	<script src="./ASSETS/js/cloudflare.js"></script>
+	<script src="./ASSETS/js/ajax.js"></script>
+	<!-- <script src="https://www.amcharts.com/lib/3/serial.js"></script>
+	<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script> -->
+	
+	<style type="text/css">
+		a {
+			outline: 0;
+			text-decoration: none;
+		}
+
+		.navigation {
+			width: 100%;
+			/*border-bottom: 3px solid white;*/
+			font-family: 'PT Sans Caption', sans-serif;
+			font-size: 20px;
+		}
+
+		.menu {
+			display: flex;
+			justify-content: center;
+			max-width: 1150px;
+			margin: 0 auto;
+			padding-left: 0;
+		}
+
+		.menu__item {
+			display: inline-block;
+			white-space: nowrap;
+		}
+
+		.menu__item:last-child .menu__link {
+			border-right: 0;
+		}
+
+		.menu__link {
+			display: block;
+			padding: 6px 30px 3px;
+			border-right: 2px ridge #3b3b3b;
+
+		}
+		.menu__link:hover .menu__first-word, .menu__link:focus .menu__first-word {
+			transform: translate3d(0, -105%, 0);
+		}
+		.menu__link:hover .menu__second-word, .menu__link:focus .menu__second-word {
+			transform: translate3d(0, 105%, 0);
+		}
+		
+		/*@media screen and (min-width: 768px) {
+			.menu__link {
+				padding: 6px 40px 3px;
+			}
+		}*/
+
+		.menu__title {
+			display: inline-block;
+			overflow: hidden;
+		}
+
+		.menu__first-word,
+		.menu__second-word {
+			display: inline-block;
+			position: relative;
+			transition: transform .3s;
+		}
+		.menu__first-word::before,
+		.menu__second-word::before {
+			position: absolute;
+			content: attr(data-hover);
+		}
+
+		.menu__first-word {
+			color: #ff8000;
+		}
+		.menu__first-word::before {
+			top: 105%;
+			color: white;
+		}
+
+		.menu__second-word {
+			color: white;
+		}
+		.menu__second-word::before {
+			bottom: 105%;
+			color: #ff8000;
+		}
+		.dropdown .dropbtn {
+			font-size: 16px;    
+			border: none;
+			outline: none;
+			color: white;
+			padding: 14px 16px;
+			background-color: #262626;
+			font-family: inherit;
+			font-weight: bold;
+			margin: 0;
+		}
+
+		.navbar a:hover, .dropdown:hover .dropbtn {
+			color: #ff9933;
+		}
+
+		.dropdown-content {
+
+			display: none;
+			position: absolute;
+			background-color: #262626;
+			min-width: 260px;
+			box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+			z-index: 1;
+			max-height: 300px;
+			overflow-y: auto;
+		}
+		
+		.dropdown-content a {
+			float: none;
+			color: black;
+			padding: 10px 10px;
+			text-decoration: none;
+			display: block;
+			text-align: left;
+		}
+
+		.dropdown-content a:hover {
+			background-color: #ff8000;
+		}
+
+		.dropdown:hover .dropdown-content {
+			display: block;
+		}
+
+		/*for responsiveness*/
+
+		/*@media screen and (max-width: 480px) {
+			.menu__item:nth-child(n + 3) {
+				display: none;
+			}
+			.menu__item:nth-child(2) .menu__link {
+				border-right: 0;
+			}
+		}
+
+		
+		@media screen and (max-width: 768px) {
+			.menu__item:nth-child(n + 4) {
+				display: none;
+			}
+			.menu__item:nth-child(3) .menu__link {
+				border-right: 0;
+			}
+		}
+		@media screen and (max-width: 992px) {
+			.menu__item:nth-child(n + 5) {
+				display: none;
+			}
+			.menu__item:nth-child(4) .menu__link {
+				border-right: 0;
+			}
+		}*/
+
+		/*for large devices - tv, desktop*/
+
+		@media only screen and (min-width: 1000px){
+			#navigationBar {
+				width: 100%;
+			}
+		}
+				
+		/*for medium devices - laptop*/
+		@media only screen and (min-width: 993px){
+			.menu__link {
+				padding-right: 13%;
+				padding-left: 13%;
+			}
+			
+			div.ngdialog-content {
+				width: 70% !important;
+			}
+
+			.animateThis img {
+				margin-top: 2%;
+			}
+		}
+				
+		/*for tablets*/
+		@media only screen and (max-width: 992px) and (min-width: 768px) {
+			
+			div.ngdialog-content {
+				width: 60%;
+			}
+
+			.animateThis {
+				margin: 10% auto 10% auto !important;
+			}
+
+			.menu__link {
+				padding-right: 10%;
+				padding-left: 10%;
+				font-size: 90%;
+				margin: auto;
+			}
+
+			.menu {
+				width: 60%;
+			}
+
+			.navigationBar {
+				width: 30%;
+				margin-top: 10%;
+			}
+
+			.animateThis img{
+				margin: 5% auto 5% auto !important;
+			}
+
+			.navbar-brand img {
+				width: 20% !important;
+				margin: auto;
+			}
+
+			.navigation {
+				margin-top: 7%;
+			}
+
+			.dropdown-content {
+				width: 60%;
+				font-size: 80%;
+			}
+
+			.ngdialog-content {
+				width: 60% !important;
+			}
+
+			.table-responsive {
+				font-size: 80% !important;
+			}
+
+			.blink_for_h3 {
+				font-size: 100% !important;
+			}
+
+			#ngdialog1-aria-labelledby {
+				margin-top: 0% !important;
+				margin-bottom: 0% !important;
+			}
+		}
+
+		@media only screen and (max-width: 767px) and (min-width: 550px) {
+
+			.animateThis img{
+				margin: 30% auto 10% auto !important;
+			}
+
+			.ngdialog-content {
+				width: 80% !important;
+			}
+
+			.table-responsive {
+				font-size: 70% !important;
+			}
+
+			.blink_for_h3 {
+				font-size: 100% !important;
+			}
+
+			#ngdialog1-aria-labelledby {
+				margin-top: 0% !important;
+				margin-bottom: 0% !important;
+			}
+
+			.menu {
+				display: block;
+			}
+
+			.menu__link {
+				border: 0;
+			}
+
+			#navbar {
+				overflow: visible;
+			}
+
+			div.dropdown {
+				width: 20% !important;
+			}
+		
+		}
+
+		@media only screen and (max-width: 550px) {
+
+			.animateThis {
+				margin-top: 35%;
+				margin-bottom: 10%;
+			}
+
+			.animateThis img {
+				margin-top: -3% !important;
+				width: 100% !important;
+			}
+
+			.ngdialog-content {
+				margin-top: -10% !important;
+				width: 100% !important;
+			}
+
+			.table-responsive {
+				font-size: 60% !important;
+			}
+
+			.blink_for_h3 {
+				font-size: 100% !important;
+			}
+
+			#ngdialog1-aria-labelledby {
+				margin-top: 0% !important;
+				margin-bottom: 0% !important;
+			}
+
+			.menu {
+				display: block;
+			}
+
+			.menu__link {
+				border: 0;
+				font-size: 80%;
+			}
+
+			.navigation .dropdown {
+				width: 30%;
+			}
+
+			#navbar {
+				overflow: visible;
+			}
+
+			div.dropdown-content li a {
+				font-size: 13px !important;
+			}
+
+			div#navbar.navbar-collapse {
+				overflow: unset !important;
+				max-height: 340px !important;
+			}
+		}
+
+		@media only screen and (max-width: 490px) {
+
+		}
+</style>
+
+<!-- For loading screen, load the elements first before showing #page-content -->
+<script>
+
+	$(document).ready(function() {	
+		function showPage() {
+			$(".se-pre-con").fadeOut("slow");
+			$(".page-content").fadeIn("slow");
+			setTimeout(delayModal, 1000);
+		}
+		
+		function delayModal() {
+			$(".ngdialog-content").show();
+		}
+
+		setTimeout(showPage, 5000);
+	});
+
+</script>
+		
+
+</head>
+
+<body ng-controller="Navbar" style="padding-top: 3%;
+font-family: 'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif;">
+
+<div class="se-pre-con">
+
+	<style type="text/css">
+	div.se-pre-con {
+		position: fixed ;
+		display: hidden;
+	}
+	
+	div.se-pre-con div.animateThis {
+		background-color: white ;
+		bottom: 0px ;
+		left: 0px ;
+		opacity: 1.0 ;
+		position: fixed ;
+		right: 0px ;
+		top: 0px ;
+		z-index: 999999 ;
+	}
+
+	/* Used to initialize the ng-leave animation state. */
+	/*div.se-pre-con div.animateThis.ng-leave {
+		opacity: 1.0 ;
+		transition: all linear 200ms ;
+		-webkit-transition: all linear 200ms ;
+	}*/
+
+	/* Used to set the end properties of the ng-leave animation state. */
+	/*div.se-pre-con div.animateThis.ng-leave-active {
+		opacity: 0 ;
+	}*/
+
+	div.se-pre-con div.animateThis img {
+		width: 90%;
+		margin: auto;
+	}
+	
+	/*div.se-pre-con div.animateThis.ng-enter {
+		transition:0.5s linear all;
+  		opacity:0;
+	}*/
+
+	/*div.se-pre-con div.animateThis.ng-enter-active {
+		opacity: 1;
+	}*/
+	</style>
+	<!-- <div class="animateThis" align="center">	
+		<img src="1and1.gif">
+	</div> -->
+
+	<!-- end of the m-app loading -->
+</div>
+
+<div class="page-content" style="display: none">
+<nav class="navbar navbar-default navbar-fixed-top" style="background-color:#262626;color:white;padding-left: 1px;padding-right: 1px;" role="navigation">
+	<div class="container-fluid" id="navigationBar">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" style="margin-top:-15px"><!-- <img src="Bunny.png" style="width:130px"> --></a>	
+		</div>
+
+		<div id="navbar" class="collapse navbar-collapse container-fluid" style="margin-top:5px; overflow: visible;">
+			<div class="navigation">
+				<ul class="menu">
+
+					<!-- <li class="menu__item">
+						<a href="#/NewsFeed" class="menu__link">
+							<span class="menu__title">
+								<span class="menu__second-word" data-hover="News">
+									News
+								</span>
+								<span class="menu__first-word" data-hover="Feed">
+									Feed
+								</span>
+							</span>
+						</a>
+					</li> -->
+					<div class="dropdown">
+						<li class="menu__item">
+							<a class="menu__link">
+								<span  class="menu__title">
+									<span class="menu__first-word" data-hover="Admin">
+										Admin
+									</span>
+									<!-- <span class="menu__second-word" data-hover="">
+										<i class="fa fa-caret-down"></i>
+									</span> -->
+								</span>
+							</a>
+						</li>
+						<div class="dropdown-content">
+							<li><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/Sales"><i  class="fa fa-cogs"></i>&nbspCashier</a></li>
+							<li ng-if="user.permissions.Admin.Modules.One"><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/Barcode"><i  class="fa fa-cogs"></i>&nbspInventory Management</a></li>
+								<li  ng-if="user.permissions.Admin.Modules.Four"><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/Report"><i class="fa fa-line-chart"></i>&nbspSales Report</a></li>
+								<!-- <li  ng-if="user.permissions.Admin.Modules.Nineteen"><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/Salesanalytics"><i class="fa fa-bar-chart"></i>&nbsp;Sales Analytics</a></li> -->
+								<!-- <li  ng-if="user.permissions.Admin.Modules.Twentyone"><a  style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/Payment"><i class="fa fa-credit-card"></i>&nbspPetty Cash Out Record</a></li> -->
+								<!-- <li  ng-if="user.permissions.Admin.Modules.Twentytwo"><a  style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/CustPayment"><i class="fa fa-user"></i>&nbspCustomer Payment</a></li> -->
+								<!-- <li  ng-if="user.permissions.Admin.Modules.Twenty"><a  style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/Refund"><i class="fa fa-money"></i>&nbspRefund</a></li> -->
+								<li  ng-if="user.permissions.Admin.Modules.Five"><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/ReceiptBackup"><i class="fa fa-list-alt"></i>&nbspReceipt Back-up</a></li>
+								<!-- <li  ng-if="user.permissions.Admin.Modules.Seven"><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/ORList"><i class="fa fa-file-text-o"></i>&nbspO.R List</a></li> -->
+								<!-- <li  ng-if="user.permissions.Admin.Modules.Eight"><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/BestSelling"><i class="fa fa-star"></i>&nbspBest Selling Products</a></li> -->
+								<li ng-if="user.permissions.Admin.Modules.Two"><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/PO"><i  class="fa fa-shopping-cart"></i>&nbspPurchase Order</a></li>
+								<li ng-if="user.permissions.Admin.Modules.Three"><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/Supplier"><i  class="fa fa-info-circle"></i>&nbspSupplier Details</a></li>
+								<!-- <li><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/BusinessLoan"><i class="fa fa-money"></i>&nbspBusiness Loan</a></li> -->
+								<!-- <li  ng-if="user.permissions.Admin.Modules.Six"><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/Refund"><i class="fa fa-money"></i>&nbspRefund</a></li> -->
+								<!-- <li  ng-if="user.permissions.Admin.Modules.Sixteen"><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/ChangeItem"><i class="fa fa-exchange"></i>&nbspChange Item</a></li> -->
+								<!-- <li ng-if="user.permissions.Admin.Modules.Nine"><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/AddCustomer"><i class="fa fa-phone"></i>&nbspAdd Customer</a></li> -->
+								<!-- <li ng-if="user.permissions.Admin.Modules.Ten"><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/AddBranches"><i class="fa fa-building"></i>&nbspAdd Branches</a></li> -->
+								<!-- <li  ng-if="user.permissions.Admin.Modules.Eighteen"><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/NFAdmin"><i class="fa fa-cogs"></i>&nbspNews Feed Admin</a></li>
+								<li  ng-if="user.permissions.Admin.Modules.Seventeen"><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/Discount"><i class="fa fa-user"></i>&nbspAOMOS Discount List</a></li> -->
+								<!-- <li  ng-if="user.permissions.Admin.Modules.Eleven"><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/Rules"><i class="fa fa-gear"></i>&nbspRules</a></li> -->
+								<!-- <li  ng-if="user.permissions.Admin.Modules.Fifteen"><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/Storage"><i class="fa fa-floppy-o"></i>&nbspStorage</a></li> -->
+								<li  ng-if="user.permissions.Admin.Modules.Twelve"><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/User"><i class="fa fa-user"></i>&nbspUser Management</a></li>
+								<!-- <li  ng-if="user.permissions.Admin.Modules.Eighteen"><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/NFAdmin"><i class="fa fa-envelope"></i>&nbspNews Feed Admin</a></li> -->
+								 <li  ng-if="user.permissions.Admin.Modules.Thirteen"><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/History"><i class="fa fa-history"></i>&nbspHistory logs</a></li> 
+								<!-- <li><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/Unicorn"><i class="fa fa-mobile"></i>&nbspUnicorn Marketing</a></li> -->
+						</div>
+					</div>
+
+					<!-- <li class="menu__item">
+						<a href="#/Wealth" class="menu__link">
+							<span class="menu__title">
+							
+								<span class="menu__first-word" data-hover="">
+									
+								</span>
+								<span class="menu__second-word" data-hover="Wealth">
+									Wealth
+								</span>
+
+							</span>
+						</a>
+					</li> -->
+							<!-- <li class="menu__item">
+							<a href="#/NFAdmin" class="menu__link">
+								<span class="menu__title">
+								<span class="menu__second-word" data-hover="News">
+										 News
+									</span>
+									<span class="menu__first-word" data-hover="Feed">
+										Feed
+									</span>
+									
+									<span class="menu__second-word" data-hover=" Admin">
+										 Admin
+									</span>
+								</span>
+							</a>
+						</li> -->
+					<div class="dropdown">
+						<li class="menu__item">
+							<a class="menu__link">
+								<span class="menu__title">
+									<span class="menu__first-word" data-hover=" {{user.first_name }} ">
+										{{user.first_name }} 
+									</span>
+									<span class="menu__second-word" data-hover="{{user.last_name }}">
+										{{user.last_name }}
+									</span>
+									<!-- <span class="menu__first-word" data-hover="">
+										<i class="fa fa-caret-down"></i>
+									</span> -->
+								</span>
+							</a>
+						</li>
+						<div class="dropdown-content">
+							<li><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="" ng-click="change_password()"><span class="fa fa-key" ></span>&nbspChange Password</a></li>
+							<!-- <li><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/AskHelp"><span class="fa fa-headphones"></span>&nbspTech Support</a></li> -->
+						</div>
+					</div>
+						<li class="menu__item">
+							<a href="" ng-click="logout()" class="menu__link">
+								<span style="margin-left: 30%;" class="menu__title">
+									<span class="menu__first-word" data-hover="Log">
+										Log
+									</span>
+									<span class="menu__second-word" data-hover="Out">
+										Out
+									</span>
+								</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+		</div>
+	</div>
+</nav>
+
+	<div class="container-fluid" style="background-image: url('login_background.jpg');background-repeat:no-repeat;background-size: 100% 100%; background-attachment: fixed; min-height: 500px" id="container_fluid_revise">
+		<div ng-view="" >
+		</div>
+	</div>
+	
+	<hr>
+
+	<footer class="footer">
+		<div class="container">
+			<!-- <p class="text-muted">&copy;</p> -->
+		</div>
+	</footer>
+</div>
+
+  		<script src="ASSETS/js/jquery.min.js"></script>
+		<script src="ASSETS/bootstrap/js/bootstrap.min.js"></script>
+
+		<script src="ASSETS/angular/angular.min.js"></script>
+		<script src="ASSETS/angular/angular-route.min.js"></script>
+		<script src="ASSETS/angular/angular-cookies.min.js"></script>
+        <script src="ASSETS/angular/angular-md5.js"></script>   
+        <script src="ASSETS/angular/angular-date.js"></script>
+        <script src="ASSETS/angularjs/loading-bar.min.js"></script>
+		
+		<script src="JS/module.js"></script>
+		
+		<script src="JS/CONTROLLERS/homecontroller.js"></script>
+		<script src="JS/CONTROLLERS/bucketcontroller.js"></script>
+		<script src="JS/CONTROLLERS/reports.js"></script>
+		<script src="JS/CONTROLLERS/product.js"></script>
+		<script src="JS/CONTROLLERS/navbar.js"></script>
+		<script src="JS/CONTROLLERS/history.js"></script>
+		<script src="JS/CONTROLLERS/EmailAndText.js"></script>
+		<script src="JS/CONTROLLERS/storage.js"></script>
+		<script src="JS/CONTROLLERS/newsfeed.js"></script>
+		<script src="JS/CONTROLLERS/admin.js"></script>
+		<script src="JS/CONTROLLERS/discount.js"></script>
+		<script src="JS/CONTROLLERS/sales.js"></script>
+		<script src="JS/CONTROLLERS/custpayment.js"></script>
+		<script src="JS/directives/isNumber.js"></script>
+		<script src="JS/directives/splash.js"></script>
+
+		<script src="JS/FACTORIES/SessionFactory.js"></script>
+		<script src="JS/FACTORIES/UserFactory.js"></script>
+		<script src="JS/FACTORIES/ProductFactory.js"></script>
+
+		<script src="./ASSETS/js/dialog/ngDialog.js"></script>
+		<script src="./ASSETS/js/bootstrap-notify.js"></script>
+		<script src="./ASSETS/js/angucomplete-alt.js"></script>
+		<script src="./ASSETS/js/uploader/angular-file-upload.min.js"></script>
+		<script src="./ASSETS/js/notification/angular-ui-notification.min.js"></script>
+		<script src="ASSETS/angular/bootstrap-ui.js"></script>
+		<script src="./ASSETS/js/plugins/chartjs/angular-chart.min.js"></script>
+		<script src="./ASSETS/js/cloudfarejs.js"></script>
+		<script src="./ASSETS/js/moment.min.js"></script>
+    	<script src="ASSETS/angular/angular-date2.js"></script>
+
+<script type="text/ng-template" id="ExpireModal">
+	<style type="text/css">
+		.blink_for_avail_table {
+			animation: blinker 1s linear infinite;
+		}
+
+		.blink_for_h3 {
+			animation: blinker 1s linear infinite;
+		}
+
+		.color_font {
+			color: red;
+		}
+
+		@keyframes blinker {
+			50% { opacity: 0; }
+		}
+
+		.ngdialog-content {
+			display: none;
+		}
+	</style>
+
+	<div class="ngdialog-message">
+		<div>
+			<i class="fa fa-close" data-ng-click="confirm(1)" style="margin-left: 97%; color: red; cursor: pointer; font-size: 30px;"></i>
+		</div>
+		<h3><span class="blink_for_h3" style="color: red; font-weight: bolder;">{{ modal.title }}</span></h3>
+	</div>
+
+	<hr>
+
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div class="table-responsive">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Product Name</th>
+							<th>Receipt Name</th>
+							<th>Product Expiration</th>
+							<th>Status</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="(k,v) in product_data_expire track by $index">
+							<th ng-class="{blink_for_avail_table : v.status_exp == 'AVAILABLE'}">
+							{{v.number}}</th>
+							<td ng-class="{blink_for_avail_table : v.status_exp == 'AVAILABLE'}">{{v.product_name}}</td>
+							<td ng-class="{blink_for_avail_table : v.status_exp == 'AVAILABLE'}">{{v.product_receipt_name}}</td>
+							<td ng-class="{blink_for_avail_table : v.status_exp == 'AVAILABLE'}">{{v.product_expiration | date :  "medium"}}</td>
+							<td ng-class="{blink_for_avail_table : v.status_exp == 'AVAILABLE', color_font : v.status_exp == 'AVAILABLE'}">{{v.status_exp}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	
+	<hr>
+
+	<div class="ngdialog-buttons">
+		<button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+	</div>
+
+</script>
+
+<script type="text/ng-template" id="ChangePassword">
+
+    <div class="ngdialog-message">
+      <div style="margin-top: 15px;">
+      <h3><span style="color:#ff6600;">{{ modal.title }}</span></h3>
+      </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="col-md-12">
+          Old Password <input type="password" class="form-control" ng-model="modal.old_password">
+        </div>
+        </div>
+        <span ng-show="modal.not_match == true"> These passwords doesnt match.</span>
+      </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="col-md-6">
+          New Password <input type="password" class="form-control" ng-model="modal.password1">
+        </div>
+        <div class="col-md-6">
+          Confirm New Password <input type="password" class="form-control" ng-model="modal.password2">
+        </div>
+      </div>
+    </div>
+    <br>
+  <div class="ngdialog-buttons" style="margin-top:20px;">
+    <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+    <button type="button" style="background-color: #ff6600;" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
+  </div>
+</script>
+
+</body>
+</html>
