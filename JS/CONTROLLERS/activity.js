@@ -1,4 +1,4 @@
-app.controller('History', function(
+app.controller('Activity', function(
                                     $scope,
                                     SessionFactory,
                                     UserFactory,
@@ -147,12 +147,16 @@ app.controller('History', function(
 function get_history(){
     cfpLoadingBar.start();
 
-    var promise = ProductFactory.get_accounts_logs(filters);
+    var promise = ProductFactory.get_history_logs(filters);
     promise.then(function(data){
         $scope.history_data = data.data.result;
+        
+        
+
         var a = 0;
         for (var i in $scope.history_data) {
-            $scope.history_data[i].datetime = moment($scope.history_data[i].datetime).format('LLLL');
+            $scope.history_data[i].product_expiration = new Date($scope.history_data[i].product_expiration);
+            $scope.history_data[i].date_created = moment($scope.history_data[i].date_created).format('LLLL');
             $scope.history_data[i].number = a += 1;
         };
 
@@ -168,3 +172,17 @@ cfpLoadingBar.complete();
 
 
 });
+
+/*
+$scope.setPage_history_data = function (pageNo) {
+    $scope.currentPage_history_data = pageNo;
+};
+
+$scope.pageChanged_history_data = function() {
+    console.log('Page changed to: ' + $scope.currentPage_history_data);
+};
+
+$scope.setItemsPerPage_history_data = function(num) {
+    $scope.itemsPerPage_history_data = num;
+    $scope.currentPage_history_data = 1; 
+}*/

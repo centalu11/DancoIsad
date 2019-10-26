@@ -611,6 +611,23 @@ app.factory('ProductFactory', function($http, $location){
         return promise;
     };
 
+    factory.get_accounts_logs = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Management/get_accounts_logs.php', 
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        }) 
+
+        return promise;
+    };
+
     factory.get_check_bar_code_item = function(data){
         var promise = $http({
             url:'./FUNCTIONS/Product/get_check_bar_code_item.php', 

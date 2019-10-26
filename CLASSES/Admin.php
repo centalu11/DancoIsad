@@ -325,6 +325,19 @@ EOT;
         return ClassParent::get($sql);
     }
 
+    public function get_accounts_logs($data){
+        
+        $sql = <<<EOT
+                select 
+                    *
+                from accounts_log_data
+                order by datetime desc
+                ;
+EOT;
+
+        return ClassParent::get($sql);
+    }
+
     public function get_check_bar_code_item($filter){
         foreach($filter as $k=>$v){
             $filter[$k] = pg_escape_string(trim(strip_tags($v)));

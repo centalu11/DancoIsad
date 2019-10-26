@@ -246,11 +246,22 @@ $scope.expire_modal = function(){
 } 
 
 $scope.logout = function(){
-        var promise = SessionFactory.logout();
-        promise.then(function(data){
-            window.location = './login.html';
-        })
-    }
+    var userData = $scope.user;
+    var name = userData.first_name + ' ' + userData.last_name;
+    var userType = userData.user_type == '1' ? 'ADMIN' : 'CASHIER';
+    var action = userType + " LOGGED OUT";
+
+    $.ajax('FUNCTIONS/Users/logout.php', {
+        type: "POST",
+        data: { name : name, action : action},
+        success: function(data){
+            var promise = SessionFactory.logout();
+            promise.then(function(data){
+                window.location = './login.html';
+            });
+        }
+    });
+}
 
     $scope.change_password = function(){
     /*console.log(v);*/

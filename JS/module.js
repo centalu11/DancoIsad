@@ -72,6 +72,11 @@ app.config(function($routeProvider) {
 		controller: 'Admin',
 		templateUrl: 'TEMPLATE/HOME/addcustomer.html'             
 	})
+	.when('/Activity',             
+	{                 
+		controller: 'Activity',
+		templateUrl: 'TEMPLATE/HOME/activitylog.html'             
+	})
 	.when('/History',             
 	{                 
 		controller: 'History',
