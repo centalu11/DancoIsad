@@ -45,6 +45,17 @@ app.controller('Reports', function(
     $scope.itemsPerPage_reportdata = $scope.viewby_reportdata;
     $scope.maxSize = 5;
 
+    $scope.search_filter = {
+        name : 'All',
+        date_from : undefined,
+        date_to : undefined
+    };
+
+    $scope.search_value = "";
+    $scope.product_transaction_number = "";
+    $scope.product_name = "";
+    $scope.full_name = "";
+
     var filtered = {};
 
     init();
@@ -570,6 +581,8 @@ app.controller('Reports', function(
             date_to : $filter('date')($scope.form.sales_to, "yyyy-MM-dd")
         }; 
 
+        $scope.search_filter = filtered;
+
         var promise = ProductFactory.get_reports(filtered);
         promise.then(function(data){
             $scope.tender_data = data.data.result;
@@ -865,6 +878,103 @@ app.controller('Reports', function(
 
         });
 
-    }   
+    }
+
+    $scope.search_columns = function () {
+        cfpLoadingBar.start();
+        var filter = {
+            name : $scope.search_filter.name,
+            date_from : $scope.search_filter.date_from,
+            date_to : $scope.search_filter.date_to
+        }
+        $scope.search_value = "(";
+        if ($scope.product_transaction_number != "") {
+            $scope.search_value += "product_transaction_number ILIKE '%" + $scope.product_transaction_number + "%'";
+        }
+
+        if ($scope.product_name != "") {
+            if ($scope.search_value.length > 1) {
+                $scope.search_value += "AND ";
+            }
+            $scope.search_value += "product_name ILIKE '%" + $scope.product_name + "%'";
+        }
+
+        if ($scope.full_name != "") {
+            var full_name = $scope.full_name.split(" ");
+            var cashier_name = "(";
+            if ($scope.search_value.length > 1) {
+                $scope.search_value += "AND ";
+            }
+            for (var i = 0; i < full_name.length; i++) {
+                if (full_name[i] != "") {
+                    if (cashier_name.length > 1) {
+                        cashier_name += "OR ";
+                    }
+                    cashier_name += "(users.first_name ILIKE '%" + full_name[i] + "%'";
+                    cashier_name += "OR users.last_name ILIKE '%" + full_name[i] + "%')";
+                }
+            }
+            cashier_name += ")";
+            $scope.search_value += cashier_name;
+        }
+        $scope.search_value += ")";
+
+        if ($scope.search_value != "()") {
+            filter.search_term = $scope.search_value;
+        }
+
+        $scope.totalItems_reportdata = 0;
+        $scope.final_total_ito = 0;
+        var promise = ProductFactory.get_reports(filter);
+        promise.then(function(data){
+            $scope.tender_data = data.data.result;
+
+            var a = 0;
+            for (var i in $scope.tender_data) {
+                $scope.tender_data[i].date_created = new Date($scope.tender_data[i].date_created);
+                $scope.tender_data[i].date_created = moment($scope.tender_data[i].date_created).format('LLLL');
+                $scope.tender_data[i].number = a += 1;
+            };
+
+            var b = 0;
+            var c = 0;
+            var p = 0;
+            var k = 0;
+
+            for (var i in $scope.tender_data) {
+                if ($scope.tender_data[i].exchange_remarks == "t") {
+                    $scope.tender_data[i].tempo_total = $scope.tender_data[i].total;
+                    $scope.final_total_ito += parseFloat($scope.tender_data[i].tempo_total);
+                }else{
+                    c = $scope.tender_data[i].product_quantity;
+                    p = $scope.tender_data[i].product_retail_price;
+                    k = parseFloat(c) * parseFloat(p);
+                    $scope.tender_data[i].tempo_total = k;
+                    $scope.final_total_ito += k;
+                }
+            };
+
+            for (var i in $scope.tender_data) {
+                if ($scope.tender_data[i].product_supplier_price == "undefined" || $scope.tender_data[i].product_supplier_price == "" || $scope.tender_data[i].product_supplier_price == "NaN" || $scope.tender_data[i].product_supplier_price == undefined || $scope.tender_data[i].product_supplier_price == NaN || $scope.tender_data[i].product_supplier_price == "null" || $scope.tender_data[i].product_supplier_price == null) {
+                    $scope.tender_data[i].product_supplier_price = 0;
+                };
+            };
+
+            for (var i in $scope.tender_data) {
+                if ($scope.tender_data[i].cashier_user_id == "N/A") {
+                    $scope.tender_data[i].first_name = 'N/A';
+                    $scope.tender_data[i].last_name = 'N/A';
+                };
+            };
+            $scope.tender_data_status = true;
+
+            $scope.totalItems_reportdata = $scope.tender_data.length;
+        })
+        .then(null, function(data){
+            $scope.tender_data_status = false;
+            cfpLoadingBar.complete();
+
+        });
+    };
 });
 

@@ -13,8 +13,10 @@ $filter = array(
 				"date_to" => $_POST['date_to'],
 	);
 
+$search = $_POST['search_term'] ?? null;
+
 $class = new Users();
-$data = $class->get_reports($filter);
+$data = $class->get_reports($filter, $search);
 
 header("HTTP/1.0 400 No User Found");
 if($data['status']==true){

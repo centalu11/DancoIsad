@@ -613,12 +613,13 @@ EOT;
         return ClassParent::get($sql);
     }
 
-    public function get_reports($filter){
+    public function get_reports($filter, $search = null){
         foreach($filter as $k=>$v){
             $filter[$k] = pg_escape_string(trim(strip_tags($v)));
         }
         $where = "";
         $where2 = "";
+        $where3 = "";
         $name = $filter['name'];
         if ($name != "All") {
             $where.="AND cashier_user_id = '$name'";
@@ -635,11 +636,15 @@ EOT;
             $where2 = "";
         }
 
+        if (!is_null($search)) {
+            $where3 .= "AND $search";
+        }
+
         $sql = <<<EOT
             select
                 product_name,
                 product_quantity,
-                date_created,
+                tender_data.date_created,
                 product_supplier_price,
                 (select output_vat from product_data where pk = tender_data.product_pk) as output_vat,
                 (select input_vat from product_data where pk = tender_data.product_pk) as input_vat,
@@ -647,16 +652,17 @@ EOT;
                 cashier_user_id,
                 discount,
                 product_transaction_number,
-                (select first_name from users where user_id = cashier_user_id) as first_name,
-                (select last_name from users where user_id = cashier_user_id) as last_name,
+                users.first_name,
+                users.last_name,
                 (select product_receipt_name from product_data where pk = tender_data.product_pk) as product_receipt_name,
                 void_count,
                 tempo_total,
                 exchange_remarks,
                 total
                 from tender_data
-                where archived = 'f' $where $where2
-                order by pk desc
+                left join users on (tender_data.cashier_user_id = users.user_id)
+                where tender_data.archived = 'f' $where $where2 $where3
+                order by tender_data.pk desc
                 ;
 EOT;
         return ClassParent::get($sql);

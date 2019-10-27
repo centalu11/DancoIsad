@@ -3,7 +3,13 @@
     background-color: green !important;
   }
 
+  .search_fields{
+    width: 100%;
+  }
 
+  #search_fields_row{
+    background-color: #ffffff !important;
+  }
 
   #container_fluid_revise {
     padding-right: 0%;
@@ -219,6 +225,7 @@
           <table id="wtf" class="table table-hover table-responsive">
             <thead>
               <tr style="background-color:green;color: white;">
+                <th>Transaction Number</th>
                 <th onclick="salestrueshot(0)">Cashier Name</th>
                 <th onclick="salestrueshot(1)">Product Name</th>
                 <th>Product Quantity</th>
@@ -228,7 +235,6 @@
                 <!-- <th>Output VAT</th> -->
                 <!-- <th>Discount</th> -->
                 <!-- <th>Voided Items</th> -->
-                <th>Transaction Number</th>
                 <th>Date Tendered</th>
                 <th>Total</th>
               </tr>
@@ -245,8 +251,14 @@
                   <input type="button" style="background-color:black;font-family: arial;border-radius: 4px; float: right;margin-left:-50%;" class="btn btn-warning" value="Download Excel Copy" ng-click="print_csvs()">
                 </div>
               </div>
+              <tr id="search_fields_row">
+                <td><input ng-model="product_transaction_number" ng-keyup="$event.keyCode == 13 && search_columns()"
+                  placeholder="Search for transaction no..." class="search_fields" type="search"/></td>
+                <td><input ng-model="full_name" ng-keyup="$event.keyCode == 13 && search_columns()"placeholder="Search for cashier name..." class="search_fields" type="search"/></td>
+                <td><input ng-model="product_name" ng-keyup="$event.keyCode == 13 && search_columns()" placeholder="Search for product name..." class="search_fields" type="search"/></td>
+              </tr>
               <tr ng-repeat="(k,v) in tender_data.slice(((currentPage_reportdata-1)*itemsPerPage_reportdata), ((currentPage_reportdata)*itemsPerPage_reportdata))" ng-if="tender_data_status">
-
+                <td>{{v.product_transaction_number}}</td>
                 <td>{{v.first_name+ " " +v.last_name}}</td>
                 <td>{{v.product_name}}</td>
                 <td>{{v.product_quantity}}</td>
@@ -256,7 +268,6 @@
                 <!-- <td>{{v.output_vat}}</td> -->
                 <!-- <td>{{v.discount}}</td> -->
                 <!-- <td>{{v.void_count}}</td> -->
-                <td>{{v.product_transaction_number}}</td>
                 <td>{{v.date_created | date :  "medium" }}</td>
                 <td>{{v.tempo_total | currency:"":2}}</td>
               </tr>
