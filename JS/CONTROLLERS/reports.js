@@ -889,7 +889,7 @@ app.controller('Reports', function(
         }
         $scope.search_value = "(";
         if ($scope.product_transaction_number != "") {
-            $scope.search_value += "product_transaction_number ILIKE '%" + $scope.product_transaction_number + "%'";
+            $scope.search_value += "product_transaction_number ILIKE '" + $scope.product_transaction_number + "%'";
         }
 
         if ($scope.product_name != "") {

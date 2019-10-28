@@ -23,7 +23,7 @@ class ClassParent {
             $return['msg'] = pg_last_error();
             $return['result'] = NULL;
         }
-        
+
         pg_free_result($query);
         return $return;
     }
