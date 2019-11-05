@@ -45,15 +45,23 @@
 
 		.menu {
 			display: flex;
-			justify-content: center;
-			max-width: 1150px;
-			margin: 0 auto;
+			/*justify-content: center;*/
+			/*max-width: 1150px;*/
+			margin: 0;
 			padding-left: 0;
 		}
 
 		.menu__item {
 			display: inline-block;
+			margin: auto;
 			white-space: nowrap;
+		}
+
+		.navbar-items {
+			/*margin-right: 20px;*/
+			display: flex;
+			justify-content: center;
+			width: 20%;
 		}
 
 		.menu__item:last-child .menu__link {
@@ -62,8 +70,9 @@
 
 		.menu__link {
 			display: block;
-			padding: 6px 30px 3px;
-			border-right: 2px ridge #3b3b3b;
+			cursor: pointer;
+			/*padding: 6px 30px 3px;*/
+			/*border-right: 2px ridge #3b3b3b;*/
 
 		}
 		.menu__link:hover .menu__first-word, .menu__link:focus .menu__first-word {
@@ -97,7 +106,7 @@
 		}
 
 		.menu__first-word {
-			color: #ff8000;
+			color: #68d411;
 		}
 		.menu__first-word::before {
 			top: 105%;
@@ -109,7 +118,7 @@
 		}
 		.menu__second-word::before {
 			bottom: 105%;
-			color: #ff8000;
+			color: #68d411;
 		}
 		.dropdown .dropbtn {
 			font-size: 16px;    
@@ -149,7 +158,7 @@
 		}
 
 		.dropdown-content a:hover {
-			background-color: #ff8000;
+			background-color: #3b8004;
 		}
 
 		.dropdown:hover .dropdown-content {
@@ -195,10 +204,10 @@
 				
 		/*for medium devices - laptop*/
 		@media only screen and (min-width: 993px){
-			.menu__link {
+			/*.menu__link {
 				padding-right: 13%;
 				padding-left: 13%;
-			}
+			}*/
 			
 			div.ngdialog-content {
 				width: 70% !important;
@@ -221,8 +230,8 @@
 			}
 
 			.menu__link {
-				padding-right: 10%;
-				padding-left: 10%;
+				/*padding-right: 10%;
+				padding-left: 10%;*/
 				font-size: 90%;
 				margin: auto;
 			}
@@ -481,49 +490,132 @@ font-family: 'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif;">
 							</span>
 						</a>
 					</li> -->
-					<div class="dropdown">
-						<li class="menu__item">
-							<a class="menu__link">
-								<span  class="menu__title">
-									<span class="menu__first-word" data-hover="Admin">
-										Admin
+					<div class="navbar-items">
+						<div class="dropdown">
+							<li class="menu__item">
+								<a class="menu__link">
+									<span  class="menu__title">
+										<span class="menu__first-word" data-hover="Menu">
+											Menu
+										</span>
+										<!-- <span class="menu__second-word" data-hover="">
+											<i class="fa fa-caret-down"></i>
+										</span> -->
 									</span>
-									<!-- <span class="menu__second-word" data-hover="">
-										<i class="fa fa-caret-down"></i>
-									</span> -->
-								</span>
-							</a>
-						</li>
-						<div class="dropdown-content">
-							<li><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/Sales"><i  class="fa fa-cogs"></i>&nbspCashier</a></li>
-							<li ng-if="user.permissions.Admin.Modules.One"><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/Barcode"><i  class="fa fa-list"></i>&nbspInventory Management</a></li>
-								<li  ng-if="user.permissions.Admin.Modules.Four"><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/Report"><i class="fa fa-line-chart"></i>&nbspSales Report</a></li>
-								<!-- <li  ng-if="user.permissions.Admin.Modules.Nineteen"><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/Salesanalytics"><i class="fa fa-bar-chart"></i>&nbsp;Sales Analytics</a></li> -->
-								<!-- <li  ng-if="user.permissions.Admin.Modules.Twentyone"><a  style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/Payment"><i class="fa fa-credit-card"></i>&nbspPetty Cash Out Record</a></li> -->
-								<!-- <li  ng-if="user.permissions.Admin.Modules.Twentytwo"><a  style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/CustPayment"><i class="fa fa-user"></i>&nbspCustomer Payment</a></li> -->
-								<!-- <li  ng-if="user.permissions.Admin.Modules.Twenty"><a  style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/Refund"><i class="fa fa-money"></i>&nbspRefund</a></li> -->
-								<li  ng-if="user.permissions.Admin.Modules.Five"><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/ReceiptBackup"><i class="fa fa-list-alt"></i>&nbspReceipt Back-up</a></li>
-								<!-- <li  ng-if="user.permissions.Admin.Modules.Seven"><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/ORList"><i class="fa fa-file-text-o"></i>&nbspO.R List</a></li> -->
-								<!-- <li  ng-if="user.permissions.Admin.Modules.Eight"><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/BestSelling"><i class="fa fa-star"></i>&nbspBest Selling Products</a></li> -->
-								<li ng-if="user.permissions.Admin.Modules.Two"><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/PO"><i  class="fa fa-shopping-cart"></i>&nbspPurchase Order</a></li>
-								<li ng-if="user.permissions.Admin.Modules.Three"><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/Supplier"><i  class="fa fa-info-circle"></i>&nbspSupplier Details</a></li>
-								<!-- <li><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/BusinessLoan"><i class="fa fa-money"></i>&nbspBusiness Loan</a></li> -->
-								<!-- <li  ng-if="user.permissions.Admin.Modules.Six"><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/Refund"><i class="fa fa-money"></i>&nbspRefund</a></li> -->
-								<!-- <li  ng-if="user.permissions.Admin.Modules.Sixteen"><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/ChangeItem"><i class="fa fa-exchange"></i>&nbspChange Item</a></li> -->
-								<!-- <li ng-if="user.permissions.Admin.Modules.Nine"><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/AddCustomer"><i class="fa fa-phone"></i>&nbspAdd Customer</a></li> -->
-								<!-- <li ng-if="user.permissions.Admin.Modules.Ten"><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/AddBranches"><i class="fa fa-building"></i>&nbspAdd Branches</a></li> -->
-								<!-- <li  ng-if="user.permissions.Admin.Modules.Eighteen"><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/NFAdmin"><i class="fa fa-cogs"></i>&nbspNews Feed Admin</a></li>
-								<li  ng-if="user.permissions.Admin.Modules.Seventeen"><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/Discount"><i class="fa fa-user"></i>&nbspAOMOS Discount List</a></li> -->
-								<!-- <li  ng-if="user.permissions.Admin.Modules.Eleven"><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/Rules"><i class="fa fa-gear"></i>&nbspRules</a></li> -->
-								<!-- <li  ng-if="user.permissions.Admin.Modules.Fifteen"><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/Storage"><i class="fa fa-floppy-o"></i>&nbspStorage</a></li> -->
-								<li  ng-if="user.permissions.Admin.Modules.Twelve"><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/User"><i class="fa fa-user"></i>&nbspUser Management</a></li>
-								<!-- <li  ng-if="user.permissions.Admin.Modules.Eighteen"><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/NFAdmin"><i class="fa fa-envelope"></i>&nbspNews Feed Admin</a></li> -->
-								 <li  ng-if="user.permissions.Admin.Modules.Thirteen"><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/Activity"><i class="fa fa-history"></i>&nbspActivity logs</a></li>
-								 <li  ng-if="user.permissions.Admin.Modules.Thirteen"><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/History"><i class="fa fa-sign-out"></i>&nbspHistory logs</a></li>
-								<!-- <li><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/Unicorn"><i class="fa fa-mobile"></i>&nbspUnicorn Marketing</a></li> -->
+								</a>
+							</li>
+							<div class="dropdown-content">
+								<li>
+									<a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/Sales">
+										<i  class="fa fa-cogs"></i>
+										&nbspCashier
+									</a>
+								</li>
+								<li ng-if="user.permissions.Admin.Modules.Five">
+									<a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/ReceiptBackup">
+										<i class="fa fa-list-alt"></i>
+										&nbspReceipt Back-up
+									</a>
+								</li>
+								<li ng-if="user.permissions.Admin.Modules.Two">
+									<a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/PO">
+										<i  class="fa fa-shopping-cart"></i>
+										&nbspPurchase Order
+									</a>
+								</li>
+							</div>
 						</div>
 					</div>
 
+					<div ng-if="user.permissions.Admin.Modules.One" class="navbar-items">
+						<div class="dropdown">
+							<li class="menu__item">
+								<a class="menu__link">
+									<span  class="menu__title">
+										<span class="menu__first-word" data-hover="Management">
+											Management
+										</span>
+									</span>
+								</a>
+							</li>
+							<div class="dropdown-content">
+								<li ng-if="user.permissions.Admin.Modules.One">
+									<a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/Barcode">
+										<i  class="fa fa-list"></i>
+										&nbspInventory Management
+									</a>
+								</li>
+								<li ng-if="user.permissions.Admin.Modules.Three">
+									<a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/Supplier">
+										<i  class="fa fa-info-circle"></i>
+										&nbspSupplier Management
+									</a>
+								</li>
+								<li ng-if="user.permissions.Admin.Modules.Nine">
+									<a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/AddCustomer">
+										<i class="fa fa-phone"></i>
+										&nbspClient Management
+									</a>
+								</li>
+								<li ng-if="user.permissions.Admin.Modules.Twelve">
+									<a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/User">
+										<i class="fa fa-user"></i>
+										&nbspUser Management
+									</a>
+								</li>
+							</div>
+						</div>
+					</div>
+
+					<div ng-if="user.permissions.Admin.Modules.Four" class="navbar-items">
+						<div class="dropdown">
+							<li class="menu__item">
+								<a class="menu__link">
+									<span  class="menu__title">
+										<span class="menu__first-word" data-hover="Reports">
+											Reports
+										</span>
+									</span>
+								</a>
+							</li>
+							<div class="dropdown-content">
+								<li ng-if="user.permissions.Admin.Modules.Four">
+									<a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/Report">
+										<i class="fa fa-line-chart"></i>
+										&nbspSales Report
+									</a>
+								</li>
+							</div>
+						</div>
+					</div>
+
+					<div ng-if="user.permissions.Admin.Modules.Thirteen" class="navbar-items">
+						<div class="dropdown">
+							<li class="menu__item">
+								<a class="menu__link">
+									<span  class="menu__title">
+										<span class="menu__first-word" data-hover="Logs">
+											Logs
+										</span>
+									</span>
+								</a>
+							</li>
+							<div class="dropdown-content">
+								 <li ng-if="user.permissions.Admin.Modules.Thirteen">
+								 	<a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/Activity">
+								 		<i class="fa fa-history"></i>
+								 		&nbspActivity logs
+								 	</a>
+								 </li>
+								 <li ng-if="user.permissions.Admin.Modules.Thirteen">
+								 	<a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/History">
+								 		<i class="fa fa-sign-out"></i>
+								 		&nbspHistory logs
+								 	</a>
+								 </li>
+							</div>
+						</div>
+					</div>
 					<!-- <li class="menu__item">
 						<a href="#/Wealth" class="menu__link">
 							<span class="menu__title">
@@ -554,41 +646,32 @@ font-family: 'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif;">
 								</span>
 							</a>
 						</li> -->
-					<div class="dropdown">
-						<li class="menu__item">
-							<a class="menu__link">
-								<span class="menu__title">
-									<span class="menu__first-word" data-hover=" {{user.first_name }} ">
-										{{user.first_name }} 
+					<div class="navbar-items">
+						<div class="dropdown">
+							<li class="menu__item">
+								<a class="menu__link">
+									<span class="menu__title">
+										<span class="menu__first-word" data-hover=" {{user.first_name }} ">
+											{{user.first_name }} 
+										</span>
+										<span class="menu__second-word" data-hover="{{user.last_name }}">
+											{{user.last_name }}
+										</span>
+										<!-- <span class="menu__first-word" data-hover="">
+											<i class="fa fa-caret-down"></i>
+										</span> -->
 									</span>
-									<span class="menu__second-word" data-hover="{{user.last_name }}">
-										{{user.last_name }}
-									</span>
-									<!-- <span class="menu__first-word" data-hover="">
-										<i class="fa fa-caret-down"></i>
-									</span> -->
-								</span>
-							</a>
-						</li>
-						<div class="dropdown-content">
-							<li><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="" ng-click="change_password()"><span class="fa fa-key" ></span>&nbspChange Password</a></li>
-							<!-- <li><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/AskHelp"><span class="fa fa-headphones"></span>&nbspTech Support</a></li> -->
+								</a>
+							</li>
+							<div class="dropdown-content">
+								<li><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="" ng-click="change_password()"><span class="fa fa-key" ></span>&nbspChange Password</a></li>
+								<li><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="" ng-click="logout()"><span class="fa fa-sign-out" ></span>&nbspLog Out</a></li>
+								<!-- <li><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/AskHelp"><span class="fa fa-headphones"></span>&nbspTech Support</a></li> -->
+							</div>
 						</div>
 					</div>
-						<li class="menu__item">
-							<a href="" ng-click="logout()" class="menu__link">
-								<span style="margin-left: 30%;" class="menu__title">
-									<span class="menu__first-word" data-hover="Log">
-										Log
-									</span>
-									<span class="menu__second-word" data-hover="Out">
-										Out
-									</span>
-								</span>
-							</a>
-						</li>
-					</ul>
-				</div>
+				</ul>
+			</div>
 		</div>
 	</div>
 </nav>
@@ -626,6 +709,7 @@ font-family: 'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif;">
 		<script src="JS/CONTROLLERS/navbar.js"></script>
 		<script src="JS/CONTROLLERS/activity.js"></script>
 		<script src="JS/CONTROLLERS/history.js"></script>
+		<script src="JS/CONTROLLERS/addcustomer.js"></script>
 		<script src="JS/CONTROLLERS/EmailAndText.js"></script>
 		<script src="JS/CONTROLLERS/storage.js"></script>
 		<script src="JS/CONTROLLERS/newsfeed.js"></script>

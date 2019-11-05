@@ -1,6 +1,6 @@
 <style>
     button:hover, input[type=button]:hover {
-      background-color: #ff6600 !important;
+      background-color: green !important;
     }
 
     input[type=button] {
@@ -57,15 +57,9 @@
 </style>
 
 <div class="row-fluid">
-  <div id="header" style="background-color:#ff6600 !important; overflow: hidden;">
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="background-color:#ff6600 !important; overflow: hidden; display: flex; align-items: center" >
-      <div id="header-title" class="col-xs-12 col-sm-8 col-md-8 col-lg-8" style="font-size: 50px;font-weight: bold;color: white; padding:20px;"> Customer Management</div>
-
-      <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-        <span id="first-banner" style="font-size:15px;color:white; font-weight: bold;font-family: arial;">BUNNY TIPS <i class="fa fa-lightbulb-o"></i></span><br>
-        <span id="sec-banner" style="font-size:15px;color:white; font-weight: bold;">You can easily add your customer's details simply clicking the add customer button.</span>
-      </div>
-
+  <div id="header" style="background-color:green !important; overflow: hidden;">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="background-color:green !important; overflow: hidden; display: flex; align-items: center" >
+      <div id="header-title" class="col-xs-12 col-sm-8 col-md-8 col-lg-8" style="font-size: 50px;font-weight: bold;color: white; padding:20px;"> Client Management</div>
     </div>
   </div>
 </div>
@@ -75,39 +69,31 @@
       <div class="panel">
         <div class="panel-body" style="overflow: auto">
           <div style="margin-bottom: 10px;">
-            <input value="Add Customer" type="button" class="btn" ng-click="add_customer()" style="color: #ffffff; background-color: black;font-family: arial;border-radius: 4px;">
+            <input value="Add Client" type="button" class="btn" ng-click="add_customer()" style="color: #ffffff; background-color: black;font-family: arial;border-radius: 4px;">
           </div>
         <div class="clearfix"></div>
         <div class="x_content">
           <table class="table table-hover table-responsive">
             <thead>
-              <tr style="background-color:#ff6600;color: white; ">
-                <th>Customer Name</th>
+              <tr style="background-color:green;color: white; ">
+                <th>Client Name</th>
+                <th>TIN #</th>
                 <th>Email</th>
                 <th>Contact Number</th>
-                <th>Date Joined</th>
-                <th>Job Position</th>
-                <th>Company Name</th>
-                <th>TIN #</th>
                 <th>Address</th>
-                <th>Discount Percent</th>
-                <th>Last Date of Discount</th>
-                <th>Options</th>
+                <th>Date Added</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="v in customer_data.slice(((currentPage_customerdata-1)*itemsPerPage_customerdata), ((currentPage_customerdata)*itemsPerPage_customerdata)) track by $index">
+              <tr ng-repeat="v in customer_data.slice(((currentPage_customerdata-1)*10), ((currentPage_customerdata)*10)) track by $index">
 
-                <td>{{v.first_name+ " " +v.last_name}}</td>
+                <td>{{v.client_name}}</td>
+                <td>{{v.tin}}</td>
                 <td>{{v.email}}</td>
                 <td>{{v.contact_number}}</td>
+                <td>{{v.street}}, {{v.city}}</td>
                 <td>{{v.date_created | date :  "medium" }}</td>
-                <td>{{v.job_position}}</td>
-                <td>{{v.company}}</td>
-                <td>{{v.tin}}</td>
-                <td>{{v.cadd}}</td>
-                <td>{{v.percent}}</td>
-                <td>{{v.last_days}}</td>
                 <td>&nbsp&nbsp<i class="fa fa-pencil" aria-hidden="true" style="cursor:pointer" ng-click="edit_customer(v)"  title="Edit"></i>
                   <i class="fa fa-trash" aria-hidden="true" style="cursor:pointer" ng-click="delete_customer(v)"  title="Delete"></i>
                 </tr>
@@ -135,28 +121,37 @@
 <script type="text/ng-template" id="EditUser">
   <div class="ngdialog-message">
     <div style="margin-top: -15px;">
-      <h3><span style="color:#ff6600;"><b>{{ modal.title }}<b></span></h3>
+      <h3><span style="color:green;"><b>{{ modal.title }}<b></span></h3>
 
       </div>
       <div class="row">
         <div class="col-md-12">
-          <div class="col-md-6">
-            First Name <input type="text" class="form-control" ng-model="modal.first_name">
-          </div>
-          <div class="col-md-6">
-            Middle Name <input type="text" class="form-control" ng-model="modal.middle_name">
-          </div>
-          <div class="col-md-6">
-            Last Name <input type="text" class="form-control" ng-model="modal.last_name">
+          <div class="col-md-12">
+            Client Name <input type="text" class="form-control input-word-uppercase" onkeyup="uppercaseWords(0);" ng-model="modal.client_name">
           </div>
         </div>
       </div>
-      <br>
 
       <div class="row">
         <div class="col-md-12">
           <div class="col-md-12">
-            E-Mail <input type="email" class="form-control" ng-model="modal.email">
+            Street Address <input type="text" class="form-control input-word-uppercase" onkeyup="uppercaseWords(1);" ng-model="modal.address">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="col-md-12">
+            City <input type="text" class="form-control input-word-uppercase" onkeyup="uppercaseWords(2);" ng-model="modal.city">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="col-md-12">
+            E-Mail <input type="text" class="form-control" ng-model="modal.email">
           </div>
         </div>
       </div>
@@ -168,200 +163,60 @@
           </div>
         </div>
       </div>
+
       <div class="row">
-            <div class="col-md-12">
-              <div class="col-md-12">
-                Discount Percentage <input type="text" class="form-control" ng-model="modal.percent">
-              </div>
-            </div>
-          </div>
-          <div class="row" style="margin-top: 1%;">
-            <div class="form-group col-md-12">
-              <div class="form-group col-md-12">
-                Last Date of Discount
-                <div class='input-group  date' datetimepicker ng-model="modal.last_day" id='datetimepicker1' >
-                  <input type='text'  placeholder="Exp. Date" class="form-control" />
-                  <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-      <div class="row" style="margin-top: 5%;">
         <div class="col-md-12">
           <div class="col-md-12">
-            Optional :
+            TIN Number <input type="text" is-Number class="form-control" ng-model="modal.tin_number">
           </div>
         </div>
       </div>
-
-      <div class="row" style="margin-top: 1%;">
-        <div class="col-md-12">
-          <div class="col-md-12">
-            Job Position <input type="text" class="form-control" ng-model="modal.job_position">
-          </div>
-        </div>
-      </div>
-
-      <div class="row" style="margin-top: 1%;">
-            <div class="col-md-12">
-              <div class="col-md-12">
-                Company Name<input type="text" class="form-control" ng-model="modal.company">
-              </div>
-            </div>
-          </div>
-          <div class="row" style="margin-top: 1%;">
-            <div class="col-md-12">
-              <div class="col-md-12">
-                Company TIN <input type="text" class="form-control" ng-model="modal.tin">
-              </div>
-            </div>
-          </div>
-          <div class="row" style="margin-top: 1%;">
-            <div class="col-md-12">
-              <div class="col-md-12">
-                Company Address <input type="text" class="form-control" ng-model="modal.cadd">
-              </div>
-            </div>
-          </div>
-          
 
       <div class="ngdialog-buttons" style="margin-top:20px;">
         <div class="ngdialog-buttons">
           <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)"> <i class="fa fa-times-circle"> </i> {{modal.close}}</button>
-          <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')" style="background-color:#ff6600"> <i class="fa fa-check"> </i> {{modal.save}}</button>
+          <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')" style="background-color:green"> <i class="fa fa-check"> </i> {{modal.save}}</button>
         </div>
       </br>
-    </script>
+</script>
 
-    <script type="text/ng-template" id="UpdateUser">
-      <div class="ngdialog-message">
-        <div style="margin-top: -15px;">
-          <h3><span style="color:#ff6600;"><b>{{ modal.title }}<b></span></h3>
+<script type="text/ng-template" id="ConfirmModal">
+  <div class="ngdialog-message">
+    <div style="margin-top: -15px;">
+      <h3><span style="color:green;">{{ modal.title }}</span></h3>
+    </div>
+    <div>
+      <table style="width: 85%;">
+        <thead>
+          <tr>
+            <td>
+            </td>
+          </tr>
+          <tr>
+          </tr>
+        </thead>
+      </table>
+    </div>
+  </div>
+  <div class="ngdialog-buttons">
+    <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+    <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')" style="background-color:green">{{modal.save}}</button>
+  </div>
+</script>
 
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="col-md-6">
-                First Name <input type="text" class="form-control" ng-model="modal.first_name">
-              </div>
-              <div class="col-md-6">
-                Middle Name <input type="text" class="form-control" ng-model="modal.middle_name">
-              </div>
-              <div class="col-md-6">
-                Last Name <input type="text" class="form-control" ng-model="modal.last_name">
-              </div>
-            </div>
-          </div>
-          <br>
+<script>
+  function uppercaseWords(index) {
+    var element = document.getElementsByClassName("input-word-uppercase");
+    var value = element[index].value;
+    var valueArray = [];
+    valueArray = value.toLowerCase().split(' ');
 
-          <div class="row">
-            <div class="col-md-12">
-              <div class="col-md-12">
-                E-Mail <input type="email" class="form-control" ng-model="modal.email">
-              </div>
-            </div>
-          </div>
-          <br>
-
-
-          <div class="row">
-            <div class="col-md-12">
-              <div class="col-md-12">
-                Contact Number <input type="text" is-Number class="form-control" ng-model="modal.contact_number">
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="col-md-12">
-                Discount Percentage <input type="text" class="form-control" ng-model="modal.percent">
-              </div>
-            </div>
-          </div>
-          <div class="row" style="margin-top: 1%;">
-            <div class="form-group col-md-12">
-              <div class="form-group col-md-12">
-                Last Date of Discount
-                <div class='input-group  date' datetimepicker ng-model="modal.last_day" id='datetimepicker1' >
-                  <input type='text'  placeholder="Exp. Date" class="form-control" />
-                  <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-
-          <div class="row" style="margin-top: 5%;">
-            <div class="col-md-12">
-              <div class="col-md-12">
-                Optional :
-              </div>
-            </div>
-          </div>
-
-          <div class="row" style="margin-top: 1%;">
-            <div class="col-md-12">
-              <div class="col-md-12">
-                Job Position <input type="text" class="form-control" ng-model="modal.job_position">
-              </div>
-            </div>
-          </div>
-
-          <div class="row" style="margin-top: 1%;">
-            <div class="col-md-12">
-              <div class="col-md-12">
-                Company Name<input type="text" class="form-control" ng-model="modal.company">
-              </div>
-            </div>
-          </div>
-          <div class="row" style="margin-top: 1%;">
-            <div class="col-md-12">
-              <div class="col-md-12">
-                Company TIN <input type="text" class="form-control" ng-model="modal.tin">
-              </div>
-            </div>
-          </div>
-          <div class="row" style="margin-top: 1%;">
-            <div class="col-md-12">
-              <div class="col-md-12">
-                Company Address <input type="text" class="form-control" ng-model="modal.cadd">
-              </div>
-            </div>
-          </div>
-          <br>
-          <div class="ngdialog-buttons" style="margin-top:20px;">
-            <div class="ngdialog-buttons">
-              <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)"> <i class="fa fa-times-circle"> </i> {{modal.close}}</button>
-              <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')" style="background-color:#ff6600"> <i class="fa fa-check"> </i> {{modal.save}}</button>
-            </div>
-          </script>
-
-          <script type="text/ng-template" id="ConfirmModal">
-            <div class="ngdialog-message">
-              <div style="margin-top: -15px;">
-                <h3><span style="color:#ff6600;">{{ modal.title }}</span></h3>
-              </div>
-              <div>
-                <table style="width: 85%;">
-                  <thead>
-                    <tr>
-                      <td>
-                      </td>
-                    </tr>
-                    <tr>
-                    </tr>
-                  </thead>
-                </table>
-              </div>
-            </div>
-            <div class="ngdialog-buttons">
-              <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
-              <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')" style="background-color:#ff6600">{{modal.save}}</button>
-            </div>
-          </script>
-          <script>
+    for (var i = 0; i < valueArray.length; i++) {
+      valueArray[i] = valueArray[i].charAt(0).toUpperCase() + valueArray[i].substring(1);
+    }
+   
+    value = valueArray.join(' ');
+    
+    element[index].value = value;
+  }
+</script>

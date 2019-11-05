@@ -225,18 +225,18 @@
           <table id="wtf" class="table table-hover table-responsive">
             <thead>
               <tr style="background-color:green;color: white;">
-                <th>Transaction Number</th>
-                <th onclick="salestrueshot(0)">Cashier Name</th>
-                <th onclick="salestrueshot(1)">Product Name</th>
-                <th>Product Quantity</th>
-                <th>Supplier Price</th>
+                <th ng-click="sortTable('product_transaction_number')">Transaction Number</th>
+                <th ng-click="sortTable('users.first_name')">Cashier Name</th>
+                <th ng-click="sortTable('product_name')">Product Name</th>
+                <th ng-click="sortTable('product_quantity')">Product Quantity</th>
+                <th ng-click="sortTable('product_supplier_price')">Supplier Price</th>
                 <!-- <th>Input VAT</th> -->
-                <th>Markup Price</th>
+                <th ng-click="sortTable('product_retail_price')">Markup Price</th>
                 <!-- <th>Output VAT</th> -->
                 <!-- <th>Discount</th> -->
                 <!-- <th>Voided Items</th> -->
-                <th>Date Tendered</th>
-                <th>Total</th>
+                <th ng-click="sortTable('tender_data.date_created')">Date Tendered</th>
+                <th ng-click="sortTable('cast(total as numeric)')">Total</th>
               </tr>
             </thead>
             <tbody style="text-align: center">

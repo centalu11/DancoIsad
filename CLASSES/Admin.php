@@ -131,47 +131,34 @@ EOT;
     }
 
     public function add_customer($data){
-        $first_name = $data['first_name'];
-        $middle_name = $data['middle_name'];
-        $last_name = $data['last_name'];
-        $contact_number = $data['contact_number'];
+        $client_name = $data['client_name'];
+        $address = $data['address'];
+        $city = $data['city'];
         $email = $data['email'];
-        $company = $data['company'];
-        $job_position = $data['job_position'];
-        $tin = $data['tin'];
-        $cadd = $data['cadd'];
-        $percent = $data['percent'];
-        $last_day = $data['last_days'];
+        $contact_number = $data['contact_number'];
+        $tin_number = $data['tin_number'];
+
         $sql = <<<EOT
                 insert into customer_data
                 (
-                    first_name,
-                    middle_name,
-                    last_name,
-                    contact_number,
+                    client_name,
+                    street,
+                    city,
                     email,
-                    company,
-                    job_position,
-                    tin,
-                    cadd,
-                    percent,
-                    last_day
+                    contact_number,
+                    tin
                 )
                 VALUES
                 (
-                    '$first_name',
-                    '$middle_name',
-                    '$last_name',
-                    '$contact_number',
+                    '$client_name',
+                    '$address',
+                    '$city',
                     '$email',
-                    '$company',
-                    '$job_position',
-                    '$tin',
-                    '$cadd',
-                    $percent,
-                    '$last_day'
+                    '$contact_number',
+                    '$tin_number'
                 );
 EOT;
+
         return ClassParent::insert($sql);
     }
     
@@ -195,46 +182,32 @@ EOT;
     }
 
     public function edit_customer($data){
-        $first_name = $data['first_name'];
-        $middle_name = $data['middle_name'];
-        $last_name = $data['last_name'];
-        $contact_number = $data['contact_number'];
+        $client_name = $data['client_name'];
+        $address = $data['address'];
+        $city = $data['city'];
         $email = $data['email'];
-        $company = $data['company'];
-        $job_position = $data['job_position'];
+        $contact_number = $data['contact_number'];
+        $tin_number = $data['tin_number'];
         $pk = $data['pk'];
-        $cadd = $data['cadd'];
-        $tin = $data['tin'];
-        $percent = $data['percent'];
-        $last_day = $data['last_days'];
+
         $sql = <<<EOT
                 update customer_data set
                 (
-                    first_name,
-                    middle_name,
-                    last_name,
-                    contact_number,
+                    client_name,
+                    street,
+                    city,
                     email,
-                    company,
-                    job_position,
-                    cadd,
-                    tin,
-                    percent,
-                    last_day
+                    contact_number,
+                    tin
                 )
                 =
                 (
-                    '$first_name',
-                    '$middle_name',
-                    '$last_name',
-                    '$contact_number',
+                    '$client_name',
+                    '$address',
+                    '$city',
                     '$email',
-                    '$company',
-                    '$job_position',
-                    '$cadd',
-                    '$tin',
-                    $percent,
-                    '$last_day'
+                    '$contact_number',
+                    '$tin_number'
                 )
                 where pk = '$pk'
                 ;

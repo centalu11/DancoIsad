@@ -7,17 +7,8 @@ foreach($_POST as $k=>$v){
 	$data[$k] = $v;
 }
 
-$filter = array(
-				"name" => $_POST['name'],
-				"date_from" => $_POST['date_from'],
-				"date_to" => $_POST['date_to'],
-	);
-
-$search = $_POST['search_term'] ?? null;
-$sort = $_POST['sort'] ?? null;
-
 $class = new Users();
-$data = $class->get_reports($filter, $search, $sort);
+$data = $class->get_customers();
 
 header("HTTP/1.0 400 No User Found");
 if($data['status']==true){

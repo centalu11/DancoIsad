@@ -613,13 +613,14 @@ EOT;
         return ClassParent::get($sql);
     }
 
-    public function get_reports($filter, $search = null){
+    public function get_reports($filter, $search = null, $sort = null){
         foreach($filter as $k=>$v){
             $filter[$k] = pg_escape_string(trim(strip_tags($v)));
         }
         $where = "";
         $where2 = "";
         $where3 = "";
+        $sortValue = "order by tender_data.pk desc";
         $name = $filter['name'];
         if ($name != "All") {
             $where.="AND cashier_user_id = '$name'";
@@ -637,7 +638,11 @@ EOT;
         }
 
         if (!is_null($search)) {
-            $where3 .= "AND $search";
+            $where3 = "AND $search";
+        }
+
+        if (!is_null($sort)) {
+            $sortValue = $sort;
         }
 
         $sql = <<<EOT
@@ -662,7 +667,17 @@ EOT;
                 from tender_data
                 left join users on (tender_data.cashier_user_id = users.user_id)
                 where tender_data.archived = 'f' $where $where2 $where3
-                order by tender_data.pk desc
+                $sortValue
+                ;
+EOT;
+        return ClassParent::get($sql);
+    }
+
+    public function get_customers(){
+        $sql = <<<EOT
+            select
+                *
+                from customer_data
                 ;
 EOT;
         return ClassParent::get($sql);

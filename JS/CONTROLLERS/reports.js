@@ -57,6 +57,8 @@ app.controller('Reports', function(
     $scope.full_name = "";
 
     var filtered = {};
+    var current_sort_direction = null;
+    var current_sort_field = null;
 
     init();
 
@@ -880,7 +882,7 @@ app.controller('Reports', function(
 
     }
 
-    $scope.search_columns = function () {
+    $scope.search_columns = function (sortValue = []) {
         cfpLoadingBar.start();
         var filter = {
             name : $scope.search_filter.name,
@@ -921,6 +923,10 @@ app.controller('Reports', function(
 
         if ($scope.search_value != "()") {
             filter.search_term = $scope.search_value;
+        }
+
+        if (sortValue.length > 0) {
+            filter.sort = "ORDER BY " + sortValue[0] + " " + sortValue[1];
         }
 
         $scope.totalItems_reportdata = 0;
@@ -976,5 +982,24 @@ app.controller('Reports', function(
 
         });
     };
+
+    $scope.sortTable = function(field) {
+        if (this.current_sort_field != field) {
+            this.current_sort_field = field;
+            this.current_sort_direction = null;
+        }
+
+        if (this.current_sort_direction == 'ASC') {
+            this.current_sort_direction = 'DESC';
+        } else if (this.current_sort_direction == 'DESC') {
+            this.current_sort_direction = null;
+            this.search_columns();
+            return null;
+        } else {
+            this.current_sort_direction = 'ASC'
+        }
+
+        this.search_columns([field, this.current_sort_direction]);
+    }
 });
 
