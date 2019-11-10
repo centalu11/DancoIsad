@@ -131,13 +131,13 @@
     <div class="row">
       <div class="col-md-12">
         <div class="col-md-6">
-          First Name <input type="text" class="form-control" ng-model="modal.first_name">
+          First Name <input type="text" class="form-control" ng-model="modal.first_name" ng-keyup="uppercaseModalWords('first_name');">
         </div>
         <div class="col-md-6">
-          Middle Name <input type="text" class="form-control" ng-model="modal.middle_name">
+          Middle Name <input type="text" class="form-control" ng-model="modal.middle_name" ng-keyup="uppercaseModalWords('middle_name');">
         </div>
         <div class="col-md-6">
-          Last Name <input type="text" class="form-control" ng-model="modal.last_name">
+          Last Name <input type="text" class="form-control" ng-model="modal.last_name" ng-keyup="uppercaseModalWords('last_name');">
         </div>
       </div>
     </div>
@@ -202,13 +202,13 @@
     <div class="row">
       <div class="col-md-12">
         <div class="col-md-6">
-          First Name <input type="text" class="form-control" ng-model="modal.first_name">
+          First Name <input type="text" class="form-control" ng-model="modal.first_name" ng-keyup="uppercaseModalWords('first_name');">
         </div>
         <div class="col-md-6">
-          Middle Name <input type="text" class="form-control" ng-model="modal.middle_name">
+          Middle Name <input type="text" class="form-control" ng-model="modal.middle_name" ng-keyup="uppercaseModalWords('middle_name');">
         </div>
         <div class="col-md-6">
-          Last Name <input type="text" class="form-control" ng-model="modal.last_name">
+          Last Name <input type="text" class="form-control" ng-model="modal.last_name" ng-keyup="uppercaseModalWords('last_name');">
         </div>
       </div>
     </div>
@@ -318,10 +318,10 @@
     </div>
     <div class="row">
       <div class="col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
-        <p>Inventory Management</p>
+        <p>Receipt Backup</p>
       </div>
       <div class="col-md-1 col-lg-1">
-        <input type="checkbox" style="transform: scale(1.5);" ng-model="modal.permissions.Admin.Modules.One">
+        <input type="checkbox" style="transform: scale(1.5);" ng-model="modal.permissions.Admin.Modules.Five">
       </div>
     </div>
     <div class="row">
@@ -334,10 +334,42 @@
     </div>
     <div class="row">
       <div class="col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
-        <p>Supplier Details</p>
+        <p>Exchange</p>
+      </div>
+      <div class="col-md-1 col-lg-1">
+        <input type="checkbox" style="transform: scale(1.5);" ng-model="modal.permissions.Admin.Modules.Six">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
+        <p>Inventory Management</p>
+      </div>
+      <div class="col-md-1 col-lg-1">
+        <input type="checkbox" style="transform: scale(1.5);" ng-model="modal.permissions.Admin.Modules.One">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
+        <p>Supplier Management</p>
       </div>
       <div class="col-md-1 col-lg-1">
         <input type="checkbox" style="transform: scale(1.5);" ng-model="modal.permissions.Admin.Modules.Three">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
+        <p>Client Management</p>
+      </div>
+      <div class="col-md-1 col-lg-1">
+        <input type="checkbox" style="transform: scale(1.5);" ng-model="modal.permissions.Admin.Modules.Nine">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
+        <p>User Management</p>
+      </div>
+      <div class="col-md-1 col-lg-1">
+        <input type="checkbox" style="transform: scale(1.5);" ng-model="modal.permissions.Admin.Modules.Twelve">
       </div>
     </div>
     <div class="row">
@@ -350,18 +382,10 @@
     </div>
     <div class="row">
       <div class="col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
-        <p>Receipt Backup</p>
+        <p>Logs</p>
       </div>
       <div class="col-md-1 col-lg-1">
-        <input type="checkbox" style="transform: scale(1.5);" ng-model="modal.permissions.Admin.Modules.Five">
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
-        <p>User Management</p>
-      </div>
-      <div class="col-md-1 col-lg-1">
-        <input type="checkbox" style="transform: scale(1.5);" ng-model="modal.permissions.Admin.Modules.Twelve">
+        <input type="checkbox" style="transform: scale(1.5);" ng-model="modal.permissions.Admin.Modules.Thirteen">
       </div>
     </div>
   </div>

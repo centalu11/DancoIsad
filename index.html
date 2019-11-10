@@ -31,6 +31,16 @@
 	<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script> -->
 	
 	<style type="text/css">
+		body {
+			padding-top: 70px !important;
+		}
+
+		#main-navbar {
+			display: flex;
+			align-items: center;
+			height: 70px;
+		}
+
 		a {
 			outline: 0;
 			text-decoration: none;
@@ -462,7 +472,7 @@ font-family: 'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif;">
 </div>
 
 <div class="page-content" style="display: none">
-<nav class="navbar navbar-default navbar-fixed-top" style="background-color:#262626;color:white;padding-left: 1px;padding-right: 1px;" role="navigation">
+<nav id="main-navbar" class="navbar navbar-default navbar-fixed-top" style="background-color:#262626;color:white;padding-left: 1px;padding-right: 1px;" role="navigation">
 	<div class="container-fluid" id="navigationBar">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -474,7 +484,7 @@ font-family: 'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif;">
 			<a class="navbar-brand" style="margin-top:-15px"><!-- <img src="Bunny.png" style="width:130px"> --></a>	
 		</div>
 
-		<div id="navbar" class="collapse navbar-collapse container-fluid" style="margin-top:5px; overflow: visible;">
+		<div id="navbar" class="collapse navbar-collapse container-fluid" style="overflow: visible;">
 			<div class="navigation">
 				<ul class="menu">
 
@@ -523,11 +533,17 @@ font-family: 'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif;">
 										&nbspPurchase Order
 									</a>
 								</li>
+								<li ng-if="user.permissions.Admin.Modules.Six">
+									<a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/Exchange">
+										<i  class="fa fa-money"></i>
+										&nbspExchange
+									</a>
+								</li>
 							</div>
 						</div>
 					</div>
 
-					<div ng-if="user.permissions.Admin.Modules.One" class="navbar-items">
+					<div ng-if="user.permissions.Admin.Modules.One || user.permissions.Admin.Modules.Three || user.permissions.Admin.Modules.Nine || user.permissions.Admin.Modules.Twelve" class="navbar-items">
 						<div class="dropdown">
 							<li class="menu__item">
 								<a class="menu__link">
@@ -807,7 +823,7 @@ font-family: 'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif;">
 
     <div class="ngdialog-message">
       <div style="margin-top: 15px;">
-      <h3><span style="color:#ff6600;">{{ modal.title }}</span></h3>
+      <h3><span style="color:#008000;">{{ modal.title }}</span></h3>
       </div>
     <div class="row">
       <div class="col-md-12">
@@ -830,7 +846,7 @@ font-family: 'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif;">
     <br>
   <div class="ngdialog-buttons" style="margin-top:20px;">
     <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
-    <button type="button" style="background-color: #ff6600;" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
+    <button type="button" style="background-color: #008000;" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
   </div>
 </script>
 

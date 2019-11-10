@@ -24,6 +24,8 @@ $discount = $_GET['discount'];
 $cash = $_GET['cash'];
 $rname = $_GET['r_name'];
 $pr_price = $_GET['pr_name'];
+$customer_data = $class->get_customers('WHERE pk = ' . $data['result'][0]['client_id']);
+$customer_data = $customer_data['result'];
 
 $x = 60;
 $y = 51;
@@ -37,14 +39,27 @@ $a = 72;
 $b = 13;
 $n = 51;
 $endline = 75;
-$endmessage = 77;
-$endmessage2 = 80;
-$endmessage3 = 83;
-$endmessage4 = 86;
-$endmessage5 = 91;
-$endmessage6 = 94;
-$endmessage7 = 97;
-$endmessage7 = 97;
+if ($data['result'][0]['client_id'] != 0) {
+	$customerNameLine = 78;
+	$customerAddressLine = 81;
+	$customerTinLine = 84;
+	$customerDataEndLine = 87;
+	$endmessage = 90;
+	$endmessage2 = 93;
+	$endmessage3 = 96;
+	$endmessage4 = 99;
+	$endmessage5 = 102;
+	$endmessage6 = 105;
+	$endmessage7 = 108;
+} else {
+	$endmessage = 78;
+	$endmessage2 = 81;
+	$endmessage3 = 84;
+	$endmessage4 = 87;
+	$endmessage5 = 90;
+	$endmessage6 = 93;
+	$endmessage7 = 96;	
+}
 $count = 0;
 $str = 'Php';
 $heights = 130;
@@ -67,7 +82,7 @@ class PDF extends FPDF
 	{
 	    $this->SetFont('Arial', 'B', 10); 
 		$this->SetFillColor(36, 96, 84); 
-		/*$this->Image('../../ASSETS/picture/gosarigray.png',36,2,14);*/
+		$this->Image('../../ASSETS/picture/grandpen.png',33,2,14);
 	    $this->Ln(5);
 	}
 
@@ -81,17 +96,17 @@ class PDF extends FPDF
 		$pdf->construct();
 		$pdf->AddPage('P',array($heights,87));
 		$pdf->SetFont('Arial', 'B', 8); 
-		/*$pdf->SetXY(10,16); 
-		$pdf->Cell(40, 5, 'AOMOS Information Technology Services' , 0, 'L'); 
+		$pdf->SetXY(24,16); 
+		$pdf->Cell(40, 5, 'Grand Pen Marketing' , 0, 'L'); 
 		$pdf->Ln();
-		$pdf->SetXY(9,19); 
-		$pdf->Cell(10, 5, 'De Oro Bldg. Sierra Madre St. Boni Avenue' , 0, 'L'); 
-		$pdf->Ln();*/
-		$pdf->SetXY(17,22); 
-		$pdf->Cell(10, 5, 'Mandaluyong City, Philippines' , 0, 'L'); 
+		$pdf->SetXY(12,19); 
+		$pdf->Cell(10, 5, 'Halcon Street corner Boni Avenue' , 0, 'L'); 
 		$pdf->Ln();
-		$pdf->SetXY(14,25); 
-		$pdf->Cell(10, 5, 'VAT REG TIN#000-000-000-000' , 0, 'L'); 
+		$pdf->SetXY(24,22); 
+		$pdf->Cell(10, 5, 'Mandaluyong City' , 0, 'L'); 
+		$pdf->Ln();
+		$pdf->SetXY(18,25); 
+		$pdf->Cell(10, 5, 'VAT REG TIN#147-749-490-000' , 0, 'L');
 		$pdf->Ln();
 		$pdf->SetXY(12,28); 
 		$pdf->Cell(10, 5, 'THIS SERVE AS YOUR SALES INVOICE' , 0, 'L'); 
@@ -102,7 +117,7 @@ class PDF extends FPDF
 		$pdf->Ln();
 		$pdf->Cell(10, 2,'------------------------------------------------------------------------', 0, 'L');
 		$pdf->Ln();
-		$pdf->Cell(10, 5,$date_time."            ".'TN#'.$TI, 0, 'L'); 
+		$pdf->Cell(10, 5,$date_time."             ".'TN#'.$TI, 0, 'L'); 
 		$pdf->Ln();
 		$pdf->Cell(10, 1,'------------------------------------------------------------------------', 0, 'L');
 		$pdf->Ln();
@@ -191,14 +206,28 @@ class PDF extends FPDF
 		$pdf->Ln();
 		$pdf->SetXY(13,$a);
 		$pdf->SetFont('Arial', 'B', 7); 
-		$pdf->Cell(10, 4,'VAT', 0, 'L');
+		$pdf->Cell(10, 4,'VAT 12%', 0, 'L');
 		$pdf->Ln();
 		$pdf->SetXY(60,$a);
 		$pdf->SetFont('Arial', 'B', 8); 
 		$pdf->Cell(10, 4,$v['vat'], 0, 'L');
 		$pdf->Ln();
 		$pdf->SetXY(0,$endline);
-		$pdf->Cell(10, 1,'-------------------------------------------------------------------------', 0, 'L');
+		$pdf->Cell(10, 2,'------------------------------------------------------------------------', 0, 'L');
+		if ($data['result'][0]['client_id'] != 0) {
+			$pdf->Ln();
+			$pdf->SetXY(0,$customerNameLine);
+			$pdf->Cell(10, 4,'Customer Name: ' . $customer_data[0]['client_name'], 0, 'L');
+			$pdf->Ln();
+			$pdf->SetXY(0,$customerAddressLine);
+			$pdf->Cell(10, 4,'Address: ' . $customer_data[0]['city'], 0, 'L');
+			$pdf->Ln();
+			$pdf->SetXY(0,$customerTinLine);
+			$pdf->Cell(10, 4,'TIN: ' . $customer_data[0]['tin'], 0, 'L');
+			$pdf->Ln();
+			$pdf->SetXY(0,$customerDataEndLine);
+			$pdf->Cell(10, 2,'------------------------------------------------------------------------', 0, 'L');
+		}
 		$pdf->SetXY(0,$endmessage);
 		$pdf->SetFont('Arial', 'B', 8); 
 		$pdf->Cell(10, 4,'THIS SERVES AS AN OFFICIAL RECEIPT', 0, 'L');

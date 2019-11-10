@@ -68,16 +68,16 @@
         <div class="panel-body">
           <div class="form-group">
             <div class="col-xs-6 col-sm-12 col-md-12 col-lg-12" style="margin-top:10px;">
-             <input type="text" class="form-control" placeholder="Registered Name" ng-model="form.supplier_name"/>
+             <input type="text" class="form-control" placeholder="Registered Name" ng-model="form.supplier_name" ng-keyup="uppercaseFormWords('supplier_name');"/>
             </div>
             <div class="col-xs-6 col-sm-12 col-md-12 col-lg-12" style="margin-top:10px;">
-              <input type="text" class="form-control" placeholder="Company Address" ng-model="form.supplier_address"/>
+              <input type="text" class="form-control" placeholder="Company Address" ng-model="form.supplier_address" ng-keyup="uppercaseFormWords('supplier_address');"/>
             </div>
             <div class="col-xs-6 col-sm-12 col-md-12 col-lg-12" style="margin-top:10px;">
               <input type="text" class="form-control" is-Number placeholder="Contact Number" ng-model="form.supplier_contact_number"/>
             </div>
             <div class="col-xs-6 col-sm-12 col-md-12 col-lg-12" style="margin-top:10px;">
-              <input type="text" class="form-control" placeholder="Contact Person" ng-model="form.supplier_contact_person"/>
+              <input type="text" class="form-control" placeholder="Contact Person" ng-model="form.supplier_contact_person" ng-keyup="uppercaseFormWords('supplier_contact_person');"/>
             </div>
             <div class="col-xs-6 col-sm-12 col-md-12 col-lg-12" style="margin-top:10px;">
               <input type="text" class="form-control" placeholder="Code Name" ng-model="form.supplier_code_name"/>

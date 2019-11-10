@@ -22,6 +22,12 @@ $total = $_GET['total'];
 $discount = $_GET['discount'];
 $cash = $_GET['cash'];
 $rname = $_GET['rname'];
+if ($_GET['is_walkin'] == 'false') {
+	$customerName = $_GET['customer_name'];
+	$customerAddress = $_GET['customer_address'];
+	$customerTin = $_GET['customer_tin'];
+}
+
 $x = 60;
 $y = 51;
 $q = 54;
@@ -34,14 +40,27 @@ $a = 72;
 $b = 13;
 $n = 51;
 $endline = 75;
-$endmessage = 77;
-$endmessage2 = 80;
-$endmessage3 = 83;
-$endmessage4 = 86;
-$endmessage5 = 91;
-$endmessage6 = 94;
-$endmessage7 = 97;
-$endmessage7 = 97;
+if ($_GET['is_walkin'] == 'false') {
+	$customerNameLine = 78;
+	$customerAddressLine = 81;
+	$customerTinLine = 84;
+	$customerDataEndLine = 87;
+	$endmessage = 90;
+	$endmessage2 = 93;
+	$endmessage3 = 96;
+	$endmessage4 = 99;
+	$endmessage5 = 102;
+	$endmessage6 = 105;
+	$endmessage7 = 108;
+} else {
+	$endmessage = 78;
+	$endmessage2 = 81;
+	$endmessage3 = 84;
+	$endmessage4 = 87;
+	$endmessage5 = 90;
+	$endmessage6 = 93;
+	$endmessage7 = 96;	
+}
 $count = 0;
 $str = 'Php';
 $heights = 130;
@@ -88,7 +107,7 @@ class PDF extends FPDF
 		$pdf->Cell(10, 5, 'Mandaluyong City' , 0, 'L'); 
 		$pdf->Ln();
 		$pdf->SetXY(18,25); 
-		$pdf->Cell(10, 5, 'VAT REG TIN#000-000-000-000' , 0, 'L'); 
+		$pdf->Cell(10, 5, 'VAT REG TIN#147-749-490-000' , 0, 'L');
 		$pdf->Ln();
 		$pdf->SetXY(12,28); 
 		$pdf->Cell(10, 5, 'THIS SERVE AS YOUR SALES INVOICE' , 0, 'L'); 
@@ -115,13 +134,17 @@ class PDF extends FPDF
 		$s += 5;
 		$a += 5;
 		$endline += 6;
-		$endmessage += 6;
-		$endmessage2 += 6;
-		$endmessage3 += 6;
-		$endmessage4 += 6;
-		$endmessage5 += 7;
-		$endmessage6 += 7;
-		$endmessage7 += 7;
+		$customerNameLine += 7;
+		$customerAddressLine += 7;
+		$customerTinLine += 7;
+		$customerDataEndLine += 7;	
+		$endmessage += 8;
+		$endmessage2 += 8;
+		$endmessage3 += 8;
+		$endmessage4 += 8;
+		$endmessage5 += 9;
+		$endmessage6 += 9;
+		$endmessage7 += 9;
 		};
 		$count += 1;
 		$pdf->SetFont('Arial', 'B', 8); 
@@ -195,6 +218,20 @@ class PDF extends FPDF
 		$pdf->Ln();
 		$pdf->SetXY(0,$endline);
 		$pdf->Cell(10, 2,'------------------------------------------------------------------------', 0, 'L');
+		if ($_GET['is_walkin'] == 'false') {
+			$pdf->Ln();
+			$pdf->SetXY(0,$customerNameLine);
+			$pdf->Cell(10, 4,'Customer Name: ' . $customerName, 0, 'L');
+			$pdf->Ln();
+			$pdf->SetXY(0,$customerAddressLine);
+			$pdf->Cell(10, 4,'Address: ' . $customerAddress, 0, 'L');
+			$pdf->Ln();
+			$pdf->SetXY(0,$customerTinLine);
+			$pdf->Cell(10, 4,'TIN: ' . $customerTin, 0, 'L');
+			$pdf->Ln();
+			$pdf->SetXY(0,$customerDataEndLine);
+			$pdf->Cell(10, 2,'------------------------------------------------------------------------', 0, 'L');
+		}
 		$pdf->SetXY(0,$endmessage);
 		$pdf->SetFont('Arial', 'B', 8); 
 		$pdf->Cell(10, 4,'THIS SERVES AS AN OFFICIAL RECEIPT', 0, 'L');

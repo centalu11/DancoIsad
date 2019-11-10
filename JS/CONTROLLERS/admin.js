@@ -129,7 +129,10 @@ app.controller('Admin', function(
 
         })
         .then(null, function(data){
-
+            var promise = SessionFactory.logout();
+            promise.then(function(data){
+                window.location = './login.html';
+            });
         });
     }
 
@@ -221,7 +224,6 @@ $scope.sortstocks = function(){
     var promise = ProductFactory.get_product_data_search(filters);
     promise.then(function(data){
         $scope.product_data = data.data.result;
-
 
         var a = 0;
         for (var i in $scope.product_data) {
@@ -640,6 +642,12 @@ cfpLoadingBar.start();
 
     // console.log($scope.form.selling_price1);
     // return false;
+
+    if ($scope.form.product_kinds == '' || $scope.form.product_kinds == "" || $scope.form.product_kinds == NaN || $scope.form.product_kinds == null || $scope.form.product_kinds == undefined || $scope.form.product_kinds == 'NaN') {
+        var notify = $.notify('Product Kind is required!', {'type': 'danger' ,  allow_dismiss: true });
+        cfpLoadingBar.complete();
+        return false;
+    }
 
     var datas = {
         product_name : $scope.form.product_name,
@@ -1312,15 +1320,22 @@ $scope.pageChanged_productdata = function() {
 $scope.setItemsPerPage_productdata = function(num) {
     $scope.itemsPerPage_productdata = num;
 $scope.currentPage_productdata = 1; //reset to first paghe
-}
+};
+
+$scope.complete_request = function(product_id) {
+    cfpLoadingBar.start();
+    var promise = ProductFactory.complete_request(product_id);
+    promise.then(function(data){
+        get_product_data();
+        cfpLoadingBar.complete();
+    })
+};
 
 function get_product_data(){
     cfpLoadingBar.start();
     var promise = ProductFactory.get_product_data();
     promise.then(function(data){
         $scope.product_data = data.data.result;
-        
-
 
         var a = 0;
         for (var i in $scope.product_data) {
@@ -1907,69 +1922,6 @@ function makeid() {
     $scope.form.finalnumber = finalnumber;
 }
 
-$scope.request_product_order = function(v){
-    
-    var index = $scope.checked_bcode_data.indexOf(v);
-    makeid();
-
-    $scope.modal = {
-        title : 'Request Product Order',
-        save : 'Request',
-        close : 'Cancel',
-        finalnumber : $scope.form.finalnumber
-    };
-
-    ngDialog.openConfirm({
-        template: 'RequestOrderDataModal',
-        className: 'ngdialog-theme-plain dialogwidth400',
-        preCloseCallback: function(value) {
-            var nestedConfirmDialog;
-            if($scope.modal.product_quantity == '' || $scope.modal.product_date_needed == '' || $scope.modal.product_market_price == ''
-                || $scope.modal.product_quantity == "" || $scope.modal.product_date_needed == "" || $scope.modal.product_market_price == ""
-                || $scope.modal.product_quantity == null || $scope.modal.product_date_needed == null || $scope.modal.product_market_price == null
-                || $scope.modal.product_quantity == undefined || $scope.modal.product_date_needed == undefined || $scope.modal.product_market_price == undefined
-                ){
-                var notify = $.notify('Request orders will not proceed if there is an absence of data', {'type': 'danger', allow_dismiss: true });
-            return false;
-        }
-        return nestedConfirmDialog;
-    },
-    scope: $scope,
-    showClose: false
-})
-.then(function(value){
-    return false;
-}, function(value){
-    cfpLoadingBar.start();
-    $scope.modal.new_product_date_needed = $filter('date')($scope.modal.product_date_needed._d, "medium");
-    var datas = {
-        pk : $scope.checked_bcode_data[index].pk,
-        product_name : $scope.checked_bcode_data[index].product_name,
-        product_finalnumber : $scope.modal.finalnumber,
-        product_quantity : $scope.modal.product_quantity,
-        product_date_needed : $scope.modal.new_product_date_needed,
-        product_market_price : $scope.modal.product_market_price,
-        user_pk : $scope.user.pk,
-        request_order_status : true,
-        message : '<p>Good Day Sir Wayne,</p><p>&nbsp;</p><p>I have already sent a product order for '+ $scope.checked_bcode_data[index].product_name +' in BunnyPOS with a quantity of '+ $scope.modal.product_quantity +', thanks</p><p>&nbsp;</p><p>Warm Regards,</p><p>'+$scope.user.first_name+' '+$scope.user.last_name +'</p>'
-    }
-
-    var notify = $.notify('Please wait while the system is sending your request', { 'type': 'warning', allow_dismiss: true });
-
-    var promise = ProductFactory.request_product_order(datas);
-    promise.then(function(data){
-        var notify = $.notify('You have succesfully requested the product', { 'type': 'success', allow_dismiss: true });
-        get_product_data();
-        $route.reload();
-        cfpLoadingBar.complete();
-    })
-    .then(null, function(data){
-        var notify = $.notify('Oops there something wrong!', { 'type': 'danger', allow_dismiss: true });
-        cfpLoadingBar.complete();
-    });
-});
-}
-
 $scope.approve_order_request = function(v){
     cfpLoadingBar.start();
     var index = $scope.request_data.indexOf(v);
@@ -2216,10 +2168,10 @@ $scope.request_product_order = function(v){
         get_product_data();
         $route.reload();
         cfpLoadingBar.complete();
+        return;
     })
     .then(null, function(data){
-        var notify = $.notify('Oops there something wrong!', { 'type': 'danger', allow_dismiss: true });
-        cfpLoadingBar.complete();
+        get_product_data();
     });
 });
 }

@@ -33,7 +33,7 @@ app.controller('HomeController', function(
             
         })
         .then(null, function(data){
-            
+            $scope.logout();
         });
     }
 

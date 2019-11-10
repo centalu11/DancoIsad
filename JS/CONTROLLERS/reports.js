@@ -55,6 +55,8 @@ app.controller('Reports', function(
     $scope.product_transaction_number = "";
     $scope.product_name = "";
     $scope.full_name = "";
+    $scope.sortFieldIndex = null;
+    $scope.arrowSort = null;
 
     var filtered = {};
     var current_sort_direction = null;
@@ -93,7 +95,10 @@ app.controller('Reports', function(
 
         })
         .then(null, function(data){
-
+            var promise = SessionFactory.logout();
+            promise.then(function(data){
+                window.location = './login.html';
+            });
         });
     }
 
@@ -983,7 +988,9 @@ app.controller('Reports', function(
         });
     };
 
-    $scope.sortTable = function(field) {
+    $scope.sortTable = function(field, index) {
+        $scope.sortFieldIndex = index;
+
         if (this.current_sort_field != field) {
             this.current_sort_field = field;
             this.current_sort_direction = null;
@@ -991,12 +998,15 @@ app.controller('Reports', function(
 
         if (this.current_sort_direction == 'ASC') {
             this.current_sort_direction = 'DESC';
+            $scope.arrowSort = 0;
         } else if (this.current_sort_direction == 'DESC') {
             this.current_sort_direction = null;
+            $scope.arrowSort = null;
             this.search_columns();
             return null;
         } else {
             this.current_sort_direction = 'ASC'
+            $scope.arrowSort = 1;
         }
 
         this.search_columns([field, this.current_sort_direction]);

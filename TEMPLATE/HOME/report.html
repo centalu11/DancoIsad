@@ -225,18 +225,18 @@
           <table id="wtf" class="table table-hover table-responsive">
             <thead>
               <tr style="background-color:green;color: white;">
-                <th ng-click="sortTable('product_transaction_number')">Transaction Number</th>
-                <th ng-click="sortTable('users.first_name')">Cashier Name</th>
-                <th ng-click="sortTable('product_name')">Product Name</th>
-                <th ng-click="sortTable('product_quantity')">Product Quantity</th>
-                <th ng-click="sortTable('product_supplier_price')">Supplier Price</th>
+                <th ng-click="sortTable('product_transaction_number', 0)">Transaction Number <i ng-class="{ 'fa fa-arrow-down' : sortFieldIndex == 0 && arrowSort == 0, 'fa fa-arrow-up' : sortFieldIndex == 0 && arrowSort == 1 }"></i></th>
+                <th ng-click="sortTable('users.first_name', 1)">Cashier Name <i ng-class="{ 'fa fa-arrow-down' : sortFieldIndex == 1 && arrowSort == 0, 'fa fa-arrow-up' : sortFieldIndex == 1 && arrowSort == 1 }"></i></th>
+                <th ng-click="sortTable('product_name', 2)">Product Name <i ng-class="{ 'fa fa-arrow-down' : sortFieldIndex == 2 && arrowSort == 0, 'fa fa-arrow-up' : sortFieldIndex == 2 && arrowSort == 1 }"></i></th>
+                <th ng-click="sortTable('product_quantity', 3)">Product Quantity <i ng-class="{ 'fa fa-arrow-down' : sortFieldIndex == 3 && arrowSort == 0, 'fa fa-arrow-up' : sortFieldIndex == 3 && arrowSort == 1 }"></i></th>
+                <th ng-click="sortTable('product_supplier_price', 4)">Supplier Price <i ng-class="{ 'fa fa-arrow-down' : sortFieldIndex == 4 && arrowSort == 0, 'fa fa-arrow-up' : sortFieldIndex == 4 && arrowSort == 1 }"></i></th>
                 <!-- <th>Input VAT</th> -->
-                <th ng-click="sortTable('product_retail_price')">Markup Price</th>
+                <th ng-click="sortTable('product_retail_price', 5)">Markup Price <i ng-class="{ 'fa fa-arrow-down' : sortFieldIndex == 5 && arrowSort == 0, 'fa fa-arrow-up' : sortFieldIndex == 5 && arrowSort == 1 }"></i></th>
                 <!-- <th>Output VAT</th> -->
                 <!-- <th>Discount</th> -->
                 <!-- <th>Voided Items</th> -->
-                <th ng-click="sortTable('tender_data.date_created')">Date Tendered</th>
-                <th ng-click="sortTable('cast(total as numeric)')">Total</th>
+                <th ng-click="sortTable('tender_data.date_created', 6)">Date Tendered <i ng-class="{ 'fa fa-arrow-down' : sortFieldIndex == 6 && arrowSort == 0, 'fa fa-arrow-up' : sortFieldIndex == 6 && arrowSort == 1 }"></i></th>
+                <th ng-click="sortTable('cast(total as numeric)', 7)">Total <i ng-class="{ 'fa fa-arrow-down' : sortFieldIndex == 7 && arrowSort == 0, 'fa fa-arrow-up' : sortFieldIndex == 7 && arrowSort == 1 }"></i></th>
               </tr>
             </thead>
             <tbody style="text-align: center">

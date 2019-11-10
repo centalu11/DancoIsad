@@ -673,11 +673,12 @@ EOT;
         return ClassParent::get($sql);
     }
 
-    public function get_customers(){
+    public function get_customers($where = null){
         $sql = <<<EOT
             select
                 *
                 from customer_data
+                $where
                 ;
 EOT;
         return ClassParent::get($sql);
@@ -1177,7 +1178,8 @@ EOT;
                     product_image,
                     input_vat,
                     output_vat,
-                    selling_price
+                    selling_price,
+                    product_kind
                 )
                 VALUES
                 (
@@ -1197,7 +1199,8 @@ EOT;
                     '$product_image',
                     '$input_vat',
                     '$output_vat',
-                    '$selling_price'
+                    '$selling_price',
+                    '$product_kinds'
                 )
                 ;
 EOT;
@@ -1267,6 +1270,7 @@ EOT;
         $voucherstatus = $data['voucherstatus'];
         $vouchercustname = $data['vouchercustname'];
         $vouchernumber = $data['vouchernumber'];
+        $client_id = $data['client_id'];
 
         $sql = "begin;";
 
@@ -1355,7 +1359,7 @@ EOT;
                     gc_code,
                     tempo_total,
                     product_pk,
-                    date_created
+                    client_id
                 )
                 VALUES
                 (
@@ -1378,7 +1382,7 @@ EOT;
                     '$gc_code',
                     '$tempo_total',
                     '$pk',
-                    '$final_date_tendered'
+                    '$client_id'
                 )
                 ;
 EOT;
@@ -1405,7 +1409,7 @@ EOT;
                     gc_code,
                     tempo_total,
                     product_pk,
-                    date_created
+                    client_id
                 )
                 VALUES
                 (
@@ -1428,7 +1432,7 @@ EOT;
                     '$gc_code',
                     '$tempo_total',
                     '$pk',
-                    '$final_date_tendered'
+                    '$client_id'
                 )
                 ;
 EOT;
@@ -1512,6 +1516,36 @@ EOT;
 EOT;
         $sql .= "commit;";
         return ClassParent::insert($sql);
+    }
+
+    public function complete_request($data){
+        $data = $data['pk'];
+        $sql = <<<EOT
+                select 
+                    product_quantity
+                from request_order_data
+                where product_pk = '$data' AND request_order_status = 'true'
+                ORDER BY date_created DESC LIMIT 1
+                ;
+EOT;
+
+        $result = ClassParent::get($sql);
+
+        if ($result['status']) {
+            $request_quantity = $result['result'][0]['product_quantity'];
+            $request_quantity = (int) $request_quantity;
+        $sql = <<<EOT
+                update product_data set product_stocks = product_stocks + $request_quantity where pk = '$data'
+                ;
+EOT;
+            ClassParent::update($sql);
+        }
+        $sql = <<<EOT
+                update request_order_data set request_order_status = 'false' where product_pk = '$data'
+                ;
+EOT;
+
+        return ClassParent::update($sql);
     }
 
     public function gift_certificate_data($data){
@@ -1598,7 +1632,8 @@ EOT;
                     product_image,
                     input_vat,
                     output_vat,
-                    selling_price
+                    selling_price,
+                    product_kind
                 )
                 =
                 (
@@ -1615,7 +1650,8 @@ EOT;
                     '$product_image',
                     $input_vat,
                     $output_vat,
-                    $selling_price
+                    $selling_price,
+                    '$product_kinds'
                 )
                 where pk = '$pk'
                 ;
@@ -1799,8 +1835,9 @@ EOT;
                     product_price,
                     product_receipt_name,
                     remarks,
+                    product_kind,
                     product_image,
-                    (select request_order_status from request_order_data where product_pk::int =  product_data.pk and archived = 'f') as request_order_status,
+                    (select request_order_status from request_order_data where product_pk::int =  product_data.pk and archived = 'f' ORDER BY date_created DESC LIMIT 1) as request_order_status,
                     product_product_code,
                     product_rules,
                     product_branches,
@@ -1846,7 +1883,7 @@ EOT;
                     product_price,
                     product_receipt_name,
                     product_image,
-                    (select request_order_status from request_order_data where product_pk::int =  product_data.pk and archived = 'f') as request_order_status,
+                    (select request_order_status from request_order_data where product_pk::int =  product_data.pk and archived = 'f' ORDER BY date_created DESC LIMIT 1) as request_order_status,
                     product_product_code,
                     product_rules,
                     product_branches,

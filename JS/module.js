@@ -34,7 +34,7 @@ app.config(function($routeProvider) {
 		controller: 'Sales',
 		templateUrl: 'TEMPLATE/HOME/salesanalytics.html'             
 	})
-	.when('/Refund',             
+	.when('/Exchange',             
 	{                 
 		controller: 'Admin',
 		templateUrl: 'TEMPLATE/HOME/refund.html'             

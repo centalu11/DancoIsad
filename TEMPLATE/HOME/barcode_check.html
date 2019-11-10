@@ -250,8 +250,8 @@
                 <th style="width:5% !important;max-width:5% !important;" onclick="sortTable(0)">Product Name</th>
                 <th style="width:5% !important;max-width:5% !important;" onclick="sortTable(1)">Receipt Name</th>
                 <!-- <th style="width:5% !important;max-width:5% !important;">Product Code</th> -->
-                <!-- <th style="width:5% !important;max-width:5% !important;">Rules</th> --><!-- 
-                <th style="width:5% !important;max-width:5% !important;">Kind</th> -->
+                <!-- <th style="width:5% !important;max-width:5% !important;">Rules</th> -->
+                <th style="width:5% !important;max-width:5% !important;">Kind</th>
                 <!-- <th style="width:5% !important;max-width:5% !important;" >O.R #</th>
                 <th style="width:5% !important;max-width:5% !important;">Status</th> -->
                 <!-- <th style="width:5% !important;max-width:5% !important;">Supplier Code Name</th> -->
@@ -272,7 +272,7 @@
             <td style="width:5% !important;max-width:5% !important;">{{v.product_receipt_name}}</td>
             <!-- <td style="width:5% !important;max-width:5% !important;">{{v.product_product_code}}</td> -->
             <!-- <td style="width:5% !important;max-width:5% !important;">{{v.product_rules}}</td> -->
-            <!-- <td style="width:5% !important;max-width:5% !important;">{{v.product_kind}}</td> -->
+            <td style="width:5% !important;max-width:5% !important;">{{v.product_kind}}</td>
             <!-- <td style="width:5% !important;max-width:5% !important;">{{v.product_or_number}}</td> -->
             <!-- <td style="width:5% !important;max-width:5% !important;" ng-if="v.product_status_color == 1" style="color:{{v.product_status_color1}};">{{v.product_status}}</td> -->
             <!-- <td style="width:5% !important;max-width:5% !important;">{{v.product_supplier}}</td > -->
@@ -541,7 +541,7 @@ function sortTable(n) {
               <th style="width:5% !important;max-width:5% !important;" onclick="Trueshot(1)">Receipt Name</th>
               <!-- <th style="width:5% !important;max-width:5% !important;">Product Code</th> -->
               <!-- <th style="width:5% !important;max-width:5% !important;">Rules</th> -->
-              <!-- <th style="width:5% !important;max-width:5% !important;">Kind</th> -->
+              <th style="width:5% !important;max-width:5% !important;">Kind</th>
               <!-- <th style="width:5% !important;max-width:5% !important;" >O.R #</th>
               <th style="width:5% !important;max-width:5% !important;">Status</th> -->
               <!-- <th style="width:5% !important;max-width:5% !important;">Supplier Code Name</th> -->
@@ -588,7 +588,7 @@ function sortTable(n) {
               <th style="width:6% !important;max-width:6% !important;">{{v.product_receipt_name}}</th>
               <!-- <th style="width:6% !important;max-width:6% !important;">{{v.product_product_code}}</th> -->
               <!-- <th style="width:6% !important;max-width:6% !important;">{{v.product_rules}}</th> -->
-              <!-- <th style="width:6% !important;max-width:6% !important;">{{v.product_kind}}</th> -->
+              <th style="width:6% !important;max-width:6% !important;">{{v.product_kind}}</th>
               <!-- <th style="width:6% !important;max-width:6% !important;">{{v.product_or_number}}</th> -->
               <!-- <th ng-if="v.product_status_color == 1" style="color:{{v.product_status_color1}};width:6% !important;max-width:6% !important;">{{v.product_status}}</th> -->
               <!-- <th style="width:6% !important;max-width:6% !important;">{{v.product_supplier}}</th> -->
@@ -604,7 +604,8 @@ function sortTable(n) {
               <!-- <th style="width:6% !important;max-width:6% !important;color:{{v.remarks_color}};">{{v.remarks}}</th> -->
               <th style="width:6% !important;max-width:6% !important;">&nbsp;&nbsp;<i class="fa fa-pencil" aria-hidden="true" style="cursor:pointer" ng-click="edit_product_data(v)"  title="Edit"></i>
                 <i class="fa fa-trash" aria-hidden="true" style="cursor:pointer" ng-click="delete_product_data(v)"  title="Delete"></i>
-                <i class="fa fa-shopping-cart" ng-if="v.product_stocks <= 3 && v.request_order_status == 'false' || v.request_order_status == 'null'" aria-hidden="true" style="cursor:pointer" ng-click="request_product_order(v)"  title="Request"></i>
+                <i class="fa fa-shopping-cart" ng-if="v.product_stocks <= 3 && v.request_order_status == 'false' || v.request_order_status == 'null'" aria-hidden="true" style="cursor:pointer" ng-click="request_product_order(v)" title="Request"></i>
+                <i class="fa fa-check" style="cursor:pointer" ng-click="complete_request(v)" title="Request Completed" ng-if="v.request_order_status == true"></i>
               </th>
             </tr>
           </tbody>
@@ -779,7 +780,26 @@ function sortTable(n) {
 </div>
 <div class="row">
 </div>
-
+<div class="row">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <label for="slckinds">Select Kinds  </label>
+    <select id="slckinds" ng-model="modal.product_kinds" 
+    class="form-control">
+    <option value="" disabled selected style="display:none"> Select Kinds</option>
+    <option value="Hard Copy Sub# 20">Hard Copy Sub# 20</option>
+    <option value="Hard Copy Sub# 24">Hard Copy Sub# 24</option>
+    <option value="FAX Paper">FAX Paper</option>
+    <option value="Cartolina">Cartolina</option>
+    <option value="Notebook Spiral 80lvs">Notebook Spiral 80lvs</option>
+    <option value="Basketball Leather & Rubber">Basketball Leather & Rubber</option>
+    <option value="Badminton Carlton">Badminton Carlton</option>
+    <option value="Ballpen">Ballpen</option>
+    <option value="Marker">Marker</option>
+    <option value="Folders">Folders</option>
+    <option value="Papers">Papers</option>
+    <option value="Clips">Clips</option>
+  </select>  
+</div>
 
 <hr>
 
@@ -955,7 +975,7 @@ function Trueshot(n) {
 
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
           <div class="row-fluid">
-            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="margin-bottom:1%">
               <select ng-model="form.product_supplier" class="form-control">
                 <option value="" disabled selected style="display:none"> Select Supplier </option>
                 <option ng-repeat="v in supplier_data" value="{{v.supplier_code_name}}">{{v.supplier_name}}</option>
@@ -963,6 +983,28 @@ function Trueshot(n) {
             </div>
             <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
               <input type="text" class="form-control" max-length="17"  placeholder="Receipt Name" ng-model="form.receipt_name"/>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="row-fluid">
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+              <select ng-model="form.product_kinds" class="form-control">
+                <option value="" disabled selected style="display:none"> Select Kinds</option>
+                <option value="Hard Copy Sub# 20">Hard Copy Sub# 20</option>
+                <option value="Hard Copy Sub# 24">Hard Copy Sub# 24</option>
+                <option value="FAX Paper">FAX Paper</option>
+                <option value="Cartolina">Cartolina</option>
+                <option value="Notebook Spiral 80lvs">Notebook Spiral 80lvs</option>
+                <option value="Basketball Leather & Rubber">Basketball Leather & Rubber</option>
+                <option value="Badminton Carlton">Badminton Carlton</option>
+                <option value="Ballpen">Ballpen</option>
+                <option value="Marker">Marker</option>
+                <option value="Folders">Folders</option>
+                <option value="Papers">Papers</option>
+                <option value="Clips">Clips</option>
+              </select> 
             </div>
           </div>
         </div>

@@ -52,7 +52,10 @@ app.controller('Discount', function(
 
         })
         .then(null, function(data){
-
+            var promise = SessionFactory.logout();
+            promise.then(function(data){
+                window.location = './login.html';
+            });
         });
     }
 

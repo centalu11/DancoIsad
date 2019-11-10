@@ -420,7 +420,7 @@ input[type=text]:focus {
                         <span class="input-group-addon" style="background-color: lightgray">
                             <i class="glyphicon glyphicon-search"></i>
                         </span>
-                        <input type="text" class="form-control" ng-model="form.barcode" ng-change="barcode()" placeholder="Search Product"/>
+                        <input type="text" class="form-control" ng-model="form.barcode" ng-keyup= "enterBarcode($event)" placeholder="Search Product"/>
                     </div>
                 </div>
             
@@ -429,7 +429,7 @@ input[type=text]:focus {
                         <span class="input-group-addon" style="background-color: lightgray">
                             <i class="glyphicon glyphicon-certificate"></i>
                         </span>
-                        <input type="text" is-Number class="form-control" placeholder="Quantity" ng-model="form.countquantity">
+                        <input type="text" is-Number class="form-control" ng-keyup= "enterBarcode($event)" placeholder="Quantity" ng-model="form.countquantity">
                     </div>
                 </div>
             </div>
@@ -457,7 +457,7 @@ input[type=text]:focus {
                     <tr ng-repeat="(k,v) in tender_data track by $index">
                         <th scope="row">{{k+1}}</th>
                         <td>{{v.product_name}}</td>
-                        <td><input type="text" is-Number ng-model="v.product_quantity" style="width:50px;" ng-disabled="v.status" ng-keypress="$event.keyCode === 13 && [v.product_price=v.product_quantity*v.selling_price,v.status=true,temporary(),v.tempo_status=true,stock_checker(k)]"> <i style="cursor:pointer" ng-if="v.status==true" ng-click="v.status=false" class="fa fa-plus-circle"></i> </td>
+                        <td><input type="text" is-Number ng-model="v.product_quantity" style="width:50px;" ng-disabled="v.status" ng-keypress="$event.keyCode === 13 && [changeQuantity(k)]"> <i style="cursor:pointer" ng-if="v.status==true" ng-click="v.status=false" class="fa fa-plus-circle"></i> </td>
                         <td>{{v.product_price}}</td>
                         <td>&nbsp&nbsp<i class="fa fa-times-circle" aria-hidden="true" style="cursor:pointer" ng-click="void_product(k)"  title="Void Product"></i>
                             <!-- &nbsp&nbsp<i class="fa fa-check" aria-hidden="true" style="cursor:pointer" ng-click="discount_product(k)"  title="Discount Product"></i> -->
@@ -486,13 +486,20 @@ input[type=text]:focus {
 
         <div class="container" style="margin-top: 3%; width:100%;">
             <div class="row">
+                <p class="col-4 col-sm-4 col-md-4 col-lg-4" style="font-size:150%;font-weight: bold">Customer </p> 
+                <select class="col-8 col-sm-8 col-md-8 col-lg-8" style="cursor:pointer; font-size:150%; width: 66%;"
+                    ng-options="customer as customer.client_name for customer in customer_list track by customer.pk" ng-model="selected_customer">
+                </select>
+            </div>
+
+            <div class="row">
                 <p class="col-4 col-sm-4 col-md-4 col-lg-4" style="font-size:150%;font-weight: bold">Total </p> 
                 <input class="col-8 col-sm-8 col-md-8 col-lg-8" type="text" ng-model="form.q" placeholder ="0" disabled style="font-size:150%; width: 66%"/>
             </div>
             
             <div class="row">
                 <p class="col-4 col-sm-4 col-md-4 col-lg-4" style="font-size: 150%; font-weight: bold">Cash </p> 
-                <input class="col-8 col-sm-8 col-md-8 col-lg-8" id="changeInput" type="text" ng-disabled="cash_status == true" ng-model="cash" is-Number style="font-size:150%;" ng-keypress="$event.keyCode === 13 && [cash_status=true,check_amount(cash),tender_show=true]"/>
+                <input class="col-8 col-sm-8 col-md-8 col-lg-8" id="changeInput" type="text" ng-disabled="cash_status == true" ng-model="cash" is-Number style="font-size:150%;" ng-keypress="$event.keyCode === 13 && [check_amount(cash)]"/>
             </div>
 
 <!--             <div class="row">

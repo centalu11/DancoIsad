@@ -49,7 +49,10 @@ app.controller('Changeitem', function(
             get_product_data();
         })
         .then(null, function(data){
-
+            var promise = SessionFactory.logout();
+            promise.then(function(data){
+                window.location = './login.html';
+            });
         });
     }
 

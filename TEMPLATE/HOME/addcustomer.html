@@ -127,7 +127,7 @@
       <div class="row">
         <div class="col-md-12">
           <div class="col-md-12">
-            Client Name <input type="text" class="form-control input-word-uppercase" onkeyup="uppercaseWords(0);" ng-model="modal.client_name">
+            Client Name <input type="text" class="form-control input-word-uppercase" ng-keyup="uppercaseWords('client_name');" ng-model="modal.client_name">
           </div>
         </div>
       </div>
@@ -135,7 +135,7 @@
       <div class="row">
         <div class="col-md-12">
           <div class="col-md-12">
-            Street Address <input type="text" class="form-control input-word-uppercase" onkeyup="uppercaseWords(1);" ng-model="modal.address">
+            Street Address <input type="text" class="form-control input-word-uppercase" ng-keyup="uppercaseWords('address');" ng-model="modal.address">
           </div>
         </div>
       </div>
@@ -143,7 +143,7 @@
       <div class="row">
         <div class="col-md-12">
           <div class="col-md-12">
-            City <input type="text" class="form-control input-word-uppercase" onkeyup="uppercaseWords(2);" ng-model="modal.city">
+            City <input type="text" class="form-control input-word-uppercase" ng-keyup="uppercaseWords('city');" ng-model="modal.city">
           </div>
         </div>
       </div>
@@ -202,21 +202,4 @@
     <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
     <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')" style="background-color:green">{{modal.save}}</button>
   </div>
-</script>
-
-<script>
-  function uppercaseWords(index) {
-    var element = document.getElementsByClassName("input-word-uppercase");
-    var value = element[index].value;
-    var valueArray = [];
-    valueArray = value.toLowerCase().split(' ');
-
-    for (var i = 0; i < valueArray.length; i++) {
-      valueArray[i] = valueArray[i].charAt(0).toUpperCase() + valueArray[i].substring(1);
-    }
-   
-    value = valueArray.join(' ');
-    
-    element[index].value = value;
-  }
 </script>

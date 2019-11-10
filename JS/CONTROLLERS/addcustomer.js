@@ -44,7 +44,10 @@ app.controller('AddCustomer', function(
 
         })
         .then(null, function(data){
-
+            var promise = SessionFactory.logout();
+            promise.then(function(data){
+                window.location = './login.html';
+            });
         });
     }
 
@@ -281,6 +284,20 @@ app.controller('AddCustomer', function(
                 return false;
             });
         });
+    };
+
+    $scope.uppercaseWords = function(field) {
+        var value = $scope.modal[field];
+        var valueArray = [];
+        valueArray = value.split(' ');
+
+        for (var i = 0; i < valueArray.length; i++) {
+            valueArray[i] = valueArray[i].charAt(0).toUpperCase() + valueArray[i].substring(1);
+        }
+
+        value = valueArray.join(' ');
+
+        $scope.modal[field] = value;
     };
 });
 

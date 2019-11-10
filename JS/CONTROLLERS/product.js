@@ -45,7 +45,7 @@ app.controller('Product', function(
     $scope.tender_show = false;
     $scope.stock_amount_finalized = 0;
     $scope.stock_amount_pk = {};
-    $scope.stock_amount = 0;
+    $scope.stock_amount = {};
     $scope.cash_status = false;
     $scope.gift_status = false;
     $scope.discount = false;
@@ -96,6 +96,12 @@ app.controller('Product', function(
     $scope.itemsPerPage_user_data = $scope.viewby_user_data;
     $scope.maxSize = 5;
 
+    $scope.customer_list;
+    $scope.selected_customer;
+    $scope.customer_data = {};
+    $scope.temporary_product_data = {};
+    $scope.product_max_qtys = {};
+
     var filtered = {};
     var filters= {};
     var filter= {};
@@ -106,6 +112,7 @@ app.controller('Product', function(
     $scope.vm.options = {format: 'YYYY/MM/DD HH:mm', showClear: true};
 
     function init(){
+        get_customers();
         var promise = SessionFactory.getsession();
         promise.then(function(data){
             var _id = md5.createHash('pk');
@@ -120,6 +127,20 @@ app.controller('Product', function(
         .then(null, function(data){
             window.location = './login.html';
         });
+    }
+
+    function get_customers() {
+        var promise = ProductFactory.get_customers();
+        promise.then(function(data){
+            $scope.customer_data = data.data.result;
+            setCustomerList();
+        });
+    }
+
+    function setCustomerList() {
+        $scope.customer_list = $scope.customer_data;
+        $scope.customer_list.unshift({'pk' : 0, 'client_name' : 'Walk In'});
+        $scope.selected_customer = $scope.customer_list[0];
     }
 
     function get_user(){
@@ -141,7 +162,10 @@ app.controller('Product', function(
 
         })
         .then(null, function(data){
-
+            var promise = SessionFactory.logout();
+            promise.then(function(data){
+                window.location = './login.html';
+            });
         });
     }
 
@@ -1376,7 +1400,7 @@ function makeuser_id() {
 }
 
 $scope.add_user = function(){
-
+    makeuser_id();
 
     $scope.modal = {
         title : 'Add User',
@@ -1412,6 +1436,12 @@ $scope.add_user = function(){
             }
             if ($scope.modal.email == '' || $scope.modal.email == "" || $scope.modal.email == NaN || $scope.modal.email == null || $scope.modal.email == undefined || $scope.modal.email == 'NaN') {
                 var notify = $.notify('Oops there something wrong with the e-mail!', {'type': 'danger' ,  allow_dismiss: true });
+                cfpLoadingBar.complete();
+                return false;
+            }
+            var regexEmail = /\S+@\S+\.\S+/;
+            if (!regexEmail.test($scope.modal.email)) {
+                var notify = $.notify('Invalid Email!', {'type': 'danger' ,  allow_dismiss: true });
                 cfpLoadingBar.complete();
                 return false;
             }
@@ -1509,6 +1539,12 @@ $scope.edit_user = function(v){
             }
             if ($scope.modal.email == '' || $scope.modal.email == "" || $scope.modal.email == NaN || $scope.modal.email == null || $scope.modal.email == undefined || $scope.modal.email == 'NaN') {
                 var notify = $.notify('Oops there something wrong with the e-mail!', {'type': 'danger' ,  allow_dismiss: true });
+                cfpLoadingBar.complete();
+                return false;
+            }
+            var regexEmail = /\S+@\S+\.\S+/;
+            if (!regexEmail.test($scope.modal.email)) {
+                var notify = $.notify('Invalid Email!', {'type': 'danger' ,  allow_dismiss: true });
                 cfpLoadingBar.complete();
                 return false;
             }
@@ -1643,13 +1679,20 @@ $scope.barcode = function(){
     var promise = ProductFactory.get_barcode(filter);
     promise.then(function(data){
         $scope.product_data = data.data.result;
+        var is_new_product_to_tender = false;;
 
         for (var k in $scope.product_data) {
-        $scope.stock_amount = parseInt($scope.product_data[k].product_stocks) - parseInt($scope.form.countquantity) ;
-        $scope.stock_amount_finalized = $scope.stock_amount;
 
-        if ($scope.stock_amount <= 0) {
+        if ($scope.stock_amount[$scope.product_data[k].pk] == undefined) {
+            $scope.stock_amount[$scope.product_data[k].pk] = 0;
+            $scope.product_max_qtys[$scope.product_data[k].pk] = $scope.product_data[k].product_stocks;
+            is_new_product_to_tender = true;
+        }
 
+        var temporary_quantity;
+        temporary_quantity = parseInt($scope.stock_amount[$scope.product_data[k].pk]) + parseInt($scope.form.countquantity);
+
+        if (parseInt($scope.stock_amount[$scope.product_data[k].pk]) == parseInt($scope.product_data[k].product_stocks)) {
             $scope.modal = {
                 title : 'WARNING!',
                 close : 'Close'
@@ -1671,9 +1714,15 @@ $scope.barcode = function(){
 
             });
 
-        };
+            return;
+        } else if (parseInt(temporary_quantity) > parseInt($scope.product_data[k].product_stocks)) {
+            $scope.form.countquantity = parseInt($scope.product_data[k].product_stocks) - parseInt($scope.stock_amount[$scope.product_data[k].pk]);
+            $scope.stock_amount[$scope.product_data[k].pk] = parseInt($scope.stock_amount[$scope.product_data[k].pk]) + parseInt($scope.form.countquantity);
+        } else {
+            $scope.stock_amount[$scope.product_data[k].pk] = parseInt(temporary_quantity);
+        }
 
-        if ($scope.stock_amount >= $scope.product_data[k].product_stocks) {
+        if ($scope.stock_amount[$scope.product_data[k].pk] >= $scope.product_data[k].product_stocks) {
             $scope.modal = {
                 title : 'WARNING!',
                 close : 'Close'
@@ -1702,12 +1751,21 @@ $scope.barcode = function(){
             return false;
         };
 
-        $scope.tender_data.push($scope.product_data[0]);
-        for (var i in $scope.product_data) {
-            $scope.product_data[i].product_price = $scope.product_data[i].product_price * $scope.form.countquantity;
-            $scope.product_data[i].selling_price = parseFloat($scope.product_data[i].selling_price);
-            $scope.product_data[i].product_quantity = parseFloat($scope.form.countquantity);
-            $scope.product_data[i].status = true;
+        if (is_new_product_to_tender) {
+            $scope.tender_data.push($scope.product_data[0]);
+            $scope.tender_data[$scope.tender_data.length-1].product_quantity = $scope.stock_amount[$scope.product_data[0].pk];
+        } else {
+            for (var i = 0; i < $scope.tender_data.length; i++) {
+                if ($scope.tender_data[i].pk == $scope.product_data[0].pk) {
+                    $scope.tender_data[i].product_quantity = $scope.stock_amount[$scope.product_data[0].pk];
+                    break;
+                }
+            }
+        }
+
+        for (var z = 0; z < $scope.tender_data.length; z++) {
+            $scope.tender_data[z].product_price = $scope.tender_data[z].selling_price * $scope.tender_data[z].product_quantity;
+            $scope.tender_data[z].status = true;
         };
         
 
@@ -1718,7 +1776,26 @@ $scope.barcode = function(){
 
         cfpLoadingBar.complete();
     });
-}
+};
+
+$scope.enterBarcode = function(event) {
+    if (event.which == 13) {
+        $scope.barcode();
+    }
+};
+
+$scope.changeQuantity = function(index) {
+    if (parseInt($scope.tender_data[index].product_quantity) > parseInt($scope.product_max_qtys[$scope.tender_data[index].pk])) {
+        $scope.tender_data[index].product_quantity = parseInt($scope.product_max_qtys[$scope.tender_data[index].pk]);
+    }
+    $scope.stock_amount[$scope.tender_data[index].pk] = $scope.tender_data[index].product_quantity;
+
+    $scope.tender_data[index].product_price = $scope.tender_data[index].product_quantity * $scope.tender_data[index].selling_price;
+    $scope.tender_data[index].status=true;
+    $scope.temporary();
+    $scope.tender_data[index].tempo_status=true;
+    // $scope.stock_checker(index);
+};
 
 /*$scope.tender_product = function(test){
 
@@ -1771,12 +1848,16 @@ $scope.tender_data[i].product_price = 0;
 
 for (var k in $scope.tender_data){
     $scope.product_total_tempo += parseFloat($scope.tender_data[k].product_price);
-    $scope.product_total_temporary = parseInt($scope.product_total_tempo);
+    $scope.product_total_temporary = parseFloat($scope.product_total_tempo);
     $scope.number += $scope.tender_data[k].product_quantity;
     $scope.number_total = $scope.number;
 };
 
-console.log($scope.tender_data);
+if ($scope.cash < $scope.product_total_temporary) {
+    $scope.tender_show = false;
+} else {
+    $scope.tender_show = true;
+}
 /*if ($scope.product_total_temporary < 50 || $scope.product_total_temporary < '50') {
     $scope.aomos_dscnt_status = true;
 }else{
@@ -2078,10 +2159,11 @@ $scope.next_transaction = function(){
 $scope.check_amount = function(cash){
     if (cash < $scope.product_total_temporary) {
         var notify = $.notify('Oops your money is not enough!', {'type': 'danger', allow_dismiss: true });
-        $scope.cash_status=false;
+        $scope.tender_show = false;
         return false;
     }; 
 
+    $scope.tender_show = true;
 }
 
 $scope.void_product = function(k){
@@ -2188,7 +2270,6 @@ function tender_status_true(){
 $scope.tender_product_final = function(){
     cfpLoadingBar.start();
     maketransaction_number();
-
     var b = 0;
     var g = 0;
     for (var i in $scope.tender_data) {
@@ -2331,7 +2412,7 @@ var data = {
     voucherstatus: $scope.voucherstatus,
     cashier_user_id : $scope.user.user_id,
     product_transaction_number : $scope.form.transact_number,
-    cashier_user_id : $scope.user.user_id,
+    client_id : $scope.selected_customer.pk,
     data : JSON.stringify($scope.tender_data),
     data_new : JSON.stringify($scope.tender_new),
     vat_percentage : 12,
@@ -2353,7 +2434,6 @@ var data = {
     name : 'Tender',
     action : ' '+$scope.user.first_name+ ' ' +$scope.user.last_name+ ' ' +'tendered an item'
 };
-
 
 if (data.total == '' || data.total == "" || data.total == NaN || data.total == null || data.total == 0.00 || data.total == undefined || data.product_total == 'NaN') {
     var notify = $.notify('Oops there something wrong with total!', {'type': 'danger',  allow_dismiss: true });
@@ -2395,6 +2475,23 @@ $scope.gift_status = true;
 var promise = ProductFactory.tender_product(data);
 promise.then(function(data){
     var notify = $.notify('You have succesfully tendered the products', { 'type': 'success', allow_dismiss: true });
+    var is_walkin;
+    var customer_name;
+    var customer_address;
+    var customer_tin;
+
+    if ($scope.selected_customer.pk == 0) {
+        is_walkin = 'true';
+        customer_name = null;
+        customer_address = null;
+        customer_tin = null;
+    } else {
+        is_walkin = 'false';
+        customer_name = $scope.selected_customer.client_name;
+        customer_address = $scope.selected_customer.city;
+        customer_tin = $scope.selected_customer.tin;
+    }
+
     window.open('./FUNCTIONS/Uploads/receipt.php?total=' + $scope.form.final_totaal 
         + '&user_id_fname=' + $scope.user.first_name 
         + '&user_id_lname=' + $scope.user.last_name 
@@ -2409,6 +2506,10 @@ promise.then(function(data){
         + '&discount=' + $scope.discount_amounts
         + '&cash=' + r
         + '&rname=' + $scope.form.r_name
+        + '&is_walkin=' + is_walkin
+        + '&customer_name=' + customer_name
+        + '&customer_address=' + customer_address
+        + '&customer_tin=' + customer_tin
         );
 })
 .then(null, function(data){
@@ -2557,7 +2658,31 @@ function get_all_products(){
 
 $scope.add_supplier = function(){
     cfpLoadingBar.start();
-
+    if ($scope.form.supplier_name == '' || $scope.form.supplier_name == "" || $scope.form.supplier_name == NaN || $scope.form.supplier_name == null || $scope.form.supplier_name == undefined || $scope.form.supplier_name == 'NaN') {
+        $.notify('Name is required!', {'type': 'danger' ,  allow_dismiss: true });
+        cfpLoadingBar.complete();
+        return;
+    }
+    if ($scope.form.supplier_address == '' || $scope.form.supplier_address == "" || $scope.form.supplier_address == NaN || $scope.form.supplier_address == null || $scope.form.supplier_address == undefined || $scope.form.supplier_address == 'NaN') {
+        $.notify('Address is required!', {'type': 'danger' ,  allow_dismiss: true });
+        cfpLoadingBar.complete();
+        return;
+    }
+    if ($scope.form.supplier_contact_number == '' || $scope.form.supplier_contact_number == "" || $scope.form.supplier_contact_number == NaN || $scope.form.supplier_contact_number == null || $scope.form.supplier_contact_number == undefined || $scope.form.supplier_contact_number == 'NaN') {
+        $.notify('Contact Number is required!', {'type': 'danger' ,  allow_dismiss: true });
+        cfpLoadingBar.complete();
+        return;
+    }
+    if ($scope.form.supplier_contact_person == '' || $scope.form.supplier_contact_person == "" || $scope.form.supplier_contact_person == NaN || $scope.form.supplier_contact_person == null || $scope.form.supplier_contact_person == undefined || $scope.form.supplier_contact_person == 'NaN') {
+        $.notify('Contact Person is required!', {'type': 'danger' ,  allow_dismiss: true });
+        cfpLoadingBar.complete();
+        return;
+    }
+    if ($scope.form.supplier_code_name == '' || $scope.form.supplier_code_name == "" || $scope.form.supplier_code_name == NaN || $scope.form.supplier_code_name == null || $scope.form.supplier_code_name == undefined || $scope.form.supplier_code_name == 'NaN') {
+        $.notify('Code Name is required!', {'type': 'danger' ,  allow_dismiss: true });
+        cfpLoadingBar.complete();
+        return;
+    }
     var datas = {
         supplier_name : $scope.form.supplier_name,
         supplier_address : $scope.form.supplier_address,
@@ -3335,10 +3460,35 @@ $scope.down_payment = function(){
     }, function(value){
         $scope.tender_product_final_down_payment();
     });
-}
+};
 
+$scope.uppercaseModalWords = function(field) {
+    var value = $scope.modal[field];
+    var valueArray = [];
+    valueArray = value.split(' ');
 
+    for (var i = 0; i < valueArray.length; i++) {
+        valueArray[i] = valueArray[i].charAt(0).toUpperCase() + valueArray[i].substring(1);
+    }
 
+    value = valueArray.join(' ');
+
+    $scope.modal[field] = value;
+};
+
+$scope.uppercaseFormWords = function(field) {
+    var value = $scope.form[field];
+    var valueArray = [];
+    valueArray = value.split(' ');
+
+    for (var i = 0; i < valueArray.length; i++) {
+        valueArray[i] = valueArray[i].charAt(0).toUpperCase() + valueArray[i].substring(1);
+    }
+
+    value = valueArray.join(' ');
+
+    $scope.form[field] = value;
+};
 
 $scope.tender_product_final_down_payment = function(){
         cfpLoadingBar.start();
