@@ -2229,8 +2229,8 @@ $scope.refund = function(v){
     var index = $scope.product_data.indexOf(v);
 
     $scope.modal = {
-        title : 'Refund Product',
-        save : 'Refund',
+        title : 'Exchange Product',
+        save : 'Exchange',
         close : 'Cancel',
         product_name : $scope.product_data[index].product_name,
         product_bar_code : $scope.product_data[index].product_bar_code,
@@ -2325,8 +2325,8 @@ $scope.exchange = function(v){
     var index = $scope.product_data.indexOf(v);
 
     $scope.modal = {
-        title : 'Refund Product',
-        save : 'Refund',
+        title : 'Exchange Product',
+        save : 'Exchange',
         close : 'Cancel',
         product_name : $scope.product_data[index].product_name,
         product_bar_code : $scope.product_data[index].product_bar_code,

@@ -570,7 +570,7 @@ font-family: 'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif;">
 								<li ng-if="user.permissions.Admin.Modules.Nine">
 									<a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/AddCustomer">
 										<i class="fa fa-phone"></i>
-										&nbspClient Management
+										&nbspCustomer Management
 									</a>
 								</li>
 								<li ng-if="user.permissions.Admin.Modules.Twelve">
@@ -623,12 +623,12 @@ font-family: 'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif;">
 								 		&nbspActivity logs
 								 	</a>
 								 </li>
-								 <li ng-if="user.permissions.Admin.Modules.Thirteen">
+								 <!--<li ng-if="user.permissions.Admin.Modules.Thirteen">
 								 	<a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/History">
 								 		<i class="fa fa-sign-out"></i>
 								 		&nbspHistory logs
 								 	</a>
-								 </li>
+								 </li> -->
 							</div>
 						</div>
 					</div>
@@ -667,11 +667,11 @@ font-family: 'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif;">
 							<li class="menu__item">
 								<a class="menu__link">
 									<span class="menu__title">
-										<span class="menu__first-word" data-hover=" {{user.first_name }} ">
-											{{user.first_name }} 
+										<span class="menu__first-word" data-hover=" Account ">
+											Account
 										</span>
-										<span class="menu__second-word" data-hover="{{user.last_name }}">
-											{{user.last_name }}
+										<span class="menu__second-word" data-hover="Options">
+											Options
 										</span>
 										<!-- <span class="menu__first-word" data-hover="">
 											<i class="fa fa-caret-down"></i>

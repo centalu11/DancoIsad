@@ -1,6 +1,9 @@
 <style>
-    button:hover {
+    button:hover, input[type=button]:hover {
       background-color: green !important;
+    }
+    input[type=button] {
+      border-color: #d58512;
     }
 
   #container_fluid_revise {
@@ -64,6 +67,10 @@
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <div class="panel">
         <div class="panel-body">
+          <div style="margin-bottom: 10px;">
+            <input value="History Logs" type="button" class="btn" onclick="window.location.href='#/History'"style="color: #ffffff; background-color: black;font-family: arial;border-radius: 4px;">
+                <input type="button" style="background-color:black;font-family: arial;border-radius: 4px; float: right;" class="btn btn-warning" value="Download PDF Copy" ng-click="print_activity()">
+          </div>
           <div class="clearfix"></div>
             <div class="x_content">
           <table class="table table-responsive table-hover" style="overflow: auto">

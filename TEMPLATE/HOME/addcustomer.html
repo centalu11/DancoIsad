@@ -59,7 +59,7 @@
 <div class="row-fluid">
   <div id="header" style="background-color:green !important; overflow: hidden;">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="background-color:green !important; overflow: hidden; display: flex; align-items: center" >
-      <div id="header-title" class="col-xs-12 col-sm-8 col-md-8 col-lg-8" style="font-size: 50px;font-weight: bold;color: white; padding:20px;"> Client Management</div>
+      <div id="header-title" class="col-xs-12 col-sm-8 col-md-8 col-lg-8" style="font-size: 50px;font-weight: bold;color: white; padding:20px;"> Customer Management</div>
     </div>
   </div>
 </div>
@@ -69,14 +69,14 @@
       <div class="panel">
         <div class="panel-body" style="overflow: auto">
           <div style="margin-bottom: 10px;">
-            <input value="Add Client" type="button" class="btn" ng-click="add_customer()" style="color: #ffffff; background-color: black;font-family: arial;border-radius: 4px;">
+            <input value="Add Customer" type="button" class="btn" ng-click="add_customer()" style="color: #ffffff; background-color: black;font-family: arial;border-radius: 4px;">
           </div>
         <div class="clearfix"></div>
         <div class="x_content">
           <table class="table table-hover table-responsive">
             <thead>
               <tr style="background-color:green;color: white; ">
-                <th>Client Name</th>
+                <th>Customer Name</th>
                 <th>TIN #</th>
                 <th>Email</th>
                 <th>Contact Number</th>
@@ -127,7 +127,7 @@
       <div class="row">
         <div class="col-md-12">
           <div class="col-md-12">
-            Client Name <input type="text" class="form-control input-word-uppercase" ng-keyup="uppercaseWords('client_name');" ng-model="modal.client_name">
+            Customer Name <input type="text" class="form-control input-word-uppercase" ng-keyup="uppercaseWords('client_name');" ng-model="modal.client_name">
           </div>
         </div>
       </div>
@@ -167,7 +167,7 @@
       <div class="row">
         <div class="col-md-12">
           <div class="col-md-12">
-            TIN Number <input type="text" is-Number class="form-control" ng-model="modal.tin_number">
+            TIN Number <input type="text" minlength="12" maxlength="12" is-Number class="form-control" ng-model="modal.tin_number">
           </div>
         </div>
       </div>

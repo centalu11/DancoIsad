@@ -88,7 +88,7 @@ app.controller('AddCustomer', function(
 
     $scope.add_customer = function() {
         $scope.modal = {
-            title : 'Enter New Client Details',
+            title : 'Enter New Customer Details',
             save : 'Save',
             close : 'Cancel',
         }
@@ -99,7 +99,7 @@ app.controller('AddCustomer', function(
             preCloseCallback: function(value) {
                 var nestedConfirmDialog;
                 if ($scope.modal.client_name == '' || $scope.modal.client_name == "" || $scope.modal.client_name == NaN || $scope.modal.client_name == null || $scope.modal.client_name == undefined || $scope.modal.client_name == 'NaN') {
-                    var notify = $.notify('Client Name is required!', {'type': 'danger' ,  allow_dismiss: true });
+                    var notify = $.notify('Customer Name is required!', {'type': 'danger' ,  allow_dismiss: true });
                     cfpLoadingBar.complete();
                     return false;
                 }
@@ -148,7 +148,7 @@ app.controller('AddCustomer', function(
             cfpLoadingBar.start();
             var promise = ProductFactory.add_customer($scope.modal);
             promise.then(function(data){
-                var notify = $.notify('You have succesfully added a new client', { 'type': 'success', allow_dismiss: true });
+                var notify = $.notify('You have succesfully added a new customer', { 'type': 'success', allow_dismiss: true });
                 get_customers();
                 cfpLoadingBar.complete();
                 reset_modal();
@@ -184,7 +184,7 @@ app.controller('AddCustomer', function(
             preCloseCallback: function(value) {
                 var nestedConfirmDialog;
                 if ($scope.modal.client_name == '' || $scope.modal.client_name == "" || $scope.modal.client_name == NaN || $scope.modal.client_name == null || $scope.modal.client_name == undefined || $scope.modal.client_name == 'NaN') {
-                    var notify = $.notify('Client Name is required!', {'type': 'danger' ,  allow_dismiss: true });
+                    var notify = $.notify('Customer Name is required!', {'type': 'danger' ,  allow_dismiss: true });
                     cfpLoadingBar.complete();
                     return false;
                 }
@@ -233,7 +233,7 @@ app.controller('AddCustomer', function(
             cfpLoadingBar.start();
             var promise = ProductFactory.edit_customer($scope.modal);
             promise.then(function(data){
-                var notify = $.notify('You have succesfully edited the client', { 'type': 'success', allow_dismiss: true });
+                var notify = $.notify('You have succesfully edited the customer', { 'type': 'success', allow_dismiss: true });
                 get_customers();
                 cfpLoadingBar.complete();
                 reset_modal();
@@ -251,7 +251,7 @@ app.controller('AddCustomer', function(
         var index = $scope.customer_data.indexOf(v);
         
         $scope.modal = {
-            title : 'Are you sure you want to delete this client?',
+            title : 'Are you sure you want to delete this customer?',
             save : 'Delete',
             close : 'Cancel',
         }
@@ -273,7 +273,7 @@ app.controller('AddCustomer', function(
             $scope.modal.pk = $scope.customer_data[index].pk;
             var promise = ProductFactory.delete_customer($scope.modal);
             promise.then(function(data){
-                var notify = $.notify('You have succesfully deleted the client details', { 'type': 'success', allow_dismiss: true });
+                var notify = $.notify('You have succesfully deleted the customer details', { 'type': 'success', allow_dismiss: true });
                 get_customers();
                 cfpLoadingBar.complete();
                 return true;

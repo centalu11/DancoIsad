@@ -603,7 +603,7 @@ function sortTable(n) {
               <!-- <th style="width:6% !important;max-width:6% !important;">{{v.product_expiration | date :  "medium"}}</th> -->
               <!-- <th style="width:6% !important;max-width:6% !important;color:{{v.remarks_color}};">{{v.remarks}}</th> -->
               <th style="width:6% !important;max-width:6% !important;">&nbsp;&nbsp;<i class="fa fa-pencil" aria-hidden="true" style="cursor:pointer" ng-click="edit_product_data(v)"  title="Edit"></i>
-                <i class="fa fa-trash" aria-hidden="true" style="cursor:pointer" ng-click="delete_product_data(v)"  title="Delete"></i>
+                <!--<i class="fa fa-trash" aria-hidden="true" style="cursor:pointer" ng-click="delete_product_data(v)"  title="Delete"></i> -->
                 <i class="fa fa-shopping-cart" ng-if="v.product_stocks <= 3 && v.request_order_status == 'false' || v.request_order_status == 'null'" aria-hidden="true" style="cursor:pointer" ng-click="request_product_order(v)" title="Request"></i>
                 <i class="fa fa-check" style="cursor:pointer" ng-click="complete_request(v)" title="Request Completed" ng-if="v.request_order_status == true"></i>
               </th>
@@ -956,19 +956,19 @@ function Trueshot(n) {
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:1%">
           <div class="row-fluid">
             <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-              <input type="text" class="form-control" placeholder="Prod. Name,Brand" ng-model="form.product_name"/>
+              <input type="text" class="form-control" placeholder="Prod. Name" ng-model="form.product_name"/>
             </div>
             <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-              <input type="text" class="form-control" is-Number placeholder="Stocks" ng-model="form.product_stocks"/>
+              <input type="text" maxlength="9" class="form-control" is-Number placeholder="Stocks" ng-model="form.product_stocks"/>
             </div>
             <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-              <input type="text" class="form-control" is-Number placeholder="Bar Code" ng-model="form.product_bar_code"/>
+              <input type="text" class="form-control" is-Number placeholder="Product Code" ng-model="form.product_bar_code"/>
             </div>
             <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-              <input type="text" class="form-control" is-Number placeholder="Supplier Price" ng-model="form.srp"/>
+              <input type="text" maxlength="9" class="form-control" is-Number placeholder="Supplier Price" ng-model="form.srp"/>
             </div>
             <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-              <input type="text" class="form-control" placeholder="Markup Price" ng-model="form.product_price"/>
+              <input type="text" maxlength="9" class="form-control" placeholder="Markup Price" ng-model="form.product_price"/>
             </div>
           </div>
         </div>
