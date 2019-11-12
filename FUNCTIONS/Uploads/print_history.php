@@ -39,7 +39,7 @@ class PDF extends FPDF
 		// $pdf-$column_widths = ['50','50','50','50'];
 		$pdf->construct();
 		$pdf->AddPage('P','Legal'); 
-		$pdf->Cell(70, 10, 'ACTION' , 'LTBR', 0, 'C'); 
+		$pdf->Cell(70, 10, 'Action' , 'LTBR', 0, 'C'); 
 		$pdf->Cell(70, 10, 'Committed by' , 'LTBR', 0, 'C'); 
 		$pdf->Cell(55, 10, 'Committed Date' , 'LTBR', 0, 'C'); 
 		//$pdf->Cell(150, 10, 'Action' , 'LTBR', 0, 'L'); 
@@ -49,7 +49,7 @@ class PDF extends FPDF
 		$pdf->SetFillColor(36, 96, 84);
 		$pdf->Cell(70, 10, $v['action'], 'LTBR', 0, 'C');
 		$pdf->Cell(70, 10, $v['name'], 'LTBR', 0, 'C');
-		$pdf->Cell(55, 10, $v['date_created'], 'LTBR', 0, 'C');
+		$pdf->Cell(55, 10, $v['datetime'], 'LTBR', 0, 'C');
 		$pdf->Ln();
 			}
 		
