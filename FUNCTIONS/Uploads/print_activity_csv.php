@@ -10,19 +10,20 @@ foreach($_POST as $k=>$v){
 
 
 $class = new Admin($data);
-$data = $class->get_accounts_logs($data);
+$data = $class->get_history_logs($data);
 
 
 $count=1;
-$header=	'Action,Committed by, Committed Date';
+$header=	'Name,Committed by, Committed Date,Action';
 $body="";
 		foreach ($data['result'] as $k => $v) { 
-			$body .= $v['action'].','.
-					 $v['name'].','.
-					 $v['datetime']."\n";
+			$body .= $v['name'].','.
+					 $v['first_name'].' '.$v['last_name'].','.
+					 $v['date_created'].','.
+					 $v['action']."\n";
 		}
 
-$filename = "HISTORY_LOGS".date('Ymd_His').".csv";
+$filename = "ACTIVITY_LOGS".date('Ymd_His').".csv";
 header ("Content-type: application/octet-stream");
 header ("Content-Disposition: attachment; filename=".$filename);
 echo $header."\n".$body;
