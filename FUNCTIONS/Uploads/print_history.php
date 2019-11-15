@@ -8,7 +8,6 @@ foreach($_POST as $k=>$v){
 	$data[$k] = $v;
 }
 
-
 $class = new Admin($data);
 $data = $class->get_accounts_logs($data);
 
@@ -24,10 +23,12 @@ class PDF extends FPDF
 
 	function Header()
 	{
+		$this->Image('../../ASSETS/picture/grandpen.png',10,5,20);
 	    $this->SetFont('Arial', 'B', 10); 
 		$this->SetFillColor(36, 96, 84); 
-		$this->Cell(0, 0, 'History Logs', 0, 0, 'C'); 
-	    $this->Ln(5);
+		$this->Cell(83, 0, 'Grand Pen Marketing',10,100, 'C'); 
+		$this->Cell(69,9, 'History Logs',10,100,'C');
+	    $this->Ln(10);
 	}
 
 	function SetCellMargin($margin){
@@ -37,6 +38,7 @@ class PDF extends FPDF
 }
 	$pdf = new PDF();
 		// $pdf-$column_widths = ['50','50','50','50'];
+		$w = array(70,70,55);
 		$pdf->construct();
 		$pdf->AddPage('P','Legal'); 
 		$pdf->Cell(70, 10, 'Action' , 'LTBR', 0, 'C'); 
@@ -47,11 +49,11 @@ class PDF extends FPDF
 		foreach ($data['result'] as $k => $v) { 
 		$pdf->SetFont('Arial', 'B', 10); 
 		$pdf->SetFillColor(36, 96, 84);
-		$pdf->Cell(70, 10, $v['action'], 'LTBR', 0, 'C');
-		$pdf->Cell(70, 10, $v['name'], 'LTBR', 0, 'C');
-		$pdf->Cell(55, 10, $v['datetime'], 'LTBR', 0, 'C');
+		$pdf->Cell(70, 10, $v['action'], 'LR');
+		$pdf->Cell(70, 10, $v['name'], 'LR');
+		$pdf->Cell(55, 10, $v['datetime'],  'LR');
 		$pdf->Ln();
 			}
-		
+		$pdf->Cell(array_sum($w),0,'','T');
 		$pdf->Output();
 ?>

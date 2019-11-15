@@ -80,7 +80,7 @@
               <input type="text" class="form-control" placeholder="Contact Person" ng-model="form.supplier_contact_person" ng-keyup="uppercaseFormWords('supplier_contact_person');"/>
             </div>
             <div class="col-xs-6 col-sm-12 col-md-12 col-lg-12" style="margin-top:10px;">
-              <input type="text" class="form-control" placeholder="Code Name" ng-model="form.supplier_code_name"/>
+              <input type="text" maxlength="3" class="form-control" placeholder="Code Name" ng-model="form.supplier_code_name"/>
             </div>
             <div class="col-xs-6 col-sm-12 col-md-12 col-lg-12" style="margin-top:10px;">
               <input type="button" class="btn btn-warning" style="background-color:black;font-family: arial;border-radius: 4px" value="Add Supplier" ng-click="add_supplier()">
@@ -384,7 +384,7 @@ function Nababaliw(n) {
           Supplier Contact Person <input type="text" style="width:100%;" class="form-control" ng-model="modal.supplier_contact_person">
         </div>
         <div style="margin-left:13px;">
-          Supplier Code Name <input type="text" style="width:100%;" class="form-control" ng-model="modal.supplier_code_name">
+          Supplier Code Name <input type="text" maxlength="3" style="width:100%;" class="form-control" ng-model="modal.supplier_code_name">
         </div>
     <br>
 

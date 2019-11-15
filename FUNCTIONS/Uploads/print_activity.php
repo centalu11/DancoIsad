@@ -27,7 +27,7 @@ class PDF extends FPDF
 	    $this->SetFont('Arial', 'B', 10); 
 		$this->SetFillColor(36, 96, 84); 
 		$this->Cell(0, 0, 'Activity Logs', 0, 0, 'C'); 
-	    $this->Ln(5);
+	    $this->Ln(10);
 	}
 
 	function SetCellMargin($margin){
@@ -37,22 +37,23 @@ class PDF extends FPDF
 }
 	$pdf = new PDF();
 		// $pdf-$column_widths = ['50','50','50','50'];
+		$w = array(40, 70, 80, 150);
 		$pdf->construct();
 		$pdf->AddPage('L','Legal'); 
-		$pdf->Cell(40, 10, 'Name' , 'LTBR', 0, 'L'); 
-		$pdf->Cell(70, 10, 'Committed by' , 'LTBR', 0, 'L'); 
-		$pdf->Cell(80, 10, 'Committed Date' , 'LTBR', 0, 'L'); 
-		$pdf->Cell(150, 10, 'Action' , 'LTBR', 0, 'L'); 
+		$pdf->Cell(40, 10, 'Name' ,1, 0, 'L'); 
+		$pdf->Cell(70, 10, 'Committed by' ,1,  0, 'L'); 
+		$pdf->Cell(80, 10, 'Committed Date' ,1,  0, 'L'); 
+		$pdf->Cell(150, 10, 'Action' ,1,  0, 'L'); 
 		$pdf->Ln();
 		foreach ($data['result'] as $k => $v) { 
 		$pdf->SetFont('Arial', 'B', 10); 
 		$pdf->SetFillColor(36, 96, 84);
-		$pdf->Cell(40, 10, $v['name'], 'LTBR', 0, 'L');
-		$pdf->Cell(70, 10, $v['first_name'].' '.$v['last_name'], 'LTBR', 0, 'L');
-		$pdf->Cell(80, 10, $v['date_created'], 'LTBR', 0, 'L');
-		$pdf->Cell(150, 10, $v['action'], 'LTBR', 0, 'L');
+		$pdf->Cell(40, 10, $v['name'], 'LR');
+		$pdf->Cell(70, 10, $v['first_name'].' '.$v['last_name'],  'LR');
+		$pdf->Cell(80, 10, $v['date_created'], 'LR');
+		$pdf->Cell(150, 10, $v['action'], 'LR');
 		$pdf->Ln();
 			}
-		
+		$pdf->Cell(array_sum($w),0,'','T');
 		$pdf->Output();
 ?>

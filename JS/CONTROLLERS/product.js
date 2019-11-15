@@ -2728,7 +2728,7 @@ $scope.edit_supplier_data = function(v){
             var nestedConfirmDialog;
             if($scope.modal.supplier_name == '' || $scope.modal.supplier_address == '' || $scope.modal.supplier_contact_number == '' || $scope.modal.supplier_contact_person == ''){
 
-                var notify = $.notify('There is a blank encoded product data', {'type': 'danger', allow_dismiss: true });
+                var notify = $.notify('There is a blank encoded in the supplier data', {'type': 'danger', allow_dismiss: true });
                 return false;
             }
             return nestedConfirmDialog;
@@ -2752,7 +2752,7 @@ cfpLoadingBar.start();
 
         var promise = ProductFactory.edit_supplier_data(datas);
         promise.then(function(data){
-            var notify = $.notify('You have succesfully updated the product', { 'type': 'success', allow_dismiss: true });
+            var notify = $.notify('You have succesfully updated the supplier data', { 'type': 'success', allow_dismiss: true });
             get_supplier_data();
             cfpLoadingBar.complete();
         })

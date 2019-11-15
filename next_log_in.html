@@ -98,34 +98,16 @@
 
 
 <body class="login-page" ng-controller="Login">
-  <div style="background-color: #fff;width: 35%;margin-left: 35%;padding: 30px;border-radius: 5px;margin-top:2%;"> 
+  <div class="bg" style="background-color: #fff;width: 35%;margin-left: 35%;padding: 30px;border-radius: 5px;margin-top:2%;"> 
     <p class="login-box-msg" style="color:black;font-family: arial;font-weight: bold;font-size:20px;">Sign in to Grand Pen Marketing System</p>  
     <form>
-      <label>
-        <input id="user_id" type="text" required />
-        <div class="label-text">Username</div>
-
-      </label>
-      <label>
-        <input id="password" type="password" required />
-        <div class="label-text">Password</div>
-      </label>
-      <a onclick="login()" href="#" value="Log In"><img src="bowtie.png"  style="width: 140px;"></a>
+      <a onclick="window.location.href='http://localhost/grandpen/#/Sales'" value="Cashier"><img src="cashier.png"  style="width: 140px;"></a>
+      <a onclick="window.location.href='http://localhost/grandpen/#/Barcode'" value="Admin"><img src="admin.png" style="width: 140px;"></a>
 
     </form>
-    <!-- <div style="margin-top:15px;text-align: center;">
-      <a href="" ng-click="forgot_password()" class="text-center" >Forgot Password?</a>
-    </div> -->
-    <center>
-      <div id="div-message">
-      </div>
-    </center>
   </div>
- <!--  <img src="Final.png" style="max-width: 55%; height: auto;margin-top: -550px;"> -->
-  <!-- <div style="position:absolute; margin-left:10px; margin-top: -28%;">
-  <img src="Final.png" style="max-width: 55%; height: auto;">
-</div> -->
 </body>
+
 
 <script src="./ASSETS/js/jquery.min.js"></script>
 <script src="./ASSETS/bootstrap/js/bootstrap.min.js"></script>
@@ -187,83 +169,11 @@
           }
         },
         success: function(data){
-          window.location = window.location.href.replace('login.html', '');
+          window.location = window.location.href.replace('login.html','');
         }
       });
     }
 
-    function login(){
-      var error=0;
-      var empid = $('#user_id').val();
-      var pass = $('#password').val();
 
-      if(empid.replace(/\s/g,'') == "" || pass.replace(/\s/g,'') == ""){
-        $('#div-message').empty().show().append("User Name and/or Password is Incorrect");
-
-        setTimeout(function(){
-          $('#div-message').empty().hide();
-        }, 5000);
-      }
-      else {
-        $.ajax('FUNCTIONS/Users/authentication.php', {
-          type: "POST",
-          data: { empid : empid, password : pass},
-          statusCode: {
-            404: function(response){
-              $('#div-message').empty().show().append("Incorrect User Name and/or Password");
-
-              setTimeout(function(){
-                $('#div-message').empty().hide();
-              }, 5000);
-            }
-          },
-          success: function(data){
-            window.location = window.location.href.replace('login.html','');
-          }
-        });
-      }
-    }
-  </script>
-
-  <script type="text/ng-template" id="forgot_password">
-    <div class="ngdialog-message">
-      <div style="margin-top: 15px;">
-        <h3><span style="color:#ffbf00;">{{ modal.title }}</span></h3>
-      </div>
-      <div style="margin-top:20px;margin-bottom:30px;">
-        <hr style="height:1px;border:none;color:#333;background-color:#333;"/>
-        Email: <div class="input-group">
-        <input type="text" class="form-control" placeholder="Input Registered Email Here" aria-describedby="basic-addon1" ng-model="modal.email">
-        <span class="input-group-addon" id="basic-addon1">@</span>
-      </div>
-    </div>
-  </div>
-  <div class="ngdialog-buttons">
-    <button type="button"  class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
-    <button type="button" style="background-color: #ffbf00;" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
-  </div>
-</div>
-</script>
-
-<script type="text/ng-template" id="checkresult">
-  <div class="ngdialog-message">
-    <div style="margin-top: 15px;">
-      <h3><span style="color:#ffbf00;">{{ modal.title }}</span></h3>
-    </div>
-    <div style="margin-top:20px;margin-bottom:10px;" ng-if="modal.status == true">
-      <hr style="height:1px;border:none;color:#333;background-color:#333;"/>
-      An Code Verification has been sent to your email please copy it and paste on this box to verify.
-      <input type="text" class="form-control" placeholder="Input Verification Code Here." ng-model="modal.code">
-    </div>
-    <div style="margin-top:20px;margin-bottom:10px;" ng-if="modal.status == false">
-      <hr style="height:1px;border:none;color:#333;background-color:#333;"/>
-      E-mail does not exist, Please check and try again
-    </div>
-    <div class="ngdialog-buttons" >
-      <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
-      <button type="button" style="background-color: #ffbf00;" ng-if="modal.status == true" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
-    </div>
-  </div>
-</script>
-</body>
+  </body>
 </html>
