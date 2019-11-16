@@ -30,8 +30,7 @@ class PDF extends FPDF
 		$this->Cell(89, 0, 'Grand Pen Marketing',10,100, 'C'); 
 		$this->Cell(71,9, 'History Logs',10,100,'C');
 		$this->Cell(80, 1, 'As of: '.''.$currentDate,10, 10, 'C');
-		$this->Cell(72, 10, 'Prepared by: '.''.$v['name'],10, 10, 'C');
-	    $this->Ln(3);
+	    $this->Ln(9);
 	}
 
 	function SetCellMargin($margin){
