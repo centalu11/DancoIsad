@@ -24,9 +24,13 @@ class PDF extends FPDF
 
 	function Header()
 	{
-	    $this->SetFont('Arial', 'B', 10); 
+		$currentDate = date("j/n/Y");
+		$this->Image('../../ASSETS/picture/grandpen.png',10,2,20);
+	    $this->SetFont('Arial', 'B', 13); 
 		$this->SetFillColor(36, 96, 84); 
-		$this->Cell(0, 0, 'Activity Logs', 0, 0, 'C'); 
+		$this->Cell(99, 0, 'Grand Pen Marketing',10,100, 'C'); 
+		$this->Cell(82,10, 'Activity Logs',10,100,'C');
+		$this->Cell(90, 1, 'As of: '.''.$currentDate,10, 10, 'C');
 	    $this->Ln(10);
 	}
 
@@ -40,6 +44,7 @@ class PDF extends FPDF
 		$w = array(40, 70, 80, 150);
 		$pdf->construct();
 		$pdf->AddPage('L','Legal'); 
+		$pdf->SetFont('Arial','B',10);
 		$pdf->Cell(40, 10, 'Name' ,1, 0, 'L'); 
 		$pdf->Cell(70, 10, 'Committed by' ,1,  0, 'L'); 
 		$pdf->Cell(80, 10, 'Committed Date' ,1,  0, 'L'); 

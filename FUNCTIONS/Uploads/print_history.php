@@ -23,12 +23,15 @@ class PDF extends FPDF
 
 	function Header()
 	{
+		$currentDate = date("j/n/Y");
 		$this->Image('../../ASSETS/picture/grandpen.png',10,5,20);
-	    $this->SetFont('Arial', 'B', 10); 
+	    $this->SetFont('Arial', 'B', 13); 
 		$this->SetFillColor(36, 96, 84); 
-		$this->Cell(83, 0, 'Grand Pen Marketing',10,100, 'C'); 
-		$this->Cell(69,9, 'History Logs',10,100,'C');
-	    $this->Ln(10);
+		$this->Cell(89, 0, 'Grand Pen Marketing',10,100, 'C'); 
+		$this->Cell(71,9, 'History Logs',10,100,'C');
+		$this->Cell(80, 1, 'As of: '.''.$currentDate,10, 10, 'C');
+		$this->Cell(72, 10, 'Prepared by: '.''.$v['name'],10, 10, 'C');
+	    $this->Ln(3);
 	}
 
 	function SetCellMargin($margin){
@@ -41,6 +44,7 @@ class PDF extends FPDF
 		$w = array(70,70,55);
 		$pdf->construct();
 		$pdf->AddPage('P','Legal'); 
+		$pdf->SetFont('Arial','B',10);
 		$pdf->Cell(70, 10, 'Action' , 'LTBR', 0, 'C'); 
 		$pdf->Cell(70, 10, 'Committed by' , 'LTBR', 0, 'C'); 
 		$pdf->Cell(55, 10, 'Committed Date' , 'LTBR', 0, 'C'); 

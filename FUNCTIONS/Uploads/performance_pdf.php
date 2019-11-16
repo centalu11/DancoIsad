@@ -38,11 +38,15 @@ class PDF extends FPDF
 
 	function Header()
 	{
-	    $this->SetFont('Arial', 'B', 15); 
+		$currentDate = date("j/n/Y");
+		$this->Image('../../ASSETS/picture/grandpen.png',10,2,20);
+	    $this->SetFont('Arial', 'B', 12); 
 		$this->SetFillColor(36, 96, 84); 
-		$this->Cell(0, 0, 'Sales Report', 0, 0, 'C'); 
-		$this->Image('../../ASSETS/picture/grandpen.png',160,10,35);
-	    $this->Ln(5);
+		$this->Cell(98, 0, 'Grand Pen Marketing',10,100, 'C'); 
+		$this->Cell(157,9, 'Halcon Street Corner Boni Ave., Mandaluyong City',100,10,'C');
+		$this->Cell(80,6, 'Sales Report',10,100,'C');
+		$this->Cell(88, 3,	 'As of: '.''.$currentDate,10, 10, 'C');
+	    $this->Ln(10);
 	}
 
 	function SetCellMargin($margin){
@@ -56,7 +60,7 @@ class PDF extends FPDF
 		$pdf->construct();
 		$pdf->AddPage('L','Legal');
 		$pdf->SetFont('Arial', 'B', 8); 
-		$pdf->SetXY(5,50);
+		$pdf->SetXY(5,25);
 		$pdf->Cell(40, 10, 'Cashier Name' , 'LTBR', 0, 'L'); 
 		$pdf->Cell(65, 10, 'Product Name' , 'LTBR', 0, 'L'); 
 		$pdf->Cell(36, 10, 'Product Quantity' , 'LTBR', 0, 'L'); 
@@ -100,7 +104,7 @@ class PDF extends FPDF
 		$pdf->Cell(30, 10, $str." ".$v['tempo_total2'], 'LR');
 		$pdf->Ln();
 	}	
-	$pdf->Cell(array_sum($w),0,'','T');
+		//$pdf->Cell(array_sum($w),0,'','T');
 		$pdf->Cell(40, 10, '' , 0, 'L'); 
 		$pdf->Cell(60, 10, '' , 0, 'L'); 
 		$pdf->Cell(36, 10, '' , 0, 'L'); 
@@ -111,5 +115,7 @@ class PDF extends FPDF
 		$pdf->Cell(30, 10, '' , 0, 'L'); 
 		$pdf->Cell(53, 10, 'Grand Total' , 'LTBR', 0, 'LR'); 
 		$pdf->Cell(30, 10, $str." ".$total, 'LTBR', 0, 'LR'); 
+		$pdf->Cell(array_sum($w),0,'','T');
 		$pdf->Output();
+
 ?>
