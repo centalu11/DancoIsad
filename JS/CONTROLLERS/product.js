@@ -1434,7 +1434,7 @@ $scope.add_user = function(){
                 cfpLoadingBar.complete();
                 return false;
             }
-            if ($scope.modal.email == '' || $scope.modal.email == "" || $scope.modal.email == NaN || $scope.modal.email == null || $scope.modal.email == undefined || $scope.modal.email == 'NaN') {
+            /*if ($scope.modal.email == '' || $scope.modal.email == "" || $scope.modal.email == NaN || $scope.modal.email == null || $scope.modal.email == undefined || $scope.modal.email == 'NaN') {
                 var notify = $.notify('Oops there something wrong with the e-mail!', {'type': 'danger' ,  allow_dismiss: true });
                 cfpLoadingBar.complete();
                 return false;
@@ -1444,7 +1444,7 @@ $scope.add_user = function(){
                 var notify = $.notify('Invalid Email!', {'type': 'danger' ,  allow_dismiss: true });
                 cfpLoadingBar.complete();
                 return false;
-            }
+            }*/
             if ($scope.modal.user_type == '' || $scope.modal.user_type == "" || $scope.modal.user_type == NaN || $scope.modal.user_type == null || $scope.modal.user_type == undefined || $scope.modal.user_type == 'NaN') {
                 var notify = $.notify('Oops there something wrong with the user type!', {'type': 'danger' ,  allow_dismiss: true });
                 cfpLoadingBar.complete();
@@ -1537,7 +1537,7 @@ $scope.edit_user = function(v){
                 cfpLoadingBar.complete();
                 return false;
             }
-            if ($scope.modal.email == '' || $scope.modal.email == "" || $scope.modal.email == NaN || $scope.modal.email == null || $scope.modal.email == undefined || $scope.modal.email == 'NaN') {
+            /*if ($scope.modal.email == '' || $scope.modal.email == "" || $scope.modal.email == NaN || $scope.modal.email == null || $scope.modal.email == undefined || $scope.modal.email == 'NaN') {
                 var notify = $.notify('Oops there something wrong with the e-mail!', {'type': 'danger' ,  allow_dismiss: true });
                 cfpLoadingBar.complete();
                 return false;
@@ -1547,7 +1547,7 @@ $scope.edit_user = function(v){
                 var notify = $.notify('Invalid Email!', {'type': 'danger' ,  allow_dismiss: true });
                 cfpLoadingBar.complete();
                 return false;
-            }
+            }*/
             if ($scope.modal.user_type == '' || $scope.modal.user_type == "" || $scope.modal.user_type == NaN || $scope.modal.user_type == null || $scope.modal.user_type == undefined || $scope.modal.user_type == 'NaN') {
                 var notify = $.notify('Oops there something wrong with the user type!', {'type': 'danger' ,  allow_dismiss: true });
                 cfpLoadingBar.complete();
@@ -1684,7 +1684,7 @@ $scope.barcode = function(){
         for (var k in $scope.product_data) {
 
         if ($scope.stock_amount[$scope.product_data[k].pk] == undefined) {
-            $scope.stock_amount[$scope.product_data[k].pk] = 0;
+            $scope.stock_amount[$scope.product_data[k].pk] = 200;
             $scope.product_max_qtys[$scope.product_data[k].pk] = $scope.product_data[k].product_stocks;
             is_new_product_to_tender = true;
         }
@@ -1778,9 +1778,117 @@ $scope.barcode = function(){
     });
 };
 
+$scope.barcode2 = function(){
+    cfpLoadingBar.start();
+    
+    filter ={
+        barcode : $scope.form.barcode
+    };
+    var promise = ProductFactory.get_barcode(filter);
+    promise.then(function(data){
+        $scope.product_data = data.data.result;
+        var is_new_product_to_tender = false;;
+
+        for (var k in $scope.product_data) {
+
+        if ($scope.stock_amount[$scope.product_data[k].pk] == undefined) {
+            $scope.stock_amount[$scope.product_data[k].pk] = 0;
+            $scope.product_max_qtys[$scope.product_data[k].pk] = $scope.product_data[k].product_stocks;
+            is_new_product_to_tender = true;
+        }
+
+        var temporary_quantity;
+        temporary_quantity = parseInt($scope.stock_amount[$scope.product_data[k].pk]) + parseInt($scope.form.countquantity);
+
+        if (parseInt($scope.stock_amount[$scope.product_data[k].pk]) == parseInt($scope.product_data[k].product_stocks)) {
+            $scope.modal = {
+                title : 'WARNING!',
+                close : 'Close'
+            }     
+
+            ngDialog.openConfirm({
+                template: 'AdviceModal2',
+                className: 'ngdialog-theme-plain dialogwidth400',
+                preCloseCallback: function(value) {
+                    var nestedConfirmDialog;
+                    return nestedConfirmDialog;
+                },
+                scope: $scope,
+                showClose: false
+            })
+            .then(function(value){
+                return false;
+            }, function(value){
+
+            });
+
+            return;
+        } else if (parseInt(temporary_quantity) > parseInt($scope.product_data[k].product_stocks)) {
+            $scope.form.countquantity = parseInt($scope.product_data[k].product_stocks) - parseInt($scope.stock_amount[$scope.product_data[k].pk]);
+            $scope.stock_amount[$scope.product_data[k].pk] = parseInt($scope.stock_amount[$scope.product_data[k].pk]) + parseInt($scope.form.countquantity);
+        } else {
+            $scope.stock_amount[$scope.product_data[k].pk] = parseInt(temporary_quantity);
+        }
+
+        if ($scope.stock_amount[$scope.product_data[k].pk] >= $scope.product_data[k].product_stocks) {
+            $scope.modal = {
+                title : 'WARNING!',
+                close : 'Close'
+            }     
+
+            ngDialog.openConfirm({
+                template: 'AdviceExceedModal2',
+                className: 'ngdialog-theme-plain dialogwidth400',
+                preCloseCallback: function(value) {
+                    var nestedConfirmDialog;
+                    return nestedConfirmDialog;
+                },
+                scope: $scope,
+                showClose: false
+            })
+            .then(function(value){
+                return false;
+            }, function(value){
+            });
+        };
+
+    }
+
+        if ($scope.form.countquantity == null || $scope.form.countquantity == '' || $scope.form.countquantity == "") {
+            var notify = $.notify('You should specify the quantity', {'type': 'danger',  allow_dismiss: true });
+            return false;
+        };
+
+        if (is_new_product_to_tender) {
+            $scope.tender_data.push($scope.product_data[0]);
+            $scope.tender_data[$scope.tender_data.length-1].product_quantity = $scope.stock_amount[$scope.product_data[0].pk];
+        } else {
+            for (var i = 0; i < $scope.tender_data.length; i++) {
+                if ($scope.tender_data[i].pk == $scope.product_data[0].pk) {
+                    $scope.tender_data[i].product_quantity = $scope.stock_amount[$scope.product_data[0].pk];
+                    break;
+                }
+            }
+        }
+
+        for (var z = 0; z < $scope.tender_data.length; z++) {
+            $scope.tender_data[z].product_price = $scope.tender_data[z].selling_price * $scope.tender_data[z].product_quantity;
+            $scope.tender_data[z].status = true;
+        };
+        
+
+        $scope.temporary();
+
+    })
+    .then(null, function(data){
+
+        cfpLoadingBar.complete();
+    });
+};
+
 $scope.enterBarcode = function(event) {
     if (event.which == 13) {
-        $scope.barcode();
+        $scope.barcode2();
     }
 };
 
@@ -2517,6 +2625,89 @@ promise.then(function(data){
     cfpLoadingBar.complete();
 });
 }
+
+
+$scope.real_time = function(cash) {
+    var b = 0;
+    var g = 0;
+    for (var i in $scope.tender_data) {
+        console.log($scope.tender_data[i].selling_price);
+        b = parseFloat($scope.tender_data[i].product_quantity) * parseFloat($scope.tender_data[i].selling_price); 
+        $scope.tender_data[i].tempo_total = b.toFixed(2);
+        $scope.tender_data[i].tempor_total = $scope.tender_data[i].selling_price; 
+        g += parseInt($scope.tender_data[i].product_quantity); 
+        $scope.form.product_count = g;
+    };
+
+    $scope.form.totaaal = 0;
+    for (var k in $scope.tender_data) {
+        $scope.form.totaaal += parseFloat($scope.tender_data[k].tempo_total);
+        $scope.form.final_totaal = $scope.form.totaaal.toFixed(2);
+    };
+/*
+var stock_quantity
+var prd_stcks*/
+    if (cash < $scope.product_total_temporary) {
+        var notify = $.notify('Oops your money is not enough!', {'type': 'danger', allow_dismiss: true });
+        $scope.tender_show = false;
+        return false;
+    }; 
+
+for (var z in $scope.tender_data){
+    $scope.product_total += parseFloat($scope.tender_data[z].product_price);
+};
+
+for (var o in $scope.tender_data) {
+    $scope.tender_data[o].product_price = $scope.tender_data[o].product_price.toFixed(2);
+    
+};
+
+for (var u in $scope.tender_data) {
+    $scope.tender_data[u].stock_amount_finalized = $scope.stock_amount_finalized;
+};
+
+for (var b in $scope.tender_data) {
+    $scope.tender_data[b].stock_amount_status = $scope.stock_amount_status;
+};
+for (var s in $scope.tender_data) {
+    $scope.tender_data[s].final_date_tendered = $scope.date_ngayon;
+};
+
+
+
+var vat1
+vat1 = parseFloat($scope.product_total) * .12 / 1.12;
+$scope.vat = vat1.toFixed(2);
+var net_amnt
+net_amnt = parseFloat($scope.product_total) - vat1;
+$scope.net_amount = net_amnt.toFixed(2);
+
+
+
+
+var temp_change
+var tutal
+tutal = parseFloat($scope.product_total);
+temp_change = parseFloat($scope.cash) - parseFloat(tutal);
+$scope.change = temp_change.toFixed(2);
+/*$scope.change = temp_change.toFixed(2);*/
+
+var r
+var e
+e = parseFloat($scope.cash);
+r = e.toFixed(2);
+$scope.form.r = r;
+var w
+var q
+w = parseFloat($scope.product_total);
+
+q = w.toFixed(2);
+$scope.form.q = q;
+    $scope.tender_show = true;
+
+}
+
+
 
 $scope.send_receipt = function(){
     
@@ -3307,6 +3498,13 @@ $scope.upload_image_product = function(){
 }
 
 $scope.edit_permission = function(v){
+    var index = $scope.added_user_data.indexOf(v);
+
+    if ($scope.added_user_data[index].user_type == 'Cashier') {
+        $scope.modal.user_type = '2';
+        return false;
+    }
+    else {
     $scope.modal = {
         title : 'Edit Permission of '+v.first_name+' '+v.last_name,
         save : 'Update',
@@ -3337,6 +3535,9 @@ $scope.edit_permission = function(v){
         });
     });
 }
+}
+
+
 
 $scope.update_this = function(v){
 

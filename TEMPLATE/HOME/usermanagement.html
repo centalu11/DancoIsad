@@ -85,7 +85,7 @@
         
         <div class="clearfix"></div>
       <div class="x_content">
-        <table class="table table-hover table-responsive">
+        <table id="asd" class="table table-hover table-responsive">
            <thead>
         <tr style="background-color:green;color: white; ">
           <th>Cashier Name</th>
@@ -99,11 +99,11 @@
 
           <td>{{v.first_name+ " " +v.last_name}}</td>
           <td>{{v.user_id}}</td>
-          <td>{{v.user_type}}</td>
+          <td id="Cash">{{v.user_type}}</td>
           <td>
             <i class="fa fa-pencil" aria-hidden="true" style="cursor:pointer" ng-click="edit_user(v)"  title="Edit"></i>
             <i class="fa fa-trash" aria-hidden="true" style="cursor:pointer" ng-click="delete_user(v)"  title="Delete"></i>
-            <i class="fa fa-list-ul" style="cursor:pointer" title="Edit Permission"
+            <i class="fa fa-list-ul" id="fuck" style="cursor:pointer" title="Edit Permission"
               ng-click="edit_permission(v)"></i>
         </tr>
       </tbody>
@@ -121,6 +121,18 @@
 </div>
 </div>
 </div>
+
+<script>
+  function disablebutton() {
+    //var but = document.getElementById("asd").rows[2].namedItem("Cash").innerHTML;
+    //if(but == "Cashier") {
+      if( $scope.modal.user_type =='2') {
+      document.getElementById("fuck").disabled = true;
+    }                
+    //}
+
+  }
+</script>
 
 <script type="text/ng-template" id="EditUser">
   <div class="ngdialog-message">
@@ -143,14 +155,6 @@
     </div>
     <br>
 
-    <div class="row">
-      <div class="col-md-12">
-        <div class="col-md-12">
-          E-Mail <input type="email" class="form-control" ng-model="modal.email">
-        </div>
-      </div>
-    </div>
-    <br>
 
     <div class="row">
       <div class="col-md-12">
@@ -225,14 +229,6 @@
       </div>
     </div>
 
-    <div class="row">
-      <div class="col-md-12">
-        <div class="col-md-12">
-          E-Mail <input type="email" class="form-control" ng-model="modal.email">
-        </div>
-      </div>
-    </div>
-    <br>
 
     <div class="row">
       <div class="col-md-12">

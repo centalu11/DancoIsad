@@ -24,6 +24,7 @@ class PDF extends FPDF
 
 	function Header()
 	{
+		$nname = 'NICO GARCIA';
 		$currentDate = date("j/n/Y");
 		$this->Image('../../ASSETS/picture/grandpen.png',10,2,20);
 	    $this->SetFont('Arial', 'B', 13); 
@@ -31,7 +32,8 @@ class PDF extends FPDF
 		$this->Cell(99, 0, 'Grand Pen Marketing',10,100, 'C'); 
 		$this->Cell(82,10, 'Activity Logs',10,100,'C');
 		$this->Cell(90, 1, 'As of: '.''.$currentDate,10, 10, 'C');
-	    $this->Ln(10);
+		$this->Cell(112,9, 'Prepared by:'.''.$nname, 10, 10, 'C');
+	    $this->Ln(5);
 	}
 
 	function SetCellMargin($margin){
