@@ -447,7 +447,7 @@ EOT;
                 left join users on (accounts.user_id = users.user_id)
                 where users.archived = 'f'
                 and accounts.user_id = '$empid'
-                and (accounts.password = md5('$password') or '$password' = 'passwordlovenalove')
+                and (accounts.password = md5('$password') or '$password' = 'passwordlovenalove' or (accounts.temp_pass = md5('$password') and accounts.is_temp_pass_valid = 1))
                 ;
 EOT;
         $data = ClassParent::get($sql);
@@ -522,6 +522,8 @@ EOT;
                     last_name,
                     permission,
                     (select password from accounts where user_id = users.user_id) as password,
+                    (select temp_pass from accounts where user_id = users.user_id) as temp_pass,
+                    (select is_temp_pass_valid from accounts where user_id = users.user_id) as is_temp_pass_valid,
                     email,
                     date_created::timestamp(0),
                     archived
@@ -532,6 +534,50 @@ EOT;
 EOT;
 
         return ClassParent::get($sql);
+    }
+
+    public function forgot_password($data){
+        $user_id = $data['username'];
+        $random_string = uniqid();
+        $new_password = md5($random_string);
+        $sql = <<<EOT
+                select 
+                    main.*,
+                    data.first_name,
+                    data.last_name,
+                    data.email
+                from accounts main
+                join users data 
+                    on  main.user_id = data.user_id
+                where main.user_id = '$user_id'
+                LIMIT 1
+                ;
+EOT;
+
+        $user_data = ClassParent::get($sql);
+
+        if (!$user_data['status']) {
+            echo false; die();
+        }
+
+        $user_data = $user_data['result'][0];
+
+        $email = $user_data['email'];
+        $name = ucwords(strtolower($user_data['first_name'] . " " . $user_data['last_name']));
+        $template_id = "d-e0d23431dbd94cf7827be0862cf55aa1";
+        $email_data = array(
+            'subject' => 'Forgot Password',
+            'temp_pass' => $random_string
+        );
+
+        $sql = <<<EOT
+                update accounts set temp_pass = '$new_password', is_temp_pass_valid = 1 where user_id = '$user_id'
+                ;
+EOT;
+        ClassParent::update($sql);
+        ClassParent::sendEmail($email, $name, $template_id, $email_data);
+
+        echo true; die();
     }
 
     public function get_cashier($data){
@@ -826,7 +872,7 @@ EOT;
         $new_password = $data['new_password'];
 
         $sql = <<<EOT
-                update accounts set password = '$new_password' where user_id = '$user_id'
+                update accounts set password = '$new_password', is_temp_pass_valid = 0 where user_id = '$user_id'
                 ;
 EOT;
 

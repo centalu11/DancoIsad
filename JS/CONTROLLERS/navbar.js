@@ -282,7 +282,7 @@ $scope.logout = function(){
         preCloseCallback: function(value) {
             var nestedConfirmDialog;
                     $scope.form.old_pass = md5.createHash($scope.modal.old_password);
-                if ($scope.form.old_pass != $scope.user.password) {
+                if ($scope.form.old_pass != $scope.user.password && ($scope.form.old_pass != $scope.user.temp_pass || $scope.user.is_temp_pass_valid != 1)) {
                     nestedConfirmDialog = ngDialog.openConfirm({
                         template:
                                 '<p> Oops! you input a wrong old password </p>' +

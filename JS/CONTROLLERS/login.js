@@ -29,18 +29,35 @@ app.controller('Login', function(
     .then(function(value){
       return false;
     },function(value){
-        var promise = UserFactory.check_email($scope.modal);
+        var promise = UserFactory.forgot_password($scope.modal);
         promise.then(function(data){
-          var datas = {};
-          datas.result = data.data.result[0];
-          datas.status = true;
-          datas.random_string = data.data.random_string;
-          $scope.checkresult(datas); 
+          console.log(data);
+          if (data.data) {
+            nestedConfirmDialog = ngDialog.openConfirm({
+              template:
+                '<p>We have sent you a secondary password! Please! Check your email.</p>' +
+                '<div class="ngdialog-buttons">' +
+                '<button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="confirm(1)">Ok' +
+                        '</button></div>',
+              plain: true,
+              className: 'ngdialog-theme-plain custom-width'
+            });
+          }
+          else {
+            nestedConfirmDialog = ngDialog.openConfirm({
+              template:
+                '<p>User Not Found!</p>' +
+                '<div class="ngdialog-buttons">' +
+                '<button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="confirm(1)">Ok' +
+                        '</button></div>',
+              plain: true,
+              className: 'ngdialog-theme-plain custom-width'
+            });
+          }
         })
         .then(null, function(data){
-          var datas = {};
-          datas.status = false;
-          $scope.checkresult(datas); 
+          console.log(data);
+          alert("Something went wrong! Please! try again later.");
         });
     });
   }

@@ -1,4 +1,5 @@
 <?php
+require '../../vendor/autoload.php';
 error_reporting(E_ERROR);
 class ClassParent {
     public function __construct(){
@@ -58,7 +59,7 @@ class ClassParent {
             $return['status'] = true;
             $return['sql'] = $sql;
             $return['msg'] = "Success";
-            $return['result']="";
+            $return['result']= array();
             while($row = pg_fetch_assoc($query)){
                 $pattern = '/_/';
                 $replacement = ' ';
@@ -128,6 +129,33 @@ class ClassParent {
 
         pg_free_result($query);
         return $return;
+    }
+
+    protected function sendEmail($email, $name, $template_id, $data) {
+        $sender_email = "grandpen11@gmail.com";
+        $sender_name = "Grand Pen";
+
+        $from = new \SendGrid\Mail\From($sender_email, $sender_name);
+        $to = new \SendGrid\Mail\To(
+            $email,
+            $name,
+            $data
+        );
+
+        $email = new \SendGrid\Mail\Mail(
+            $from,
+            $to
+        );
+
+        $email->setTemplateId($template_id);
+        $email->setReplyTo($sender_email, $sender_name);
+        $sendgrid = new \SendGrid("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");
+
+        try {
+            $response = $sendgrid->send($email);
+        } catch (Exception $e) {
+            echo 'Caught exception: '. $e->getMessage() ."\n";
+        }
     }
 }
 
