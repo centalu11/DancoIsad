@@ -824,3 +824,21 @@ PIN CODE <input type="password" style="width:350px;" class="form-control" ng-mod
 </div>
 </div>
 </script>
+
+<script type="text/ng-template" id="BelowTwoHundredModal">
+  <div class="ngdialog-message">
+    <div style="margin-top: -15px;">
+      <h3><span style="color:green;"><b>{{ modal.title }}<b></span></h3>
+
+    </div>
+    <div class="row">
+        <div style="margin-left:13px;">
+          PLEASE TELL TO YOUR SUPERVISOR THAT THIS PRODUCT HAS LESS THAN 200 STOCKS AFTER TENDERING THE ITEMS
+        </div>
+  <div class="ngdialog-buttons" style="margin-top:20px;">
+    <div class="ngdialog-buttons">
+    <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)"> <i class="fa fa-times-circle"> </i> {{modal.close}}</button>
+  </div>
+</div>
+</div>
+</script>

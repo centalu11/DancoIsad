@@ -1684,7 +1684,7 @@ $scope.barcode = function(){
         for (var k in $scope.product_data) {
 
         if ($scope.stock_amount[$scope.product_data[k].pk] == undefined) {
-            $scope.stock_amount[$scope.product_data[k].pk] = 200;
+            $scope.stock_amount[$scope.product_data[k].pk] = 0;
             $scope.product_max_qtys[$scope.product_data[k].pk] = $scope.product_data[k].product_stocks;
             is_new_product_to_tender = true;
         }
@@ -1711,7 +1711,6 @@ $scope.barcode = function(){
             .then(function(value){
                 return false;
             }, function(value){
-
             });
 
             return;
@@ -1742,7 +1741,28 @@ $scope.barcode = function(){
                 return false;
             }, function(value){
             });
-        };
+        } else if ($scope.product_data[k].product_stocks - $scope.stock_amount[$scope.product_data[k].pk] < 200) {
+            $scope.modal = {
+                title : 'WARNING!',
+                close : 'Close'
+            }     
+
+            ngDialog.openConfirm({
+                template: 'BelowTwoHundredModal',
+                className: 'ngdialog-theme-plain dialogwidth400',
+                preCloseCallback: function(value) {
+                    var nestedConfirmDialog;
+                    return nestedConfirmDialog;
+                },
+                scope: $scope,
+                showClose: false
+            })
+            .then(function(value){
+                return false;
+            }, function(value){
+            });
+
+        }
 
     }
 
