@@ -515,12 +515,12 @@ font-family: 'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif;">
 								</a>
 							</li>
 							<div class="dropdown-content">
-								<li>
+								<!--<li>
 									<a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/Sales">
 										<i  class="fa fa-cogs"></i>
 										&nbspCashier
 									</a>
-								</li>
+								</li> -->
 								<li ng-if="user.permissions.Admin.Modules.Five">
 									<a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/ReceiptBackup">
 										<i class="fa fa-list-alt"></i>
@@ -681,6 +681,7 @@ font-family: 'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif;">
 								</a>
 							</li>
 							<div class="dropdown-content">
+								<li><a style="color:#ffffff;font-weight: bold;font-size:15px;" onclick="window.location.href='http://localhost/grandpen/next_log_in.html'"><span class-"fa fa-key"></span>&nbspBack</a></li>
 								<li><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="" ng-click="change_password()"><span class="fa fa-key" ></span>&nbspChange Password</a></li>
 								<li><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="" ng-click="logout()"><span class="fa fa-sign-out" ></span>&nbspLog Out</a></li>
 								<!-- <li><a style="color:#ffffff;font-weight: bold;font-size:15px;" href="#/AskHelp"><span class="fa fa-headphones"></span>&nbspTech Support</a></li> -->
