@@ -1888,15 +1888,9 @@ $scope.barcode2 = function(){
 
 $scope.enterBarcode = function(event) {
     if (event.which == 13) {
-        $scope.barcode();
+        $scope.barcode2();
     }
 };
-
-$scope.enterBarcode2 = function(event) {
-    if (event.which == 13) {
-        $scope.barcode();
-    }
-}
 
 $scope.changeQuantity = function(index) {
     if (parseInt($scope.tender_data[index].product_quantity) > parseInt($scope.product_max_qtys[$scope.tender_data[index].pk])) {
@@ -1939,7 +1933,7 @@ $scope.product_total_tempo += parseInt($scope.tender_data[k].product_retail_pric
 $scope.product_total_temporary = $scope.product_total_tempo;
 console.log($scope.product_total_temporary);
 };
-}; 
+};
 };
 
 for (var o in $scope.tender_data) {
@@ -2384,7 +2378,6 @@ function tender_status_true(){
 $scope.tender_product_final = function(){
     cfpLoadingBar.start();
     maketransaction_number();
-
     var b = 0;
     var g = 0;
     for (var i in $scope.tender_data) {
@@ -2408,7 +2401,7 @@ var prd_stcks*/
 
 
 for (var z in $scope.tender_data){
-    $scope.product_total = $scope.form.q;
+    $scope.product_total += parseFloat($scope.tender_data[z].product_price);
 };
 
 for (var o in $scope.tender_data) {
@@ -2492,7 +2485,6 @@ temp_change = parseFloat($scope.cash) - parseFloat(tutal);
 $scope.change = temp_change.toFixed(2);
 /*$scope.change = temp_change.toFixed(2);*/
 
-
 var r
 var e
 e = parseFloat($scope.cash);
@@ -2504,7 +2496,6 @@ w = parseFloat($scope.product_total);
 
 q = w.toFixed(2);
 $scope.form.q = q;
-
 
 if ($scope.gift_status == true) {
     $scope.form.r_name = 'Gift Certificate'
@@ -2666,12 +2657,10 @@ for (var z in $scope.tender_data){
     $scope.product_total += parseFloat($scope.tender_data[z].product_price);
 };
 
-/*
 for (var o in $scope.tender_data) {
     $scope.tender_data[o].product_price = $scope.tender_data[o].product_price.toFixed(2);
     
 };
-*/
 
 for (var u in $scope.tender_data) {
     $scope.tender_data[u].stock_amount_finalized = $scope.stock_amount_finalized;
@@ -3507,8 +3496,6 @@ $scope.upload_image_product = function(){
         });
     });
 }
-
-
 
 $scope.edit_permission = function(v){
     var index = $scope.added_user_data.indexOf(v);

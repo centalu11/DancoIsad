@@ -23,7 +23,7 @@ class PDF extends FPDF
 
 	function Header()
 	{
-		$nname = "Nico Garcia";
+		$nname = "NICO GARCIA";
 		$currentDate = date("j/n/Y");
 		$this->Image('../../ASSETS/picture/grandpen.png',10,5,20);
 	    $this->SetFont('Arial', 'B', 13); 
@@ -31,7 +31,7 @@ class PDF extends FPDF
 		$this->Cell(89, 0, 'Grand Pen Marketing',10,100, 'C'); 
 		$this->Cell(71,9, 'History Logs',10,100,'C');
 		$this->Cell(80, 1, 'As of: '.''.$currentDate,10, 10, 'C');
-		$this->Cell(98, 8, 'Prepared by: '.''.$nname, 10, 10, 'C');
+		$this->Cell(103, 8, 'Prepared by: '.''.$nname, 10, 10, 'C');
 	    $this->Ln(5);
 	}
 

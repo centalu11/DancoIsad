@@ -93,53 +93,21 @@
       color: white;
       outline: 0;
     }
-    .column {
-  float: left;
-  width: 50%;
-  padding: 5px;
-}
-
-/* Clearfix (clear floats) */
-.row::after {
-  content: "";
-  clear: both;
-  display: table;
-}
   </style>
 </head>
 
 
 <body class="login-page" ng-controller="Login">
-  <div class="row" style="background-color: #fff;width: 35%;margin-left: 35%;padding: 30px;border-radius: 5px;margin-top:5%;"> 
-    <p class="login-box-msg" style="color:black;font-family: arial;font-weight: bold;font-size:20px;">Log In As:</p>  
+  <div class="bg" style="background-color: #fff;width: 35%;margin-left: 35%;padding: 30px;border-radius: 5px;margin-top:2%;"> 
+    <p class="login-box-msg" style="color:black;font-family: arial;font-weight: bold;font-size:20px;">Sign in to Grand Pen Marketing System</p>  
     <form>
-      <div class="column">
-      <a onclick="window.location.href='http://localhost/grandpen/next_cashier.html#/'" value="Cashier"><img src="cashier.png" style="width: 140px;"></a>
-      <p><b>Cashier</p></b>
-    </div>
-    <div class="column">
+      <a onclick="window.location.href='http://localhost/grandpen/#/Sales'" value="Cashier"><img src="cashier.png"  style="width: 140px;"></a>
       <a onclick="window.location.href='http://localhost/grandpen/#/Barcode'" value="Admin"><img src="admin.png" style="width: 140px;"></a>
-      <p><b>Admin</p></b>
-    </div>
-    <!--<input value="Log out" type="button" class="btn" href="" ng-click="logout()" style="color: #ffffff; background-color: black;font-family: arial; float: right; border-radius: 4px;"> -->
+
     </form>
   </div>
 </body>
 
-<script>
-  function trueshot(v) {
-    get_added_user_data();
-        var index = $scope.added_user_data.indexOf(v);
-        var get = document.getElementByID('adminn');
-
-    if ($scope.added_user_data[index].user_type == 'Cashier') {
-        $scope.modal.user_type = '2';
-        return false;
-    }
-    else {
-      window.open("http://localhost/grandpen/#/Barcode");
-    }
-</script>
 
 <script src="./ASSETS/js/jquery.min.js"></script>
 <script src="./ASSETS/bootstrap/js/bootstrap.min.js"></script>
@@ -160,8 +128,6 @@
 <script src="ASSETS/angular/bootstrap-ui.js"></script>
 <script src="./ASSETS/js/moment.min.js"></script>
 <script src="ASSETS/angular/angular-date2.js"></script>
-
-
 
 <script>
   var app = angular.module('onload', [
@@ -184,7 +150,16 @@
   <script src="JS/FACTORIES/UserFactory.js"></script>
   <script src="JS/FACTORIES/ProductFactory.js"></script>
   <script type="text/javascript">
-        $.backstretch("login_background.jpg");
+    $(document).ready(function(){
+      checksession();
+      $.backstretch("login_background.jpg");
+      $("#user_id, #password, #btn_submit").on('keypress', function( event ) {
+        if ( event.which == 13 ) {
+          login();
+        }         
+      });
+    });
+
     function checksession(){
       $.ajax('./FUNCTIONS/Session/getsession.php', {
         type: "POST",
@@ -194,11 +169,10 @@
           }
         },
         success: function(data){
-          window.location = window.location.href.replace('next_log_in.html','');
+          window.location = window.location.href.replace('login.html','');
         }
       });
     }
-  </script>
 
 
   </body>
