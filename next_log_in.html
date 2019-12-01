@@ -94,10 +94,16 @@
       outline: 0;
     }
     .column {
-  float: left;
-  width: 50%;
-  padding: 5px;
-}
+      /*float: left;*/
+      width: 50%;
+      padding: 5px;
+    }
+
+    .column-flex{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
 /* Clearfix (clear floats) */
 .row::after {
@@ -113,33 +119,24 @@
   <div class="row" style="background-color: #fff;width: 35%;margin-left: 35%;padding: 30px;border-radius: 5px;margin-top:5%;"> 
     <p class="login-box-msg" style="color:black;font-family: arial;font-weight: bold;font-size:20px;">Log In As:</p>  
     <form>
-      <div class="column">
-      <a onclick="window.location.href='http://localhost/grandpen/next_cashier.html#/'" value="Cashier"><img src="cashier.png" style="width: 140px; cursor:pointer;"></a>
-      <p><b>Cashier</p></b>
-    </div>
-    <div class="column">
-      <a onclick="window.location.href='http://localhost/grandpen/#/Barcode'" value="Admin"><img src="admin.png" style="width: 140px; cursor:pointer;"></a>
-      <p><b>Admin</p></b>
-    </div>
+      <div class="column-flex">
+        <div class="column" id="cashieir-column">
+          <a onclick="window.location.href='http://localhost/grandpen/next_cashier.html#/'" value="Cashier">
+            <img src="cashier.png" style="width: 140px; cursor:pointer;">
+          </a>
+          <p><b>Cashier</b></p>
+        </div>
+        <div class="column" id="admin-column">
+          <a onclick="window.location.href='http://localhost/grandpen/#/Barcode'" value="Admin">
+            <img src="admin.png" style="width: 140px; cursor:pointer;">
+          </a>
+          <p><b>Admin</b></p>
+        </div>
+      </div>
     <!--<input value="Log out" type="button" class="btn" href="" ng-click="logout()" style="color: #ffffff; background-color: black;font-family: arial; float: right; border-radius: 4px;"> -->
     </form>
   </div>
 </body>
-
-<script>
-  function trueshot(v) {
-    get_added_user_data();
-        var index = $scope.added_user_data.indexOf(v);
-        var get = document.getElementByID('adminn');
-
-    if ($scope.added_user_data[index].user_type == 'Cashier') {
-        $scope.modal.user_type = '2';
-        return false;
-    }
-    else {
-      window.open("http://localhost/grandpen/#/Barcode");
-    }
-</script>
 
 <script src="./ASSETS/js/jquery.min.js"></script>
 <script src="./ASSETS/bootstrap/js/bootstrap.min.js"></script>
@@ -182,9 +179,26 @@
 
   <script src="JS/FACTORIES/SessionFactory.js"></script>
   <script src="JS/FACTORIES/UserFactory.js"></script>
-  <script src="JS/FACTORIES/ProductFactory.js"></script>
   <script type="text/javascript">
-        $.backstretch("login_background.jpg");
+    $(document).ready(function() {
+      var jqxhr = $.ajax({
+        url : "./FUNCTIONS/Users/get_user_ajax.php",
+        success : function(data) {
+          var user_type = data.result[0].user_type;
+          if (user_type != 1) {
+            $("#admin-column").hide();
+          } else {
+
+          }
+        },
+        statusCode : {
+          404 : function() {
+            var jqxhr2 = $.ajax( "./FUNCTIONS/Session/deletesession.php" );
+          }
+        }
+      });
+    });
+    $.backstretch("login_background.jpg");
     function checksession(){
       $.ajax('./FUNCTIONS/Session/getsession.php', {
         type: "POST",
